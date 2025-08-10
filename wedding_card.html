@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation: Supakit & Sunee</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Modern Tech Romance -->
+    <!-- Application Structure Plan: The SPA is designed as a single-view digital invitation card. It presents all information in a structured, visually appealing layout that mimics a physical card but with interactive enhancements. The core structure is a central card element that contains all the details. The user flow is simple: view the card, appreciate the design, and find all necessary information in one place. This structure was chosen to directly translate the source report (the card design concept) into a functional, digital format that is elegant and easy to understand. -->
+    <!-- Visualization & Content Choices: Report Info: Card design concepts. Goal: Create a digital, interactive invitation. Viz/Presentation: The main graphic (half circuit, half molecule heart) is created using HTML/CSS and Unicode characters to avoid images. Text is styled to look like code snippets. Icons are Unicode characters. Interaction: Subtle hover effects and a loading animation to simulate a system "booting up". A button to "Accept Invitation" could lead to an RSVP form. Justification: This approach brings the static design concept to life, making it more engaging and memorable for guests while staying true to the unique theme. Library/Method: Vanilla JS for minor effects, Tailwind CSS for styling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #1a202c; /* Charcoal Grey */
+            color: #E2E8F0;
+        }
+        .font-code {
+            font-family: 'Fira Code', monospace;
+        }
+        .card {
+            background-color: #2D3748; /* Darker Grey */
+            border: 1px solid #4A5568;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .card:hover {
+            transform: rotateY(1deg) rotateX(2deg);
+        }
+        .copper-foil {
+            color: #B7791F;
+            text-shadow: 0 0 5px #D69E2E;
+        }
+        .emerald-green {
+            color: #38A169;
+            text-shadow: 0 0 5px #68D391;
+        }
+        .heart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            justify-items: center;
+        }
+        .circuit-side, .molecule-side {
+            font-size: 5rem; /* Adjust size as needed */
+            line-height: 1;
+        }
+        .circuit-side {
+            text-align: right;
+            padding-right: 5px;
+        }
+        .molecule-side {
+            text-align: left;
+            padding-left: 5px;
+        }
+        .divider {
+            border-left: 2px dashed #4A5568;
+            margin: 2rem 0;
+        }
+        .icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: #4A5568;
+            color: #A0AEC0;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="card w-full max-w-lg rounded-xl p-8">
+        <div class="text-center mb-6">
+            <h2 class="font-code text-lg text-gray-400">// Our Perfect Formula</h2>
+        </div>
+        
+        <div class="heart-container mb-6">
+            <div class="circuit-side copper-foil font-code">
+                &#x21A6;
+            </div>
+            <div class="molecule-side emerald-green font-bold">
+                &#x269B;
+            </div>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold font-code copper-foil">Supakit.execute()</h1>
+            <p class="text-xl my-2 text-gray-400">&</p>
+            <h1 class="text-3xl font-bold font-code emerald-green">Sunee(aq)</h1>
+        </div>
+
+        <div class="text-center text-gray-300 mb-8 leading-relaxed">
+            <p>After extensive testing and debugging,</p>
+            <p>we've achieved a perfect reaction, creating the most stable love compound.</p>
+            <p class="mt-4">We invite you to witness our</p>
+            <p class="font-code text-xl mt-2 text-white">function love() { return "I Do"; }</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="space-y-6 text-gray-300">
+            <div class="flex items-center">
+                <div class="icon">&#x23F0;</div>
+                <div>
+                    <h3 class="font-bold text-white">// Ceremony</h3>
+                    <p class="font-code text-sm">Time: new Date("11 Oct 2025 09:09:00");</p>
+                    <p class="font-code text-sm">Location: new Venue("Sacred Heart Cathedral");</p>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <div class="icon">&#x1F389;</div>
+                <div>
+                    <h3 class="font-bold text-white">// Reception</h3>
+                    <p class="font-code text-sm">while(nightIsYoung) { party(); }</p>
+                    <p class="font-code text-sm">Location: new Venue("The Grand Ballroom");</p>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <div class="icon">&#x1F454;</div>
+                <div>
+                    <h3 class="font-bold text-white">// Dress Code</h3>
+                    <p class="font-code text-sm">Style: FormalAttire.compile();</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <div class="mb-4">
+                <input type="email" id="emailInput" placeholder="your.email@domain.com" 
+                       class="bg-gray-700 border border-gray-600 text-white font-code px-4 py-2 rounded-lg w-64 text-center placeholder-gray-400 focus:outline-none focus:border-emerald-500">
+            </div>
+            <button id="rsvpButton" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 font-code">
+                if (attending) { RSVP(); }
+            </button>
+            <p class="text-xs text-gray-500 mt-2">Kindly confirm your attendance by September 11, 2025</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('rsvpButton').addEventListener('click', function() {
+            const email = document.getElementById('emailInput').value.trim();
+            
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            scheduleEmail(email);
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function scheduleEmail(email) {
+            const rsvpData = {
+                email: email,
+                timestamp: new Date().toISOString(),
+                attending: true,
+                eventDate: '2025-10-11'
+            };
+            
+            // Store RSVP data in localStorage
+            let rsvpList = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
+            rsvpList.push(rsvpData);
+            localStorage.setItem('weddingRSVPs', JSON.stringify(rsvpList));
+            
+            // Show success message
+            alert(`Thank you! Your RSVP has been recorded for ${email}. We look forward to seeing you at our wedding!`);
+            
+            // Optional: Clear the input
+            document.getElementById('emailInput').value = '';
+            
+            console.log('RSVP scheduled:', rsvpData);
+        }
+    </script>
+
+</body>
+</html>
