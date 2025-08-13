@@ -1,191 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation: Supakit & Sunee</title>
+    <title>Wedding Invitation | ศุภกิตติ์ & สุนีย์</title>
+    
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS (Animate On Scroll) Library for animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Google Fonts for elegant typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Modern Tech Romance -->
-    <!-- Application Structure Plan: The SPA is designed as a single-view digital invitation card. It presents all information in a structured, visually appealing layout that mimics a physical card but with interactive enhancements. The core structure is a central card element that contains all the details. The user flow is simple: view the card, appreciate the design, and find all necessary information in one place. This structure was chosen to directly translate the source report (the card design concept) into a functional, digital format that is elegant and easy to understand. -->
-    <!-- Visualization & Content Choices: Report Info: Card design concepts. Goal: Create a digital, interactive invitation. Viz/Presentation: The main graphic (half circuit, half molecule heart) is created using HTML/CSS and Unicode characters to avoid images. Text is styled to look like code snippets. Icons are Unicode characters. Interaction: Subtle hover effects and a loading animation to simulate a system "booting up". A button to "Accept Invitation" could lead to an RSVP form. Justification: This approach brings the static design concept to life, making it more engaging and memorable for guests while staying true to the unique theme. Library/Method: Vanilla JS for minor effects, Tailwind CSS for styling. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <style>
+        /* Custom styles for the new theme */
         body {
-            font-family: 'Playfair Display', serif;
-            background-color: #1a202c; /* Charcoal Grey */
-            color: #E2E8F0;
+            background-color: #FEFDFB; /* A very soft, warm white */
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
-        .font-code {
-            font-family: 'Fira Code', monospace;
+        .font-mali {
+            font-family: 'Mali', cursive;
         }
-        .card {
-            background-color: #2D3748; /* Darker Grey */
-            border: 1px solid #4A5568;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
+        .font-noto {
+            font-family: 'Noto Sans Thai', sans-serif;
         }
-        .card:hover {
-            transform: rotateY(1deg) rotateX(2deg);
+        .accent-text {
+            color: #8D9DB0; /* A soft, dusty blue */
         }
-        .copper-foil {
-            color: #B7791F;
-            text-shadow: 0 0 5px #D69E2E;
+        .dark-text {
+            color: #5C5C5C; /* A soft dark grey */
         }
-        .emerald-green {
-            color: #38A169;
-            text-shadow: 0 0 5px #68D391;
+        .accent-bg {
+            background-color: #8D9DB0;
         }
-        .heart-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            justify-items: center;
+        .highlight-text {
+            color: #D4AF37; /* A touch of soft gold for highlights */
         }
-        .circuit-side, .molecule-side {
-            font-size: 5rem; /* Adjust size as needed */
-            line-height: 1;
+
+        /* Background with subtle floral pattern */
+        .main-bg {
+            background-color: #F7F9FB;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%238D9DB0" fill-opacity="0.05"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v--9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
         }
-        .circuit-side {
-            text-align: right;
-            padding-right: 5px;
+        
+        /* Scroll down arrow animation */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
         }
-        .molecule-side {
-            text-align: left;
-            padding-left: 5px;
-        }
-        .divider {
-            border-left: 2px dashed #4A5568;
-            margin: 2rem 0;
-        }
-        .icon {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            border-radius: 50%;
-            background-color: #4A5568;
-            color: #A0AEC0;
-            margin-right: 1rem;
+        .animate-bounce-slow {
+            animation: bounce 2.5s infinite;
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="font-noto dark-text">
 
-    <div class="card w-full max-w-lg rounded-xl p-8">
-        <div class="text-center mb-6">
-            <h2 class="font-code text-lg text-gray-400">// Our Perfect Formula</h2>
-        </div>
-        
-        <div class="heart-container mb-6">
-            <div class="circuit-side copper-foil font-code">
-                &#x21A6;
+    <!-- Hero Section -->
+    <section class="min-h-screen w-full flex flex-col items-center justify-center text-center p-4 main-bg relative">
+        <div data-aos="fade-in" data-aos-duration="1500" class="flex flex-col items-center">
+            <p class="tracking-widest text-gray-400">We're Getting Married</p>
+            
+            <!-- Placeholder for Couple Illustration -->
+            <div class="my-6">
+                <img src="https://placehold.co/300x350/F7F9FB/8D9DB0?text=Your+Illustration+Here" 
+                     alt="ภาพวาดคู่บ่าวสาว" 
+                     class="rounded-t-full shadow-lg"
+                     onerror="this.onerror=null;this.src='https://placehold.co/300x350/F7F9FB/8D9DB0?text=Couple+Illustration';">
             </div>
-            <div class="molecule-side emerald-green font-bold">
-                &#x269B;
-            </div>
+
+            <h1 class="font-mali text-5xl md:text-6xl accent-text">สุนีย์ และ ศุภกิตติ์</h1>
+            <p class="mt-4 text-xl highlight-text">21.11.2026</p>
         </div>
-
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold font-code copper-foil">Supakit.execute()</h1>
-            <p class="text-xl my-2 text-gray-400">&</p>
-            <h1 class="text-3xl font-bold font-code emerald-green">Sunee(aq)</h1>
+        <div class="absolute bottom-10">
+             <a href="#invitation" class="animate-bounce-slow">
+                <svg class="w-8 h-8 accent-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+            </a>
         </div>
+    </section>
 
-        <div class="text-center text-gray-300 mb-8 leading-relaxed">
-            <p>After extensive testing and debugging,</p>
-            <p>we've achieved a perfect reaction, creating the most stable love compound.</p>
-            <p class="mt-4">We invite you to witness our</p>
-            <p class="font-code text-xl mt-2 text-white">function love() { return "I Do"; }</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="space-y-6 text-gray-300">
-            <div class="flex items-center">
-                <div class="icon">&#x23F0;</div>
-                <div>
-                    <h3 class="font-bold text-white">// Ceremony</h3>
-                    <p class="font-code text-sm">Time: new Date("11 Oct 2025 09:09:00");</p>
-                    <p class="font-code text-sm">Location: new Venue("Sacred Heart Cathedral");</p>
+    <!-- Invitation Section -->
+    <section id="invitation" class="py-20 px-4 text-center bg-white">
+        <div class="max-w-3xl mx-auto">
+            <p class="text-lg leading-relaxed dark-text" data-aos="fade-up">
+                ขอเรียนเชิญเพื่อเป็นเกียรติในพิธีมงคลสมรสระหว่าง
+            </p>
+            <div class="my-12 grid md:grid-cols-3 items-center gap-8">
+                <div data-aos="fade-right">
+                    <h2 class="font-mali text-4xl accent-text">สุนีย์</h2>
+                    <p class="mt-2 text-gray-600">(สุนีย์ มงคลวรกิจชัย)</p>
+                    <p class="text-sm text-gray-500">บุตรของ (มาลัย วันพูงา)</p>
                 </div>
-            </div>
-            <div class="flex items-center">
-                <div class="icon">&#x1F389;</div>
-                <div>
-                    <h3 class="font-bold text-white">// Reception</h3>
-                    <p class="font-code text-sm">while(nightIsYoung) { party(); }</p>
-                    <p class="font-code text-sm">Location: new Venue("The Grand Ballroom");</p>
-                </div>
-            </div>
-            <div class="flex items-center">
-                <div class="icon">&#x1F454;</div>
-                <div>
-                    <h3 class="font-bold text-white">// Dress Code</h3>
-                    <p class="font-code text-sm">Style: FormalAttire.compile();</p>
+                <div class="font-mali text-6xl accent-text" data-aos="zoom-in">&</div>
+                <div data-aos="fade-left">
+                    <h2 class="font-mali text-4xl accent-text">ศุภกิตติ์</h2>
+                    <p class="mt-2 text-gray-600">(ศุภกิตติ์ สุจริตชีววงศ์)</p>
+                    <p class="text-sm text-gray-500">บุตรีของ (สมชัย สุจริตชีววงศ์) และ (สุพร ชูพูล)</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="mt-10 text-center">
-            <div class="mb-4">
-                <input type="email" id="emailInput" placeholder="your.email@domain.com" 
-                       class="bg-gray-700 border border-gray-600 text-white font-code px-4 py-2 rounded-lg w-64 text-center placeholder-gray-400 focus:outline-none focus:border-emerald-500">
+    <!-- Countdown Section -->
+    <section class="py-20 px-4 main-bg text-center">
+        <h3 class="text-3xl font-mali dark-text mb-8" data-aos="fade-up">นับถอยหลังสู่วันของเรา</h3>
+        <div id="countdown" class="flex justify-center space-x-4 md:space-x-8" data-aos="zoom-in-up">
+            <div>
+                <div id="days" class="text-5xl font-bold highlight-text">00</div>
+                <div class="text-sm text-gray-500">วัน</div>
             </div>
-            <button id="rsvpButton" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 font-code">
-                if (attending) { RSVP(); }
-            </button>
-            <p class="text-xs text-gray-500 mt-2">Kindly confirm your attendance by September 11, 2025</p>
+            <div>
+                <div id="hours" class="text-5xl font-bold highlight-text">00</div>
+                <div class="text-sm text-gray-500">ชั่วโมง</div>
+            </div>
+            <div>
+                <div id="minutes" class="text-5xl font-bold highlight-text">00</div>
+                <div class="text-sm text-gray-500">นาที</div>
+            </div>
+            <div>
+                <div id="seconds" class="text-5xl font-bold highlight-text">00</div>
+                <div class="text-sm text-gray-500">วินาที</div>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <!-- Schedule Section -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-3xl font-mali dark-text mb-12" data-aos="fade-up">กำหนดการ</h3>
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <p class="font-semibold">08:09 น.</p><p class="text-gray-600">พิธีสงฆ์</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    </div>
+                    <p class="font-semibold">09:09 น.</p><p class="text-gray-600">แห่ขันหมาก</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <p class="font-semibold">10:09 น.</p><p class="text-gray-600">พิธีรดน้ำสังข์</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V8.546c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0c.454.303.977.454 1.5.454v7z" /></svg>
+                    </div>
+                    <p class="font-semibold">12:00 น.</p><p class="text-gray-600">รับประทานอาหาร</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 px-4 main-bg">
+        <div class="max-w-5xl mx-auto text-center">
+            <h3 class="text-3xl font-mali dark-text mb-12" data-aos="fade-up">แกลเลอรี่ความทรงจำ</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div data-aos="zoom-in" data-aos-delay="100"><img src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+1" alt="ภาพคู่รัก 1" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
+                <div data-aos="zoom-in" data-aos-delay="200"><img src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+2" alt="ภาพคู่รัก 2" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
+                <div data-aos="zoom-in" data-aos-delay="300"><img src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+3" alt="ภาพคู่รัก 3" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
+                <div data-aos="zoom-in" data-aos-delay="400"><img src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+4" alt="ภาพคู่รัก 4" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
+                <div data-aos="zoom-in" data-aos-delay="500"><img src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+5" alt="ภาพคู่รัก 5" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
+                <div data-aos="zoom-in" data-aos-delay="600"><img src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+6" alt="ภาพคู่รัก 6" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Location & Info Section -->
+    <section class="py-20 px-4 bg-white text-center">
+        <div class="max-w-3xl mx-auto">
+            <div data-aos="fade-up">
+                <h3 class="text-3xl font-mali dark-text mb-4">สถานที่จัดงาน</h3>
+                <p class="font-semibold text-lg">ณ โรงแรม/สถานที่จัดงาน</p>
+                <p class="text-gray-600 mb-8">ถนน, แขวง/ตำบล, เขต/อำเภอ, จังหวัด</p>
+                <a href="https://www.google.com/maps" target="_blank" class="inline-block accent-bg text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300">
+                    ดูแผนที่
+                </a>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200" data-aos="fade-up" data-aos-delay="200">
+                 <h3 class="text-2xl font-mali dark-text mb-4">การแต่งกาย</h3>
+                 <p class="text-gray-600">ธีมสี: ฟ้า, ครีม, เบจ, น้ำตาล</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 text-center main-bg">
+        <p class="text-2xl font-mali accent-text" data-aos="zoom-in-up">#SupakitSuneeWedding</p>
+        <p class="mt-4 text-gray-500" data-aos="fade-up" data-aos-delay="200">ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง</p>
+    </footer>
+
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        document.getElementById('rsvpButton').addEventListener('click', function() {
-            const email = document.getElementById('emailInput').value.trim();
-            
-            if (!email) {
-                alert('Please enter your email address');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            
-            scheduleEmail(email);
-        });
+        AOS.init({ duration: 800, once: false });
 
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        function scheduleEmail(email) {
-            const rsvpData = {
-                email: email,
-                timestamp: new Date().toISOString(),
-                attending: true,
-                eventDate: '2025-10-11'
-            };
-            
-            // Store RSVP data in localStorage
-            let rsvpList = JSON.parse(localStorage.getItem('weddingRSVPs') || '[]');
-            rsvpList.push(rsvpData);
-            localStorage.setItem('weddingRSVPs', JSON.stringify(rsvpList));
-            
-            // Show success message
-            alert(`Thank you! Your RSVP has been recorded for ${email}. We look forward to seeing you at our wedding!`);
-            
-            // Optional: Clear the input
-            document.getElementById('emailInput').value = '';
-            
-            console.log('RSVP scheduled:', rsvpData);
-        }
+        // Countdown Timer Script
+        const countDownDate = new Date("Nov 21, 2026 08:09:00").getTime();
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "<div class='text-2xl highlight-text font-bold'>The Wedding Day is Here!</div>";
+            }
+        }, 1000);
     </script>
 
 </body>

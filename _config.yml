@@ -1,0 +1,65 @@
+# Site settings
+title: Wedding Plan
+email: supakit021@gmail.com
+description: >-
+  A beautiful wedding planning website built with Jekyll and hosted on GitHub Pages.
+baseurl: ""
+url: "https://noiskung.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+
+# Collections (if needed for wedding planning content)
+collections:
+  vendors:
+    output: true
+    permalink: /:collection/:name/
+  timeline:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "vendors"
+    values:
+      layout: "vendor"
+  - scope:
+      path: ""
+      type: "timeline"
+    values:
+      layout: "timeline"
+
+# GitHub Pages settings
+safe: true
+source: .
+destination: ./_site
+incremental: false
+gist:
+  noscript: false
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
