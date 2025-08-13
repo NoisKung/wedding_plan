@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation | ศุภกิตติ์ & สุนีย์</title>
+    <title>Wedding Invitation | สุนีย์ & ศุภกิตติ์</title>
     
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,10 +11,13 @@
     <!-- AOS (Animate On Scroll) Library for animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    <!-- Google Fonts for elegant typography -->
+    <!-- Google Fonts for elegant typography (Mali is used as a fallback) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Google Sign-In -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     
     <style>
         /* Custom styles for the new theme */
@@ -22,8 +25,13 @@
             background-color: #FEFDFB; /* A very soft, warm white */
             overflow-x: hidden; /* Prevent horizontal scroll */
         }
-        .font-mali {
-            font-family: 'Mali', cursive;
+        
+        /* NOTE: This sets the display font to 'UID Nanno'.
+          It will work if the font is installed on the user's device.
+          The 'Mali' font is used as a beautiful fallback.
+        */
+        .font-display {
+            font-family: 'UID Nanno', 'Mali', cursive;
         }
         .font-noto {
             font-family: 'Noto Sans Thai', sans-serif;
@@ -65,7 +73,6 @@
         <div data-aos="fade-in" data-aos-duration="1500" class="flex flex-col items-center">
             <p class="tracking-widest text-gray-400">We're Getting Married</p>
             
-            <!-- Placeholder for Couple Illustration -->
             <div class="my-6">
                 <img src="https://placehold.co/300x350/F7F9FB/8D9DB0?text=Your+Illustration+Here" 
                      alt="ภาพวาดคู่บ่าวสาว" 
@@ -73,7 +80,7 @@
                      onerror="this.onerror=null;this.src='https://placehold.co/300x350/F7F9FB/8D9DB0?text=Couple+Illustration';">
             </div>
 
-            <h1 class="font-mali text-5xl md:text-6xl accent-text">สุนีย์ และ ศุภกิตติ์</h1>
+            <h1 class="font-display text-5xl md:text-6xl accent-text">สุนีย์ และ ศุภกิตติ์</h1>
             <p class="mt-4 text-xl highlight-text">21.11.2026</p>
         </div>
         <div class="absolute bottom-10">
@@ -91,15 +98,15 @@
             </p>
             <div class="my-12 grid md:grid-cols-3 items-center gap-8">
                 <div data-aos="fade-right">
-                    <h2 class="font-mali text-4xl accent-text">สุนีย์</h2>
+                    <h2 class="font-display text-4xl accent-text">สุนีย์</h2>
                     <p class="mt-2 text-gray-600">(สุนีย์ มงคลวรกิจชัย)</p>
                     <p class="text-sm text-gray-500">บุตรีของ (มาลัย วันพูงา)</p>
                 </div>
-                <div class="font-mali text-6xl accent-text" data-aos="zoom-in">&</div>
+                <div class="font-display text-6xl accent-text" data-aos="zoom-in">&</div>
                 <div data-aos="fade-left">
-                    <h2 class="font-mali text-4xl accent-text">ศุภกิตติ์</h2>
+                    <h2 class="font-display text-4xl accent-text">ศุภกิตติ์</h2>
                     <p class="mt-2 text-gray-600">(ศุภกิตติ์ สุจริตชีววงศ์)</p>
-                    <p class="text-sm text-gray-500">บุตรของ (สมชัย สุจริตชีววงศ์) และ (สุพร ชูพูล)</p>
+                    <p class="text-sm text-gray-500">บุตรของ (สมชัย สุจริตชีววงศ์) และ (สุพร ซูพูล)</p>
                 </div>
             </div>
         </div>
@@ -107,7 +114,7 @@
 
     <!-- Countdown Section -->
     <section class="py-20 px-4 main-bg text-center">
-        <h3 class="text-3xl font-mali dark-text mb-8" data-aos="fade-up">นับถอยหลังสู่วันของเรา</h3>
+        <h3 class="text-3xl font-display dark-text mb-8" data-aos="fade-up">นับถอยหลังสู่วันของเรา</h3>
         <div id="countdown" class="flex justify-center space-x-4 md:space-x-8" data-aos="zoom-in-up">
             <div>
                 <div id="days" class="text-5xl font-bold highlight-text">00</div>
@@ -131,32 +138,12 @@
     <!-- Schedule Section -->
     <section class="py-20 px-4 bg-white">
         <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-3xl font-mali dark-text mb-12" data-aos="fade-up">กำหนดการ</h3>
+            <h3 class="text-3xl font-display dark-text mb-12" data-aos="fade-up">กำหนดการ</h3>
             <div class="grid md:grid-cols-4 gap-8 text-center">
-                <div data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <p class="font-semibold">08:09 น.</p><p class="text-gray-600">พิธีสงฆ์</p>
-                </div>
-                <div data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                    </div>
-                    <p class="font-semibold">09:09 น.</p><p class="text-gray-600">แห่ขันหมาก</p>
-                </div>
-                <div data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <p class="font-semibold">10:09 น.</p><p class="text-gray-600">พิธีรดน้ำสังข์</p>
-                </div>
-                <div data-aos="fade-up" data-aos-delay="400">
-                    <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V8.546c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0c.454.303.977.454 1.5.454v7z" /></svg>
-                    </div>
-                    <p class="font-semibold">12:00 น.</p><p class="text-gray-600">รับประทานอาหาร</p>
-                </div>
+                <div data-aos="fade-up" data-aos-delay="100"><div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><p class="font-semibold">08:09 น.</p><p class="text-gray-600">พิธีสงฆ์</p></div>
+                <div data-aos="fade-up" data-aos-delay="200"><div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div><p class="font-semibold">09:09 น.</p><p class="text-gray-600">แห่ขันหมาก</p></div>
+                <div data-aos="fade-up" data-aos-delay="300"><div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><p class="font-semibold">10:09 น.</p><p class="text-gray-600">พิธีรดน้ำสังข์</p></div>
+                <div data-aos="fade-up" data-aos-delay="400"><div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V8.546c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0c.454.303.977.454 1.5.454v7z" /></svg></div><p class="font-semibold">12:00 น.</p><p class="text-gray-600">รับประทานอาหาร</p></div>
             </div>
         </div>
     </section>
@@ -164,7 +151,7 @@
     <!-- Gallery Section -->
     <section class="py-20 px-4 main-bg">
         <div class="max-w-5xl mx-auto text-center">
-            <h3 class="text-3xl font-mali dark-text mb-12" data-aos="fade-up">แกลเลอรี่ความทรงจำ</h3>
+            <h3 class="text-3xl font-display dark-text mb-12" data-aos="fade-up">แกลเลอรี่ความทรงจำ</h3>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div data-aos="zoom-in" data-aos-delay="100"><img src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+1" alt="ภาพคู่รัก 1" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
                 <div data-aos="zoom-in" data-aos-delay="200"><img src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+2" alt="ภาพคู่รัก 2" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
@@ -180,7 +167,7 @@
     <section class="py-20 px-4 bg-white text-center">
         <div class="max-w-3xl mx-auto">
             <div data-aos="fade-up">
-                <h3 class="text-3xl font-mali dark-text mb-4">สถานที่จัดงาน</h3>
+                <h3 class="text-3xl font-display dark-text mb-4">สถานที่จัดงาน</h3>
                 <p class="font-semibold text-lg">ณ โรงแรม/สถานที่จัดงาน</p>
                 <p class="text-gray-600 mb-8">ถนน, แขวง/ตำบล, เขต/อำเภอ, จังหวัด</p>
                 <a href="https://www.google.com/maps" target="_blank" class="inline-block accent-bg text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300">
@@ -188,19 +175,86 @@
                 </a>
             </div>
             <div class="mt-12 pt-8 border-t border-gray-200" data-aos="fade-up" data-aos-delay="200">
-                 <h3 class="text-2xl font-mali dark-text mb-4">การแต่งกาย</h3>
+                 <h3 class="text-2xl font-display dark-text mb-4">การแต่งกาย</h3>
                  <p class="text-gray-600">ธีมสี: ฟ้า, ครีม, เบจ, น้ำตาล</p>
             </div>
         </div>
     </section>
 
+    <!-- RSVP Section -->
+    <section id="rsvp" class="py-20 px-4 main-bg">
+        <div class="max-w-xl mx-auto text-center">
+            <h3 class="text-3xl font-display dark-text mb-8" data-aos="fade-up">ตอบรับการเข้าร่วมงาน</h3>
+            
+            <!-- Google Sign-In Required -->
+            <div id="auth-required" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                    <p class="text-gray-600 mb-4">กรุณาเข้าสู่ระบบด้วย Google เพื่อตอบรับการเข้าร่วมงาน</p>
+                    <div id="g_id_onload"
+                         data-client_id="679261672981-7f2b6ekit43s411jee55nv60i3q7ujn5.apps.googleusercontent.com"
+                         data-context="signin"
+                         data-ux_mode="popup"
+                         data-callback="handleCredentialResponse"
+                         data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="rectangular"
+                         data-theme="outline"
+                         data-text="signin_with"
+                         data-size="large"
+                         data-logo_alignment="left">
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Info Display -->
+            <div id="user-info" class="hidden bg-white p-4 rounded-lg shadow-md mb-6" data-aos="fade-up">
+                <div class="flex items-center justify-center space-x-3">
+                    <img id="user-avatar" src="" alt="User Avatar" class="w-10 h-10 rounded-full">
+                    <div>
+                        <p id="user-name" class="font-semibold"></p>
+                        <p id="user-email" class="text-sm text-gray-600"></p>
+                    </div>
+                    <button id="sign-out-btn" class="text-sm text-red-600 hover:text-red-800">ออกจากระบบ</button>
+                </div>
+            </div>
+            
+            <div id="rsvp-form-container" class="hidden" data-aos="fade-up" data-aos-delay="200">
+                <form id="rsvp-form" class="space-y-4">
+                    <div>
+                        <label for="guest-count" class="sr-only">จำนวนผู้ร่วมงาน</label>
+                        <input type="number" id="guest-count" name="guest-count" placeholder="จำนวนผู้ร่วมงาน (รวมตัวท่าน)" class="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 transition text-center" min="1" max="10" value="1" required>
+                    </div>
+                    <button type="submit" id="submit-btn" class="w-full accent-bg text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300">
+                        ยืนยันการเข้าร่วม
+                    </button>
+                </form>
+            </div>
+
+            <div id="rsvp-confirmation" class="hidden" data-aos="zoom-in">
+                <p class="text-2xl font-display accent-text">ขอบคุณที่ตอบรับ</p>
+                <p class="mt-2 text-gray-600">แล้วพบกันในวันงานนะคะ!</p>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-gray-200" data-aos="fade-up" data-aos-delay="300">
+                <h4 class="text-2xl font-display dark-text mb-4">บันทึกวันสำคัญของเรา</h4>
+                <p class="text-gray-600 mb-4">เพิ่มวันแต่งงานของเราลงในปฏิทินของคุณ</p>
+                <a id="add-to-calendar-link" href="#" target="_blank" class="inline-flex items-center justify-center highlight-text font-semibold py-3 px-6 rounded-full border-2 border-amber-400 hover:bg-amber-400 hover:text-white transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    เพิ่มในปฏิทิน
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="py-12 px-4 text-center main-bg">
-        <p class="text-2xl font-mali accent-text" data-aos="zoom-in-up">#SupakitSuneeWedding</p>
+    <footer class="py-12 px-4 text-center bg-white">
+        <p class="text-2xl font-display accent-text" data-aos="zoom-in-up">#SuneeSupakitWedding</p>
         <p class="mt-4 text-gray-500" data-aos="fade-up" data-aos-delay="200">ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง</p>
     </footer>
 
-    <!-- AOS Script -->
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 800, once: false });
@@ -223,6 +277,136 @@
                 document.getElementById("countdown").innerHTML = "<div class='text-2xl highlight-text font-bold'>The Wedding Day is Here!</div>";
             }
         }, 1000);
+
+        // Google Authentication Variables
+        let currentUser = null;
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwvAqL-ovXLOBu6VVBpmeMlVr8ut3VEzm199n-50CbRqCAr6zu1nCs2BgOjjjos4NbN/exec';
+
+        // Handle Google Sign-In Response
+        function handleCredentialResponse(response) {
+            const credential = parseJwt(response.credential);
+            currentUser = {
+                email: credential.email,
+                name: credential.name,
+                picture: credential.picture,
+                sub: credential.sub
+            };
+            
+            showUserInfo();
+        }
+
+        // Parse JWT token
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+
+        // Show user info and RSVP form
+        function showUserInfo() {
+            document.getElementById('auth-required').classList.add('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            document.getElementById('rsvp-form-container').classList.remove('hidden');
+            
+            document.getElementById('user-name').textContent = currentUser.name;
+            document.getElementById('user-email').textContent = currentUser.email;
+            document.getElementById('user-avatar').src = currentUser.picture;
+        }
+
+        // Sign out function
+        document.getElementById('sign-out-btn').addEventListener('click', function() {
+            currentUser = null;
+            document.getElementById('auth-required').classList.remove('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+            document.getElementById('rsvp-form-container').classList.add('hidden');
+            document.getElementById('rsvp-confirmation').classList.add('hidden');
+        });
+
+        // RSVP Form Handler
+        const rsvpForm = document.getElementById('rsvp-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        rsvpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                alert('กรุณาเข้าสู่ระบบก่อนตอบรับ');
+                return;
+            }
+
+            const guestCount = document.getElementById('guest-count').value;
+
+            // Disable submit button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'กำลังส่ง...';
+
+            // Use the iframe method with authenticated user data
+            submitViaIframe(currentUser.name, currentUser.email, guestCount);
+        });
+
+        // Alternative submission method using hidden iframe
+        function submitViaIframe(guestName, guestEmail, guestCount) {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'rsvp-frame';
+            document.body.appendChild(iframe);
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = scriptURL;
+            form.target = 'rsvp-frame';
+
+            const nameInput = document.createElement('input');
+            nameInput.type = 'hidden';
+            nameInput.name = 'GuestName';
+            nameInput.value = guestName;
+
+            const emailInput = document.createElement('input');
+            emailInput.type = 'hidden';
+            emailInput.name = 'GuestEmail';
+            emailInput.value = guestEmail;
+
+            const countInput = document.createElement('input');
+            countInput.type = 'hidden';
+            countInput.name = 'GuestCount';
+            countInput.value = guestCount;
+
+            form.appendChild(nameInput);
+            form.appendChild(emailInput);
+            form.appendChild(countInput);
+            document.body.appendChild(form);
+
+            form.submit();
+
+            // Clean up and show success after delay
+            setTimeout(() => {
+                document.body.removeChild(form);
+                document.body.removeChild(iframe);
+                document.getElementById('rsvp-form-container').classList.add('hidden');
+                document.getElementById('rsvp-confirmation').classList.remove('hidden');
+            }, 2000);
+        }
+        
+        // Add to Calendar Link Generator
+        function generateCalendarLink() {
+            const title = encodeURIComponent('งานแต่งงานสุนีย์ & ศุภกิตติ์');
+            // Format: YYYYMMDDTHHMMSS/YYYYMMDDTHHMMSS
+            const startTime = '20261121T080000'; // 8:00 AM
+            const endTime = '20261121T220000'; // 10:00 PM (covers whole day event)
+            const details = encodeURIComponent('ร่วมแสดงความยินดีในวันสำคัญของเรา - #SuneeSupakitWedding');
+            const location = encodeURIComponent('โรงแรม/สถานที่จัดงาน, จังหวัด'); // <-- แก้ไขสถานที่ตรงนี้
+            
+            const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startTime}/${endTime}&details=${details}&location=${location}`;
+            
+            document.getElementById('add-to-calendar-link').href = googleCalendarUrl;
+        }
+
+        // Generate the link when the page loads
+        window.onload = generateCalendarLink;
+
     </script>
 
 </body>
