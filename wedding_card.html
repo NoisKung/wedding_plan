@@ -64,6 +64,44 @@
         .animate-bounce-slow {
             animation: bounce 2.5s infinite;
         }
+
+        /* Modal & payment button styles */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.5);
+            z-index: 50;
+        }
+        .modal {
+            background: #fff;
+            border-radius: 12px;
+            max-width: 420px;
+            width: 90%;
+            padding: 1.25rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; }
+        .qr-img { width: 260px; height: auto; margin: 0.5rem auto; display:block; }
+        .account-line { font-weight:600; text-align:center; }
+
+        /* Floating pay button */
+        .pay-btn {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            background: #F59E0B; /* amber */
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 9999px;
+            box-shadow: 0 6px 18px rgba(245,158,11,0.25);
+            font-weight: 700;
+            z-index: 60;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="font-noto dark-text">
@@ -256,6 +294,62 @@
         <p class="mt-4 text-gray-500" data-aos="fade-up" data-aos-delay="200">ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง</p>
     </footer>
 
+    <!-- Payment QR Modal and Trigger -->
+    <div id="pay-modal" class="modal-backdrop" aria-hidden="true" style="display:none;">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pay-title">
+            <div class="modal-header">
+                <h4 id="pay-title" class="text-xl font-semibold">สนับสนุนของขวัญ — โอนเงิน</h4>
+                <button id="close-pay" aria-label="Close" class="text-gray-500 hover:text-gray-800">✕</button>
+            </div>
+            <p class="mt-2 text-sm text-gray-600">วันที่จัดงาน: 22/11/2569<br>สถานที่: Bokrak by vivace / บอกรัก by vivace</p>
+            <div class="mt-4 text-center">
+                <img src="S__13139996.jpg" alt="QR Code โอนเงิน" class="qr-img rounded-md shadow-md">
+
+                <form id="payment-form" class="mt-4 space-y-3 text-left">
+                    <div>
+                        <label class="text-sm font-medium">ชื่อผู้โอน (แสดงบนสลิป)</label>
+                        <input type="text" id="payer-name" name="payer-name" class="w-full mt-1 p-2 border rounded" placeholder="ชื่อ - นามสกุล">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">อีเมล (ไม่บังคับ)</label>
+                        <input type="email" id="payer-email" name="payer-email" class="w-full mt-1 p-2 border rounded" placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">จำนวนเงิน (บาท)</label>
+                        <input type="number" id="amount" name="amount" class="w-full mt-1 p-2 border rounded text-right" min="0" step="0.01" placeholder="0.00" required>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">คำอวยพร / ข้อความ</label>
+                        <textarea id="message" name="message" class="w-full mt-1 p-2 border rounded" rows="3" placeholder="คำอวยพรถึงคู่บ่าวสาว"></textarea>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium">อัพโหลดสลิป (รูปหรือ PDF)</label>
+                        <input type="file" id="slip-file" name="slip-file" accept="image/*,.pdf" class="w-full mt-1">
+                    </div>
+
+                    <p class="mt-1 account-line">ชื่อบัญชี: สุนีย์ มงคลวรกิจชัย<br>ธนาคาร: ธนาคาร (ตัวอย่าง)<br>เลขที่บัญชี: <span id="account-number">012-3-45678-9</span></p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <button type="button" id="copy-account" class="px-3 py-2 border rounded-md bg-gray-100">คัดลอกเลขบัญชี</button>
+                            <a href="https://maps.app.goo.gl/PaRa1MMMfx6CY75d9" target="_blank" class="px-3 py-2 bg-amber-400 text-white rounded-md">ดูแผนที่</a>
+                        </div>
+                        <button type="submit" id="submit-payment" class="px-4 py-2 bg-green-600 text-white rounded-md">แจ้งโอน & อัพโหลดสลิป</button>
+                    </div>
+
+                    <div id="payment-progress" class="mt-2" style="display:none;">
+                        <div class="text-sm text-gray-600">กำลังอัพโหลด: <span id="upload-percent">0%</span></div>
+                        <div style="height:6px;background:#e5e7eb;border-radius:6px;margin-top:6px;"><div id="upload-bar" style="height:6px;width:0%;background:#34d399;border-radius:6px;"></div></div>
+                    </div>
+                </form>
+
+                <p class="mt-2 text-xs text-gray-500">โปรดแนบสลิปหรือแจ้งชื่อ-จำนวนผู้เข้าร่วมในช่อง RSVP หากต้องการ</p>
+            </div>
+        </div>
+    </div>
+
+    <button id="open-pay" class="pay-btn" aria-haspopup="dialog" aria-controls="pay-modal">โอนเงิน</button>
+
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -407,6 +501,147 @@
         }
 
         // Generate the link when the page loads
+        // Payment modal JS: open/close, copy account number, and upload slip + data to Google Apps Script
+        (function() {
+            const payModal = document.getElementById('pay-modal');
+            const openPay = document.getElementById('open-pay');
+            const closePay = document.getElementById('close-pay');
+            const copyBtn = document.getElementById('copy-account');
+            const paymentForm = document.getElementById('payment-form');
+            const progressWrap = document.getElementById('payment-progress');
+            const progressBar = document.getElementById('upload-bar');
+            const progressPercent = document.getElementById('upload-percent');
+
+            function showModal() {
+                if (!payModal) return;
+                payModal.style.display = 'flex';
+                payModal.setAttribute('aria-hidden', 'false');
+            }
+            function hideModal() {
+                if (!payModal) return;
+                payModal.style.display = 'none';
+                payModal.setAttribute('aria-hidden', 'true');
+            }
+
+            if (openPay) openPay.addEventListener('click', showModal);
+            if (closePay) closePay.addEventListener('click', hideModal);
+
+            // Close when clicking backdrop
+            if (payModal) payModal.addEventListener('click', function(e) {
+                if (e.target === payModal) hideModal();
+            });
+
+            // Copy account number to clipboard
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    const acct = (document.getElementById('account-number') || {}).textContent || '';
+                    if (!acct) {
+                        alert('ไม่มีเลขบัญชีที่สามารถคัดลอกได้');
+                        return;
+                    }
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(acct.trim()).then(function() {
+                            alert('คัดลอกเลขบัญชีเรียบร้อย: ' + acct.trim());
+                        }).catch(function() {
+                            alert('ไม่สามารถคัดลอกเลขบัญชีได้');
+                        });
+                    } else {
+                        // Fallback
+                        const ta = document.createElement('textarea');
+                        ta.value = acct.trim();
+                        document.body.appendChild(ta);
+                        ta.select();
+                        try { document.execCommand('copy'); alert('คัดลอกเลขบัญชีเรียบร้อย: ' + acct.trim()); } catch (e) { alert('ไม่สามารถคัดลอกเลขบัญชีได้'); }
+                        document.body.removeChild(ta);
+                    }
+                });
+            }
+
+            // Prefill payer name/email if signed in
+            function prefillPayer() {
+                try {
+                    const nameIn = document.getElementById('payer-name');
+                    const emailIn = document.getElementById('payer-email');
+                    if (currentUser) {
+                        if (nameIn && !nameIn.value) nameIn.value = currentUser.name || '';
+                        if (emailIn && !emailIn.value) emailIn.value = currentUser.email || '';
+                    }
+                } catch (e) { /* ignore */ }
+            }
+
+            // Call prefill when modal opens
+            if (openPay) openPay.addEventListener('click', prefillPayer);
+
+            // Payment form submit handler - read file as base64 (if any) and send JSON via fetch
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const amountEl = document.getElementById('amount');
+                    const messageEl = document.getElementById('message');
+                    const slipEl = document.getElementById('slip-file');
+                    const payerNameEl = document.getElementById('payer-name');
+                    const payerEmailEl = document.getElementById('payer-email');
+
+                    const amount = amountEl && amountEl.value ? amountEl.value.trim() : '';
+                    if (!amount || Number(amount) <= 0) { alert('กรุณาระบุจำนวนเงินที่ถูกต้อง'); return; }
+
+                    // Prepare payload
+                    const payload = {
+                        action: 'payment',
+                        payerName: payerNameEl ? payerNameEl.value.trim() : '',
+                        payerEmail: payerEmailEl ? payerEmailEl.value.trim() : '',
+                        amount: amount,
+                        message: messageEl ? messageEl.value.trim() : '',
+                        accountNumber: (document.getElementById('account-number') || {}).textContent || ''
+                    };
+
+                    function sendPayload() {
+                        // Show simple sending state
+                        if (progressWrap) { progressWrap.style.display = 'block'; progressPercent.textContent = 'กำลังส่ง...'; }
+
+                        fetch(scriptURL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        }).then(function(res) {
+                            if (!res.ok) throw new Error('Status ' + res.status);
+                            return res.text();
+                        }).then(function(txt) {
+                            alert('อัพโหลดสลิปและแจ้งโอนเรียบร้อย ขอบคุณมากค่ะ');
+                            paymentForm.reset();
+                            if (progressWrap) progressWrap.style.display = 'none';
+                            hideModal();
+                        }).catch(function(err) {
+                            console.error(err);
+                            alert('เกิดข้อผิดพลาดในการส่งข้อมูล โปรดลองอีกครั้ง');
+                            if (progressWrap) progressWrap.style.display = 'none';
+                        });
+                    }
+
+                    // If a file is selected, convert to base64 first
+                    if (slipEl && slipEl.files && slipEl.files.length > 0) {
+                        const file = slipEl.files[0];
+                        const reader = new FileReader();
+                        reader.onload = function(evt) {
+                            const dataUrl = evt.target.result;
+                            // dataUrl like 'data:image/png;base64,....' - send full string
+                            payload.slipDataUrl = dataUrl;
+                            payload.slipName = file.name;
+                            sendPayload();
+                        };
+                        reader.onerror = function() {
+                            alert('ไม่สามารถอ่านไฟล์สลิปได้');
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        // No file, send payload directly
+                        sendPayload();
+                    }
+                });
+            }
+        })();
+
         window.onload = generateCalendarLink;
 
     </script>
