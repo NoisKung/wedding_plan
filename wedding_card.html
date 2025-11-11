@@ -68,24 +68,204 @@
         /* Modal & payment button styles */
         .modal-backdrop {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.55);
             z-index: 50;
+            padding: 1rem;
+            overflow-y: auto;
         }
         .modal {
             background: #fff;
-            border-radius: 12px;
-            max-width: 420px;
-            width: 90%;
-            padding: 1.25rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
         }
-        .modal-header { display:flex; justify-content:space-between; align-items:center; }
-        .qr-img { width: 260px; height: auto; margin: 0.5rem auto; display:block; }
-        .account-line { font-weight:600; text-align:center; }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .modal-header h4 {
+            margin: 0;
+            flex: 1;
+            padding-right: 1rem;
+        }
+        #close-pay {
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: transparent;
+            transition: background 0.2s;
+            border-radius: 50%;
+        }
+        #close-pay:hover {
+            background: #f3f4f6;
+        }
+        .qr-img { 
+            width: 240px; 
+            max-width: 100%;
+            height: auto; 
+            margin: 1.5rem auto; 
+            display: block;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+        .account-line { 
+            font-weight: 600; 
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .account-line span {
+            font-family: 'Courier New', monospace;
+            color: #8D9DB0;
+        }
+        #payment-form {
+            display: grid;
+            gap: 1rem;
+        }
+        #payment-form > div {
+            display: flex;
+            flex-direction: column;
+        }
+        #payment-form label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #374151;
+        }
+        #payment-form input[type="text"],
+        #payment-form input[type="email"],
+        #payment-form input[type="number"],
+        #payment-form textarea,
+        #payment-form input[type="file"] {
+            padding: 0.7rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #payment-form input:focus,
+        #payment-form textarea:focus {
+            outline: none;
+            border-color: #8D9DB0;
+            box-shadow: 0 0 0 3px rgba(141,157,176,0.1);
+        }
+        #payment-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .form-actions > div:first-child {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        #copy-account, 
+        #submit-payment {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        #copy-account {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            flex: 1;
+            min-width: 140px;
+        }
+        #copy-account:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+        }
+        #submit-payment {
+            background: #10b981;
+            color: white;
+            flex: 1;
+            min-width: 160px;
+        }
+        #submit-payment:hover {
+            background: #059669;
+        }
+        #submit-payment:active {
+            transform: scale(0.98);
+        }
+        .map-btn {
+            padding: 0.75rem 1rem !important;
+            background: #F59E0B !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            font-size: 0.95rem !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex: 1 !important;
+            min-width: 140px !important;
+            transition: all 0.2s !important;
+        }
+        .map-btn:hover {
+            background: #d97706 !important;
+        }
+        #payment-progress {
+            padding: 1rem;
+            background: #f0fdf4;
+            border-radius: 8px;
+            border: 1px solid #dcfce7;
+        }
+        #payment-progress .text-sm {
+            color: #16a34a;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .modal-footer-note {
+            font-size: 0.85rem;
+            color: #6b7280;
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
 
         /* Floating pay button */
         .pay-btn {
@@ -332,9 +512,9 @@
                     <div class="flex items-center justify-between">
                         <div class="flex space-x-2">
                             <button type="button" id="copy-account" class="px-3 py-2 border rounded-md bg-gray-100">คัดลอกเลขบัญชี</button>
-                            <a href="https://maps.app.goo.gl/PaRa1MMMfx6CY75d9" target="_blank" class="px-3 py-2 bg-amber-400 text-white rounded-md">ดูแผนที่</a>
+                            <a href="https://maps.app.goo.gl/PaRa1MMMfx6CY75d9" target="_blank" class="map-btn">ดูแผนที่</a>
                         </div>
-                        <button type="submit" id="submit-payment" class="px-4 py-2 bg-green-600 text-white rounded-md">แจ้งโอน & อัพโหลดสลิป</button>
+                        <button type="submit" id="submit-payment" class="px-4 py-2 bg-green-600 text-white rounded-md">แจ้งโอน & สลิป</button>
                     </div>
 
                     <div id="payment-progress" class="mt-2" style="display:none;">
@@ -343,7 +523,7 @@
                     </div>
                 </form>
 
-                <p class="mt-2 text-xs text-gray-500">โปรดแนบสลิปหรือแจ้งชื่อ-จำนวนผู้เข้าร่วมในช่อง RSVP หากต้องการ</p>
+                <p class="modal-footer-note">โปรดแนบสลิปหรือแจ้งชื่อ-จำนวนผู้เข้าร่วมหากต้องการ</p>
             </div>
         </div>
     </div>
