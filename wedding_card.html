@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="th" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation | สุนีย์ & ศุภกิตติ์</title>
-    
+
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- AOS (Animate On Scroll) Library for animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <!-- Google Fonts for elegant typography (Mali is used as a fallback) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+
     <!-- Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    
+
+    <!-- Lottie Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
     <style>
         /* Custom styles for the new theme */
         body {
-            background-color: #FEFDFB; /* A very soft, warm white */
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            background-color: #FEFDFB;
+            /* A very soft, warm white */
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
         }
-        
+
         /* NOTE: This sets the display font to 'UID Nanno'.
           It will work if the font is installed on the user's device.
           The 'Mali' font is used as a beautiful fallback.
@@ -33,20 +42,29 @@
         .font-display {
             font-family: 'UID Nanno', 'Mali', cursive;
         }
+
         .font-noto {
             font-family: 'Noto Sans Thai', sans-serif;
         }
+
+
         .accent-text {
-            color: #8D9DB0; /* A soft, dusty blue */
+            color: #8D9DB0;
+            /* A soft, dusty blue */
         }
+
         .dark-text {
-            color: #5C5C5C; /* A soft dark grey */
+            color: #5C5C5C;
+            /* A soft dark grey */
         }
+
         .accent-bg {
             background-color: #8D9DB0;
         }
+
         .highlight-text {
-            color: #D4AF37; /* A touch of soft gold for highlights */
+            color: #D4AF37;
+            /* A touch of soft gold for highlights */
         }
 
         /* Background with subtle floral pattern */
@@ -54,13 +72,27 @@
             background-color: #F7F9FB;
             background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%238D9DB0" fill-opacity="0.05"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v--9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
         }
-        
+
         /* Scroll down arrow animation */
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-7px); }
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-15px);
+            }
+
+            60% {
+                transform: translateY(-7px);
+            }
         }
+
         .animate-bounce-slow {
             animation: bounce 2.5s infinite;
         }
@@ -75,37 +107,49 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0,0,0,0.55);
+            background: rgba(0, 0, 0, 0.55);
             z-index: 50;
             padding: 1rem;
             overflow-y: auto;
         }
+
         .modal {
             background: #fff;
             border-radius: 16px;
             max-width: 500px;
             width: 100%;
             padding: 2rem 1.5rem;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             max-height: 90vh;
             overflow-y: auto;
             animation: slideUp 0.3s ease-out;
         }
+
         @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-        .modal-header { 
-            display: flex; 
-            justify-content: space-between; 
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 1rem;
         }
+
         .modal-header h4 {
             margin: 0;
             flex: 1;
             padding-right: 1rem;
         }
+
         #close-pay {
             font-size: 1.5rem;
             cursor: pointer;
@@ -120,21 +164,24 @@
             transition: background 0.2s;
             border-radius: 50%;
         }
+
         #close-pay:hover {
             background: #f3f4f6;
         }
-        .qr-img { 
-            width: 240px; 
+
+        .qr-img {
+            width: 240px;
             max-width: 100%;
-            height: auto; 
-            margin: 1.5rem auto; 
+            height: auto;
+            margin: 1.5rem auto;
             display: block;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
             padding: 0.5rem;
         }
-        .account-line { 
-            font-weight: 600; 
+
+        .account-line {
+            font-weight: 600;
             text-align: center;
             font-size: 0.95rem;
             line-height: 1.6;
@@ -143,24 +190,29 @@
             border-radius: 8px;
             margin: 1rem 0;
         }
+
         .account-line span {
             font-family: 'Courier New', monospace;
             color: #8D9DB0;
         }
+
         #payment-form {
             display: grid;
             gap: 1rem;
         }
-        #payment-form > div {
+
+        #payment-form>div {
             display: flex;
             flex-direction: column;
         }
+
         #payment-form label {
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 0.4rem;
             color: #374151;
         }
+
         #payment-form input[type="text"],
         #payment-form input[type="email"],
         #payment-form input[type="number"],
@@ -173,28 +225,35 @@
             font-family: inherit;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
+
+        /* Micro-interactions: Input Focus */
         #payment-form input:focus,
         #payment-form textarea:focus {
             outline: none;
-            border-color: #8D9DB0;
-            box-shadow: 0 0 0 3px rgba(141,157,176,0.1);
+            border-color: #8FAADC;
+            /* Dusty Blue Focus */
+            box-shadow: 0 0 0 3px rgba(143, 170, 220, 0.2);
         }
+
         #payment-form textarea {
             resize: vertical;
             min-height: 80px;
         }
+
         .form-actions {
             display: flex;
             flex-direction: column;
             gap: 1rem;
             margin-top: 1rem;
         }
-        .form-actions > div:first-child {
+
+        .form-actions>div:first-child {
             display: flex;
             gap: 0.75rem;
             flex-wrap: wrap;
         }
-        #copy-account, 
+
+        #copy-account,
         #submit-payment {
             padding: 0.75rem 1rem;
             border: none;
@@ -204,6 +263,7 @@
             font-size: 0.95rem;
             transition: all 0.2s;
         }
+
         #copy-account {
             background: #f3f4f6;
             border: 1px solid #d1d5db;
@@ -211,22 +271,27 @@
             flex: 1;
             min-width: 140px;
         }
+
         #copy-account:hover {
             background: #e5e7eb;
             border-color: #9ca3af;
         }
+
         #submit-payment {
             background: #10b981;
             color: white;
             flex: 1;
             min-width: 160px;
         }
+
         #submit-payment:hover {
             background: #059669;
         }
+
         #submit-payment:active {
             transform: scale(0.98);
         }
+
         .map-btn {
             padding: 0.75rem 1rem !important;
             background: #F59E0B !important;
@@ -244,20 +309,24 @@
             min-width: 140px !important;
             transition: all 0.2s !important;
         }
+
         .map-btn:hover {
             background: #d97706 !important;
         }
+
         #payment-progress {
             padding: 1rem;
             background: #f0fdf4;
             border-radius: 8px;
             border: 1px solid #dcfce7;
         }
+
         #payment-progress .text-sm {
             color: #16a34a;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
+
         .modal-footer-note {
             font-size: 0.85rem;
             color: #6b7280;
@@ -272,38 +341,750 @@
             position: fixed;
             right: 18px;
             bottom: 18px;
-            background: #F59E0B; /* amber */
+            background: #F59E0B;
+            /* amber */
             color: #fff;
             border: none;
             padding: 0.75rem 1rem;
             border-radius: 9999px;
-            box-shadow: 0 6px 18px rgba(245,158,11,0.25);
+            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25);
             font-weight: 700;
             z-index: 60;
             cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        /* Micro-interaction: Button Hover */
+        .pay-btn:hover,
+        button:hover,
+        .btn-hover:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Prefers-reduced-motion: Mandatory */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            ::before,
+            ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            [data-aos] {
+                transform: none !important;
+                opacity: 1 !important;
+                transition: none !important;
+            }
+        }
+    </style>
+
+    <!-- NEW E-INVITATION STYLES (APPEND-ONLY) -->
+    <style>
+        /* ================================================
+           E-INVITATION THEME STYLES
+           Color Palette:
+           - Peach: #FFB7A5
+           - Coral: #FF6F61
+           - Dusty Blue: #8FAADC
+           - Cream: #FFF4E8
+           - Text: #444444
+           ================================================ */
+
+        /* Base theme overrides for invitation sections */
+        .einv-section {
+            font-family: 'IBM Plex Sans Thai', 'Noto Sans Thai', sans-serif;
+            color: #444444;
+        }
+
+        /* Soft textured paper background simulation */
+        .einv-paper-bg {
+            background: linear-gradient(135deg, #FFF4E8 0%, #FEFDFB 50%, #FFF8F0 100%);
+            position: relative;
+        }
+
+        .einv-paper-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(255, 183, 165, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(143, 170, 220, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Embossed geometric lines simulation */
+        .einv-emboss-lines {
+            position: relative;
+        }
+
+        .einv-emboss-lines::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(0deg, rgba(143, 170, 220, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(143, 170, 220, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        /* Navigation bar styles */
+        .einv-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 244, 232, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(143, 170, 220, 0.15);
+            padding: 0.75rem 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .einv-nav.scrolled {
+            box-shadow: 0 2px 20px rgba(68, 68, 68, 0.08);
+        }
+
+        .einv-nav-container {
+            max-width: 1024px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .einv-nav-link {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: #444444;
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+        }
+
+        .einv-nav-link:hover {
+            color: #FF6F61;
+            background: rgba(255, 111, 97, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .einv-nav-link:active {
+            transform: translateY(0);
+        }
+
+        /* Hero section */
+        .einv-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 1.5rem 3rem;
+            position: relative;
+        }
+
+        .einv-hero-names {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #FF6F61;
+            margin-bottom: 0.5rem;
+        }
+
+        .einv-hero-tagline {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 1.125rem;
+            color: #8FAADC;
+            margin-bottom: 2rem;
+        }
+
+        .einv-hero-date {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #444444;
+            padding: 1rem 2rem;
+            background: rgba(255, 183, 165, 0.15);
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* CTA Buttons */
+        .einv-cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .einv-btn {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+
+        .einv-btn-primary {
+            background: #FF6F61;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(255, 111, 97, 0.25);
+        }
+
+        .einv-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(255, 111, 97, 0.35);
+        }
+
+        .einv-btn-secondary {
+            background: rgba(143, 170, 220, 0.15);
+            color: #8FAADC;
+            border: 1px solid rgba(143, 170, 220, 0.3);
+        }
+
+        .einv-btn-secondary:hover {
+            background: rgba(143, 170, 220, 0.25);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(143, 170, 220, 0.2);
+        }
+
+        /* Section styles */
+        .einv-section-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem;
+        }
+
+        .einv-section-title {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: #444444;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Message section */
+        .einv-message-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 24px rgba(68, 68, 68, 0.06);
+            text-align: center;
+        }
+
+        .einv-message-text {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            color: #444444;
+        }
+
+        /* Schedule timeline */
+        .einv-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .einv-timeline-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .einv-timeline-dot {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            background: #FF6F61;
+            border-radius: 50%;
+            margin-top: 0.4rem;
+            box-shadow: 0 0 0 4px rgba(255, 111, 97, 0.15);
+        }
+
+        .einv-timeline-content {
+            flex: 1;
+            background: #fff;
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(68, 68, 68, 0.05);
+        }
+
+        .einv-timeline-time {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 700;
+            font-size: 0.9375rem;
+            color: #8FAADC;
+            margin-bottom: 0.25rem;
+        }
+
+        .einv-timeline-desc {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            color: #444444;
+        }
+
+        .einv-schedule-note {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 500;
+            font-size: 1.125rem;
+            color: #FF6F61;
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 183, 165, 0.12);
+            border-radius: 12px;
+        }
+
+        /* Venue section */
+        .einv-venue-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 24px rgba(68, 68, 68, 0.06);
+            text-align: center;
+        }
+
+        .einv-venue-name {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 700;
+            font-size: 1.375rem;
+            color: #444444;
+            margin-bottom: 0.75rem;
+        }
+
+        .einv-venue-address {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 0.9375rem;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* RSVP Form */
+        .einv-rsvp-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 24px rgba(68, 68, 68, 0.06);
+        }
+
+        .einv-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .einv-label {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: #444444;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .einv-input,
+        .einv-select {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid rgba(143, 170, 220, 0.3);
+            border-radius: 10px;
+            background: #fff;
+            color: #444444;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .einv-input:focus,
+        .einv-select:focus {
+            outline: none;
+            border-color: #8FAADC;
+            box-shadow: 0 0 0 3px rgba(143, 170, 220, 0.15);
+        }
+
+        .einv-input::placeholder {
+            color: #aaa;
+        }
+
+        .einv-radio-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .einv-radio-label {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 0.9375rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid rgba(143, 170, 220, 0.3);
+            border-radius: 10px;
+            transition: all 0.18s ease;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .einv-radio-label:hover {
+            background: rgba(143, 170, 220, 0.08);
+        }
+
+        .einv-radio-label.selected {
+            background: rgba(255, 111, 97, 0.1);
+            border-color: #FF6F61;
+            color: #FF6F61;
+        }
+
+        .einv-radio-input {
+            display: none;
+        }
+
+        .einv-success-state {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .einv-success-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+        }
+
+        .einv-success-title {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #444444;
+            margin-bottom: 0.5rem;
+        }
+
+        .einv-success-text {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 0.9375rem;
+            color: #666;
+        }
+
+        /* Footer */
+        .einv-footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: #FFF4E8;
+        }
+
+        .einv-footer-text {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            color: #444444;
+        }
+
+        .einv-footer-heart {
+            color: #FF6F61;
+            margin: 0 0.25rem;
+        }
+
+        /* Utility to hide existing content for invitation mode */
+        .einv-hide {
+            display: none !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .einv-hero-names {
+                font-size: 2rem;
+            }
+
+            .einv-hero-date {
+                font-size: 1.25rem;
+                padding: 0.875rem 1.5rem;
+            }
+
+            .einv-cta-group {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 1rem;
+            }
+
+            .einv-btn {
+                width: 100%;
+            }
+
+            .einv-nav-container {
+                gap: 0.5rem;
+            }
+
+            .einv-nav-link {
+                font-size: 0.8125rem;
+                padding: 0.4rem 0.5rem;
+            }
+
+            .einv-radio-group {
+                flex-direction: column;
+            }
+        }
+
+        /* Prefers reduced motion - additional rules */
+        @media (prefers-reduced-motion: reduce) {
+
+            .einv-btn,
+            .einv-nav-link,
+            .einv-input,
+            .einv-select,
+            .einv-radio-label {
+                transition: none !important;
+            }
+
+            .einv-nav {
+                transition: none !important;
+            }
+        }
+
+        /* Lottie container */
+        .einv-lottie-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+        }
+    </style>
+
+    <!-- FINAL OVERRIDE CSS FOR WEDDING THEME -->
+    <style>
+        /* IMPORT FONTS */
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;700&display=swap');
+
+        /* ROOT VARIABLES */
+        :root {
+            --c-peach: #FFB7A5;
+            --c-coral: #FF6F61;
+            --c-dusty-blue: #8FAADC;
+            --c-cream: #FFF4E8;
+            --c-text: #444444;
+            --c-white: #FFFFFF;
+            --font-main: 'IBM Plex Sans Thai', sans-serif;
+        }
+
+        /* GLOBAL RESETS & OVERRIDES */
+        body,
+        .font-noto,
+        .font-display {
+            color: var(--c-text) !important;
+            background-color: var(--c-cream) !important;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFB7A5' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+        }
+
+        .font-display-low-priority {
+            color: var(--c-text) !important;
+            font-family: 'UID Nanno', 'Mali', cursive !important;
+        }
+
+        /* TEXT COLORS overrides */
+        .accent-text {
+            color: var(--c-coral) !important;
+        }
+
+        .highlight-text {
+            color: var(--c-dusty-blue) !important;
+        }
+
+        .dark-text {
+            color: var(--c-text) !important;
+        }
+
+        .text-gray-500,
+        .text-gray-600 {
+            color: #666666 !important;
+        }
+
+        /* BUTTONS & BADGES */
+        .accent-bg {
+            background-color: var(--c-coral) !important;
+        }
+
+        /* BACKGROUNDS */
+        .main-bg,
+        .bg-gray-100 {
+            background-color: transparent !important;
+            /* Let textured body bg show */
+        }
+
+        .bg-white {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        section {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* HERO SECTION SPECIFIC */
+        section:first-of-type {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        section:first-of-type .bg-white {
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        section:first-of-type h1 {
+            font-size: 3.5rem !important;
+            line-height: 1.2;
+            text-shadow: 2px 2px 0px rgba(255, 244, 232, 0.5);
+        }
+
+        section:first-of-type img.rounded-t-full {
+            border: 8px solid var(--c-white);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* WEDDING SCHEDULE TEXT */
+        .schedule-header-group {
+            margin-bottom: 3rem;
+        }
+
+        .schedule-subtitle {
+            font-size: 1.25rem;
+            color: var(--c-coral);
+            font-weight: 500;
+            margin-top: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* COUNTDOWN */
+        #countdown>div {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 183, 165, 0.3);
+            min-width: 80px;
+        }
+
+        #countdown .highlight-text {
+            color: var(--c-coral) !important;
+            font-size: 2.5rem !important;
+        }
+
+        /* ICONS & SVGS */
+        svg.accent-text {
+            color: var(--c-coral) !important;
+        }
+
+        div.rounded-full.bg-gray-100 {
+            background-color: var(--c-cream) !important;
+            border: 1px solid var(--c-peach);
+        }
+
+        /* INPUTS */
+        input,
+        textarea {
+            border: 1px solid var(--c-peach) !important;
+            background: var(--c-white) !important;
+            border-radius: 8px !important;
+        }
+
+        input:focus,
+        textarea:focus {
+            box-shadow: 0 0 0 2px var(--c-dusty-blue) !important;
+            border-color: var(--c-dusty-blue) !important;
+            outline: none;
+        }
+
+        /* AOS ATTRIBUTES HELPER */
+        [data-aos] {
+            transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            section:first-of-type h1 {
+                font-size: 2.5rem !important;
+            }
+
+            #countdown>div {
+                min-width: 60px;
+                padding: 0.5rem;
+            }
+
+            #countdown .highlight-text {
+                font-size: 1.75rem !important;
+            }
         }
     </style>
 </head>
+
 <body class="font-noto dark-text">
 
     <!-- Hero Section -->
     <section class="min-h-screen w-full flex flex-col items-center justify-center text-center p-4 main-bg relative">
-        <div data-aos="fade-in" data-aos-duration="1500" class="flex flex-col items-center">
-            <p class="tracking-widest text-gray-400">We're Getting Married</p>
-            
-            <div class="my-6">
-                <img src="https://placehold.co/300x350/F7F9FB/8D9DB0?text=Your+Illustration+Here" 
-                     alt="ภาพวาดคู่บ่าวสาว" 
-                     class="rounded-t-full shadow-lg"
-                     onerror="this.onerror=null;this.src='https://placehold.co/300x350/F7F9FB/8D9DB0?text=Couple+Illustration';">
+        <div class="flex flex-col items-center">
+            <!-- Staggered Animation Group (Hero) -->
+            <p class="tracking-widest text-gray-400" data-aos="fade-up" data-aos-delay="0">We're Getting Married</p>
+
+            <div class="my-6" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://placehold.co/300x350/F7F9FB/8D9DB0?text=Your+Illustration+Here" alt="ภาพวาดคู่บ่าวสาว"
+                    class="rounded-t-full shadow-lg"
+                    onerror="this.onerror=null;this.src='https://placehold.co/300x350/F7F9FB/8D9DB0?text=Couple+Illustration';">
             </div>
 
-            <h1 class="font-display text-5xl md:text-6xl accent-text">สุนีย์ และ ศุภกิตติ์</h1>
-            <p class="mt-4 text-xl highlight-text">22.11.2026</p>
+            <h1 class="font-display text-5xl md:text-6xl accent-text" data-aos="fade-up" data-aos-delay="200">สุนีย์ และ
+                ศุภกิตติ์</h1>
+            <p class="mt-4 text-xl highlight-text" data-aos="fade-up" data-aos-delay="300">22.11.2026</p>
         </div>
-        <div class="absolute bottom-10">
-             <a href="#invitation" class="animate-bounce-slow">
-                <svg class="w-8 h-8 accent-text" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+        <div class="absolute bottom-10" data-aos="fade-up" data-aos-delay="400">
+            <a href="#invitation" class="animate-bounce-slow inline-block">
+                <svg class="w-8 h-8 accent-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path>
+                </svg>
             </a>
         </div>
     </section>
@@ -311,20 +1092,20 @@
     <!-- Invitation Section -->
     <section id="invitation" class="py-20 px-4 text-center bg-white">
         <div class="max-w-3xl mx-auto">
-            <p class="text-lg leading-relaxed dark-text" data-aos="fade-up">
+            <p class="text-lg leading-relaxed dark-text" data-aos="fade-up" data-aos-delay="0">
                 ขอเรียนเชิญเพื่อเป็นเกียรติในพิธีมงคลสมรสระหว่าง
             </p>
             <div class="my-12 grid md:grid-cols-3 items-center gap-8">
-                <div data-aos="fade-right">
-                    <h2 class="font-display text-4xl accent-text">สุนีย์</h2>
+                <div data-aos="fade-right" data-aos-delay="100">
+                    <h2 class="font-display-low-priority text-4xl accent-text">สุนีย์</h2>
                     <p class="mt-2 text-gray-600">(สุนีย์ มงคลวรกิจชัย)</p>
                     <p class="text-sm text-gray-500">บุตรีของ (ขาญชัย มงคลวรกิจชัย) และ (มาลัย วรรณธูงา)</p>
                 </div>
-                <div class="flex justify-center" data-aos="zoom-in">
+                <div class="flex justify-center" data-aos="zoom-in" data-aos-delay="200">
                     <img src="heart.png" alt="heart" class="w-60 h-60 object-contain">
                 </div>
-                <div data-aos="fade-left">
-                    <h2 class="font-display text-4xl accent-text">ศุภกิตติ์</h2>
+                <div data-aos="fade-left" data-aos-delay="300">
+                    <h2 class="font-display-low-priority text-4xl accent-text">ศุภกิตติ์</h2>
                     <p class="mt-2 text-gray-600">(ศุภกิตติ์ สุจริตชีววงศ์)</p>
                     <p class="text-sm text-gray-500">บุตรของ (สมชัย สุจริตชีววงศ์) และ (สุพร ซูพูล)</p>
                 </div>
@@ -358,12 +1139,59 @@
     <!-- Schedule Section -->
     <section class="py-20 px-4 bg-white">
         <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-3xl font-display dark-text mb-12" data-aos="fade-up">กำหนดการ</h3>
+            <div class="schedule-header-group" data-aos="fade-up">
+                <h3 class="text-3xl font-display-low-priority dark-text">กำหนดการ</h3>
+                <p class="schedule-subtitle">“งานเช้า เลี้ยงเที่ยง”</p>
+            </div>
             <div class="grid md:grid-cols-4 gap-8 text-center">
-                <div data-aos="fade-up" data-aos-delay="100"><div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><p class="font-semibold">08:09 น.</p><p class="text-gray-600">พิธีสงฆ์</p></div>
-                <div data-aos="fade-up" data-aos-delay="200"><div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div><p class="font-semibold">09:09 น.</p><p class="text-gray-600">แห่ขันหมาก</p></div>
-                <div data-aos="fade-up" data-aos-delay="300"><div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><p class="font-semibold">10:09 น.</p><p class="text-gray-600">พิธีรดน้ำสังข์</p></div>
-                <div data-aos="fade-up" data-aos-delay="400"><div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V8.546c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0c.454.303.977.454 1.5.454v7z" /></svg></div><p class="font-semibold">12:00 น.</p><p class="text-gray-600">รับประทานอาหาร</p></div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <p class="font-semibold">08:09 น.</p>
+                    <p class="text-gray-600">พิธีสงฆ์</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <p class="font-semibold">09:09 น.</p>
+                    <p class="text-gray-600">แห่ขันหมาก</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <div
+                        class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <p class="font-semibold">10:09 น.</p>
+                    <p class="text-gray-600">พิธีรดน้ำสังข์</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <div
+                        class="w-20 h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gray-100 accent-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V8.546c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0c.454.303.977.454 1.5.454v7z" />
+                        </svg>
+                    </div>
+                    <p class="font-semibold">12:00 น.</p>
+                    <p class="text-gray-600">รับประทานอาหาร</p>
+                </div>
             </div>
         </div>
     </section>
@@ -373,30 +1201,56 @@
         <div class="max-w-5xl mx-auto text-center">
             <h3 class="text-3xl font-display dark-text mb-12" data-aos="fade-up">แกลเลอรี่ความทรงจำ</h3>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div data-aos="zoom-in" data-aos-delay="100"><img src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+1" alt="ภาพคู่รัก 1" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
-                <div data-aos="zoom-in" data-aos-delay="200"><img src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+2" alt="ภาพคู่รัก 2" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
-                <div data-aos="zoom-in" data-aos-delay="300"><img src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+3" alt="ภาพคู่รัก 3" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
-                <div data-aos="zoom-in" data-aos-delay="400"><img src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+4" alt="ภาพคู่รัก 4" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
-                <div data-aos="zoom-in" data-aos-delay="500"><img src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+5" alt="ภาพคู่รัก 5" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
-                <div data-aos="zoom-in" data-aos-delay="600"><img src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+6" alt="ภาพคู่รัก 6" class="rounded-lg shadow-lg w-full h-full object-cover"></div>
+                <div data-aos="zoom-in" data-aos-delay="100"><img
+                        src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+1" alt="ภาพคู่รัก 1"
+                        class="rounded-lg shadow-lg w-full h-full object-cover transition duration-300 hover:scale-[1.02]">
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="200"><img
+                        src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+2" alt="ภาพคู่รัก 2"
+                        class="rounded-lg shadow-lg w-full h-full object-cover transition duration-300 hover:scale-[1.02]">
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="300"><img
+                        src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+3" alt="ภาพคู่รัก 3"
+                        class="rounded-lg shadow-lg w-full h-full object-cover transition duration-300 hover:scale-[1.02]">
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="400"><img
+                        src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+4" alt="ภาพคู่รัก 4"
+                        class="rounded-lg shadow-lg w-full h-full object-cover transition duration-300 hover:scale-[1.02]">
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="500"><img
+                        src="https://placehold.co/600x400/e2e8f0/8D9DB0?text=Photo+5" alt="ภาพคู่รัก 5"
+                        class="rounded-lg shadow-lg w-full h-full object-cover transition duration-300 hover:scale-[1.02]">
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="600"><img
+                        src="https://placehold.co/600x800/e2e8f0/8D9DB0?text=Photo+6" alt="ภาพคู่รัก 6"
+                        class="rounded-lg shadow-lg w-full h-full object-cover transition duration-300 hover:scale-[1.02]">
+                </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Location & Info Section -->
     <section class="py-20 px-4 bg-white text-center">
         <div class="max-w-3xl mx-auto">
-            <div data-aos="fade-up">
-                <h3 class="text-3xl font-display dark-text mb-4">สถานที่จัดงาน</h3>
+            <div data-aos="fade-right">
+                <h3 class="text-3xl font-display-low-priority dark-text mb-4" data-aos="fade-up">สถานที่จัดงาน</h3>
                 <p class="font-semibold text-lg">ณ VIVACE WEDDING HALL ราชพฤกษ์</p>
                 <p class="text-gray-600 mb-8">18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด จังหวัดนนทบุรี 11120</p>
-                <a href="https://maps.app.goo.gl/PaRa1MMMfx6CY75d9" target="_blank" class="inline-block accent-bg text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300">
+                <a href="https://maps.app.goo.gl/PaRa1MMMfx6CY75d9" target="_blank"
+                    class="inline-block accent-bg text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300 hover:-translate-y-px shadow-md">
                     ดูแผนที่
                 </a>
             </div>
-            <div class="mt-12 pt-8 border-t border-gray-200" data-aos="fade-up" data-aos-delay="200">
-                 <h3 class="text-2xl font-display dark-text mb-4">การแต่งกาย</h3>
-                 <p class="text-gray-600">ธีมสี: ฟ้า, ครีม, เบจ, น้ำตาล</p>
+            <div class="mt-12 pt-8 border-t border-gray-200" data-aos="fade-left" data-aos-delay="200">
+                <h3 class="text-2xl font-display-low-priority dark-text mb-4">การแต่งกาย</h3>
+                <p class="text-gray-600 mb-2">ธีมสี:</p>
+                <div class="flex justify-center items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-200 border border-gray-200 shadow-sm" title="ฟ้า"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#FDF5E6] border border-gray-200 shadow-sm" title="ครีม"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#F5F5DC] border border-gray-200 shadow-sm" title="เบจ"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#A52A2A] border border-gray-200 shadow-sm" title="น้ำตาล">
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -404,26 +1258,56 @@
     <!-- RSVP Section -->
     <section id="rsvp" class="py-20 px-4 main-bg">
         <div class="max-w-xl mx-auto text-center">
+
+            <!-- Decorative Heart Animation (SVG) -->
+            <div class="w-24 h-24 mx-auto mb-4" data-aos="zoom-in" data-aos-duration="1000">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="w-full h-full text-pink-400 animate-pulse">
+                    <path
+                        d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                </svg>
+            </div>
+
             <h3 class="text-3xl font-display dark-text mb-8" data-aos="fade-up">ตอบรับการเข้าร่วมงาน</h3>
-            
+
             <!-- Google Sign-In Required -->
             <div id="auth-required" data-aos="fade-up" data-aos-delay="200">
                 <div class="bg-white p-6 rounded-lg shadow-md mb-6">
                     <p class="text-gray-600 mb-4">กรุณาเข้าสู่ระบบด้วย Google เพื่อตอบรับการเข้าร่วมงาน</p>
                     <div id="g_id_onload"
-                         data-client_id="679261672981-7f2b6ekit43s411jee55nv60i3q7ujn5.apps.googleusercontent.com"
-                         data-context="signin"
-                         data-ux_mode="popup"
-                         data-callback="handleCredentialResponse"
-                         data-auto_prompt="false">
+                        data-client_id="679261672981-7f2b6ekit43s411jee55nv60i3q7ujn5.apps.googleusercontent.com"
+                        data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
+                        data-auto_prompt="false">
                     </div>
-                    <div class="g_id_signin"
-                         data-type="standard"
-                         data-shape="rectangular"
-                         data-theme="outline"
-                         data-text="signin_with"
-                         data-size="large"
-                         data-logo_alignment="left">
+                    <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                        data-text="signin_with" data-size="large" data-logo_alignment="left">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Guest Toggle -->
+            <div id="manual-guest-section" class="mb-8" data-aos="fade-up" data-aos-delay="300">
+                <button id="guest-toggle-btn" class="text-sm text-gray-500 underline hover:text-gray-800 transition">
+                    ไม่ได้ใช้ Gmail? ลงทะเบียนด้วยชื่อ
+                </button>
+
+                <!-- Manual Guest Inputs (Hidden by default) -->
+                <div id="manual-guest-inputs"
+                    class="hidden mt-4 text-left bg-gray-50 p-4 rounded-lg border border-gray-200 mx-auto max-w-md"
+                    data-aos="fade-in">
+                    <div class="mb-3">
+                        <label for="manual-name"
+                            class="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล</label>
+                        <input type="text" id="manual-name"
+                            class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-200 outline-none"
+                            placeholder="เช่น: สมชาย ใจดี" maxlength="100">
+                    </div>
+                    <div>
+                        <label for="manual-email" class="block text-sm font-medium text-gray-700 mb-1">อีเมล
+                            (ไม่บังคับ)</label>
+                        <input type="email" id="manual-email"
+                            class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-200 outline-none"
+                            placeholder="example@email.com" maxlength="100">
                     </div>
                 </div>
             </div>
@@ -436,17 +1320,28 @@
                         <p id="user-name" class="font-semibold"></p>
                         <p id="user-email" class="text-sm text-gray-600"></p>
                     </div>
-                    <button id="sign-out-btn" class="text-sm text-red-600 hover:text-red-800">ออกจากระบบ</button>
+                    <button id="sign-out-btn" class="text-sm text-red-600 hover:text-red-800">เปลี่ยนบัญชี /
+                        ยกเลิก</button>
                 </div>
             </div>
-            
+
             <div id="rsvp-form-container" class="hidden" data-aos="fade-up" data-aos-delay="200">
                 <form id="rsvp-form" class="space-y-4">
                     <div>
                         <label for="guest-count" class="sr-only">จำนวนผู้ร่วมงาน</label>
-                        <input type="number" id="guest-count" name="guest-count" placeholder="จำนวนผู้ร่วมงาน (รวมตัวท่าน)" class="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 transition text-center" min="1" max="10" value="1" required>
+                        <input type="number" id="guest-count" name="guest-count"
+                            placeholder="จำนวนผู้ร่วมงาน (รวมตัวท่าน)"
+                            class="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-300 focus:border-blue-300 transition text-center"
+                            min="1" max="10" value="1" required>
                     </div>
-                    <button type="submit" id="submit-btn" class="w-full accent-bg text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300">
+
+                    <!-- Honeypot Field (Hidden) -->
+                    <div style="display:none; visibility:hidden; opacity:0; height:0; width:0; overflow:hidden;">
+                        <label for="website-url-rsvp">Website</label>
+                        <input type="text" id="website-url-rsvp" name="website-url" autocomplete="off" tabindex="-1">
+                    </div>
+                    <button type="submit" id="submit-btn"
+                        class="w-full accent-bg text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300 hover:-translate-y-px shadow-sm">
                         ยืนยันการเข้าร่วม
                     </button>
                 </form>
@@ -460,8 +1355,13 @@
             <div class="mt-12 pt-8 border-t border-gray-200" data-aos="fade-up" data-aos-delay="300">
                 <h4 class="text-2xl font-display dark-text mb-4">บันทึกวันสำคัญของเรา</h4>
                 <p class="text-gray-600 mb-4">เพิ่มวันแต่งงานของเราลงในปฏิทินของคุณ</p>
-                <a id="add-to-calendar-link" href="#" target="_blank" class="inline-flex items-center justify-center highlight-text font-semibold py-3 px-6 rounded-full border-2 border-amber-400 hover:bg-amber-400 hover:text-white transition duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                <a id="add-to-calendar-link" href="#" target="_blank"
+                    class="inline-flex items-center justify-center highlight-text font-semibold py-3 px-6 rounded-full border-2 border-amber-400 hover:bg-amber-400 hover:text-white transition duration-300 btn-hover">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
                     เพิ่มในปฏิทิน
                 </a>
             </div>
@@ -470,8 +1370,9 @@
 
     <!-- Footer -->
     <footer class="py-12 px-4 text-center bg-white">
-        <p class="text-2xl font-display accent-text" data-aos="zoom-in-up">#SuneeSupakitWedding</p>
-        <p class="mt-4 text-gray-500" data-aos="fade-up" data-aos-delay="200">ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง</p>
+        <p class="text-2xl font-display-low-priority accent-text" data-aos="zoom-in-up">#SuneeSupakitWedding</p>
+        <p class="mt-4 text-gray-500" data-aos="fade-in" data-aos-delay="200" data-aos-duration="1200">
+            ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง</p>
     </footer>
 
     <!-- Payment QR Modal and Trigger -->
@@ -481,45 +1382,66 @@
                 <h4 id="pay-title" class="text-xl font-semibold">สนับสนุนของขวัญ — โอนเงิน</h4>
                 <button id="close-pay" aria-label="Close" class="text-gray-500 hover:text-gray-800">✕</button>
             </div>
-            <p class="mt-2 text-sm text-gray-600">วันที่จัดงาน: 22/11/2569<br>สถานที่: VIVACE WEDDING HALL ราชพฤกษ์<br>18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด จังหวัดนนทบุรี 11120</p>
+            <p class="mt-2 text-sm text-gray-600">วันที่จัดงาน: 22/11/2569<br>สถานที่: VIVACE WEDDING HALL
+                ราชพฤกษ์<br>18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด จังหวัดนนทบุรี 11120</p>
             <div class="mt-4 text-center">
-                <img src="S__13139996.jpg" alt="QR Code โอนเงิน" class="qr-img rounded-md shadow-md">
+                <img src="S__13139996.jpg" alt="QR Code โอนเงิน"
+                    class="qr-img rounded-md shadow-md cursor-pointer transition-transform duration-300 hover:scale-150 active:scale-150"
+                    onclick="this.classList.toggle('scale-150')">
 
                 <form id="payment-form" class="mt-4 space-y-3 text-left">
                     <div>
                         <label class="text-sm font-medium">ชื่อผู้โอน (แสดงบนสลิป)</label>
-                        <input type="text" id="payer-name" name="payer-name" class="w-full mt-1 p-2 border rounded" placeholder="ชื่อ - นามสกุล">
+                        <input type="text" id="payer-name" name="payer-name" class="w-full mt-1 p-2 border rounded"
+                            placeholder="ชื่อ - นามสกุล" maxlength="100" required>
                     </div>
                     <div>
                         <label class="text-sm font-medium">อีเมล (ไม่บังคับ)</label>
-                        <input type="email" id="payer-email" name="payer-email" class="w-full mt-1 p-2 border rounded" placeholder="you@example.com">
+                        <input type="email" id="payer-email" name="payer-email" class="w-full mt-1 p-2 border rounded"
+                            placeholder="you@example.com" maxlength="100">
                     </div>
                     <div>
                         <label class="text-sm font-medium">จำนวนเงิน (บาท)</label>
-                        <input type="number" id="amount" name="amount" class="w-full mt-1 p-2 border rounded text-right" min="0" step="0.01" placeholder="0.00" required>
+                        <input type="number" id="amount" name="amount" class="w-full mt-1 p-2 border rounded text-right"
+                            min="0" step="0.01" placeholder="0.00" required maxlength="20">
                     </div>
                     <div>
                         <label class="text-sm font-medium">คำอวยพร / ข้อความ</label>
-                        <textarea id="message" name="message" class="w-full mt-1 p-2 border rounded" rows="3" placeholder="คำอวยพรถึงคู่บ่าวสาว"></textarea>
+                        <textarea id="message" name="message" class="w-full mt-1 p-2 border rounded" rows="3"
+                            placeholder="คำอวยพรถึงคู่บ่าวสาว" maxlength="500"></textarea>
                     </div>
                     <div>
                         <label class="text-sm font-medium">อัพโหลดสลิป (รูปหรือ PDF)</label>
                         <input type="file" id="slip-file" name="slip-file" accept="image/*,.pdf" class="w-full mt-1">
                     </div>
 
-                    <p class="mt-1 account-line">ชื่อบัญชี: สุนีย์ มงคลวรกิจชัย<br>ธนาคาร: ธนาคาร (ตัวอย่าง)<br>เลขที่บัญชี: <span id="account-number">012-3-45678-9</span></p>
+                    <!-- Honeypot Field (Hidden) -->
+                    <div style="display:none; visibility:hidden; opacity:0; height:0; width:0; overflow:hidden;">
+                        <label for="website-url-pay">Website</label>
+                        <input type="text" id="website-url-pay" name="website-url" autocomplete="off" tabindex="-1">
+                    </div>
+
+                    <p class="mt-1 account-line">ชื่อบัญชี: สุนีย์ มงคลวรกิจชัย<br>ธนาคาร: ธนาคาร
+                        (ตัวอย่าง)<br>เลขที่บัญชี: <span id="account-number">012-3-45678-9</span></p>
 
                     <div class="flex items-center justify-between">
                         <div class="flex space-x-2">
-                            <button type="button" id="copy-account" class="px-3 py-2 border rounded-md bg-gray-100">คัดลอกเลขบัญชี</button>
-                            <a href="https://maps.app.goo.gl/PaRa1MMMfx6CY75d9" target="_blank" class="map-btn">ดูแผนที่</a>
+                            <button type="button" id="copy-account"
+                                class="px-3 py-2 border rounded-md bg-gray-100 btn-hover">คัดลอกเลขบัญชี</button>
+                            <a href="https://maps.app.goo.gl/PaRa1MMMfx6CY75d9" target="_blank"
+                                class="map-btn shadow-sm btn-hover">ดูแผนที่</a>
                         </div>
-                        <button type="submit" id="submit-payment" class="px-4 py-2 bg-green-600 text-white rounded-md">แจ้งโอน & สลิป</button>
+                        <button type="submit" id="submit-payment"
+                            class="px-4 py-2 bg-green-600 text-white rounded-md btn-hover shadow-sm">แจ้งโอน &
+                            สลิป</button>
                     </div>
 
                     <div id="payment-progress" class="mt-2" style="display:none;">
                         <div class="text-sm text-gray-600">กำลังอัพโหลด: <span id="upload-percent">0%</span></div>
-                        <div style="height:6px;background:#e5e7eb;border-radius:6px;margin-top:6px;"><div id="upload-bar" style="height:6px;width:0%;background:#34d399;border-radius:6px;"></div></div>
+                        <div style="height:6px;background:#e5e7eb;border-radius:6px;margin-top:6px;">
+                            <div id="upload-bar" style="height:6px;width:0%;background:#34d399;border-radius:6px;">
+                            </div>
+                        </div>
                     </div>
                 </form>
 
@@ -533,11 +1455,21 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 800, once: false });
+        // AOS Initialization with upgraded minimal settings
+        AOS.init({
+            duration: 700,
+            once: true,
+            offset: 120,
+            easing: 'ease-out',
+            disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches // Auto-disable if user prefers reduced motion
+        });
+
+        // Re-check on resize (optional but good for responsive)
+        window.addEventListener('resize', AOS.refresh);
 
         // Countdown Timer Script
         const countDownDate = new Date("Nov 21, 2026 08:09:00").getTime();
-        const x = setInterval(function() {
+        const x = setInterval(function () {
             const now = new Date().getTime();
             const distance = countDownDate - now;
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -556,7 +1488,15 @@
 
         // Google Authentication Variables
         let currentUser = null;
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwvAqL-ovXLOBu6VVBpmeMlVr8ut3VEzm199n-50CbRqCAr6zu1nCs2BgOjjjos4NbN/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz4aY1uz9X68BxN5zR_Xf-E8h65zHyCO4fnEAyqDxIg5dVr-S5ZXYhR6WvJn6MZ8Wy_/exec';
+
+        // Security: Input Sanitization
+        function sanitizeInput(str) {
+            if (!str) return '';
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML.replace(/[<>"'/]/g, ''); // Basic strip tags & special chars
+        }
 
         // Handle Google Sign-In Response
         function handleCredentialResponse(response) {
@@ -567,7 +1507,7 @@
                 picture: credential.picture,
                 sub: credential.sub
             };
-            
+
             showUserInfo();
         }
 
@@ -575,7 +1515,7 @@
         function parseJwt(token) {
             const base64Url = token.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
             return JSON.parse(jsonPayload);
@@ -586,41 +1526,96 @@
             document.getElementById('auth-required').classList.add('hidden');
             document.getElementById('user-info').classList.remove('hidden');
             document.getElementById('rsvp-form-container').classList.remove('hidden');
-            
+
             document.getElementById('user-name').textContent = currentUser.name;
             document.getElementById('user-email').textContent = currentUser.email;
             document.getElementById('user-avatar').src = currentUser.picture;
         }
 
-        // Sign out function
-        document.getElementById('sign-out-btn').addEventListener('click', function() {
+        // Sign out / Reset function
+        document.getElementById('sign-out-btn').addEventListener('click', function () {
             currentUser = null;
             document.getElementById('auth-required').classList.remove('hidden');
+            document.getElementById('manual-guest-inputs').classList.add('hidden'); // Ensure manual is hidden
             document.getElementById('user-info').classList.add('hidden');
             document.getElementById('rsvp-form-container').classList.add('hidden');
             document.getElementById('rsvp-confirmation').classList.add('hidden');
+            // Clear manual inputs
+            document.getElementById('manual-name').value = '';
+            document.getElementById('manual-email').value = '';
         });
+
+        // Toggle Manual Guest Input
+        const guestToggleBtn = document.getElementById('guest-toggle-btn');
+        const manualInputsDiv = document.getElementById('manual-guest-inputs');
+        const rsvpFormContainer = document.getElementById('rsvp-form-container');
+        const authRequiredDiv = document.getElementById('auth-required');
+
+        if (guestToggleBtn) {
+            guestToggleBtn.addEventListener('click', function () {
+                // Show form container
+                rsvpFormContainer.classList.remove('hidden');
+
+                // Show manual inputs
+                manualInputsDiv.classList.remove('hidden');
+
+                // Hide Auth Required, but keep container logic
+                authRequiredDiv.classList.add('hidden');
+
+                // Scroll to form
+                rsvpFormContainer.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
 
         // RSVP Form Handler
         const rsvpForm = document.getElementById('rsvp-form');
         const submitBtn = document.getElementById('submit-btn');
 
-        rsvpForm.addEventListener('submit', function(e) {
+        rsvpForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            
-            if (!currentUser) {
-                alert('กรุณาเข้าสู่ระบบก่อนตอบรับ');
-                return;
+
+            // Honeypot Check
+            const honeypot = document.getElementById('website-url-rsvp');
+            if (honeypot && honeypot.value) {
+                console.warn('Bot detected.');
+                return; // Silent fail
             }
 
-            const guestCount = document.getElementById('guest-count').value;
+            let guestName = '';
+            let guestEmail = 'No Email';
+            let guestCount = document.getElementById('guest-count').value;
+
+            // Check if using Google Auth
+            if (currentUser) {
+                guestName = currentUser.name;
+                guestEmail = currentUser.email;
+            } else {
+                // Check Manual Inputs
+                const manualNameInput = document.getElementById('manual-name');
+                const manualEmailInput = document.getElementById('manual-email');
+
+                if (!manualNameInput || !manualNameInput.value.trim()) {
+                    alert('กรุณากรอกชื่อของคุณ');
+                    manualNameInput.focus();
+                    return;
+                }
+
+                guestName = manualNameInput.value.trim();
+                if (manualEmailInput && manualEmailInput.value.trim()) {
+                    guestEmail = manualEmailInput.value.trim();
+                }
+            }
 
             // Disable submit button and show loading state
             submitBtn.disabled = true;
             submitBtn.textContent = 'กำลังส่ง...';
 
-            // Use the iframe method with authenticated user data
-            submitViaIframe(currentUser.name, currentUser.email, guestCount);
+            // Sanitize inputs
+            guestName = sanitizeInput(guestName);
+            guestEmail = sanitizeInput(guestEmail);
+
+            // Use the iframe method with data
+            submitViaIframe(guestName, guestEmail, guestCount);
         });
 
         // Alternative submission method using hidden iframe
@@ -665,7 +1660,7 @@
                 document.getElementById('rsvp-confirmation').classList.remove('hidden');
             }, 2000);
         }
-        
+
         // Add to Calendar Link Generator
         function generateCalendarLink() {
             const title = encodeURIComponent('งานแต่งงานสุนีย์ & ศุภกิตติ์');
@@ -674,15 +1669,15 @@
             const endTime = '20261121T220000'; // 10:00 PM (covers whole day event)
             const details = encodeURIComponent('ร่วมแสดงความยินดีในวันสำคัญของเรา - #SuneeSupakitWedding');
             const location = encodeURIComponent('VIVACE WEDDING HALL ราชพฤกษ์ - 18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด นนทบุรี 11120'); // updated venue/address
-            
+
             const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startTime}/${endTime}&details=${details}&location=${location}`;
-            
+
             document.getElementById('add-to-calendar-link').href = googleCalendarUrl;
         }
 
         // Generate the link when the page loads
         // Payment modal JS: open/close, copy account number, and upload slip + data to Google Apps Script
-        (function() {
+        (function () {
             const payModal = document.getElementById('pay-modal');
             const openPay = document.getElementById('open-pay');
             const closePay = document.getElementById('close-pay');
@@ -707,22 +1702,22 @@
             if (closePay) closePay.addEventListener('click', hideModal);
 
             // Close when clicking backdrop
-            if (payModal) payModal.addEventListener('click', function(e) {
+            if (payModal) payModal.addEventListener('click', function (e) {
                 if (e.target === payModal) hideModal();
             });
 
             // Copy account number to clipboard
             if (copyBtn) {
-                copyBtn.addEventListener('click', function() {
+                copyBtn.addEventListener('click', function () {
                     const acct = (document.getElementById('account-number') || {}).textContent || '';
                     if (!acct) {
                         alert('ไม่มีเลขบัญชีที่สามารถคัดลอกได้');
                         return;
                     }
                     if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(acct.trim()).then(function() {
+                        navigator.clipboard.writeText(acct.trim()).then(function () {
                             alert('คัดลอกเลขบัญชีเรียบร้อย: ' + acct.trim());
-                        }).catch(function() {
+                        }).catch(function () {
                             alert('ไม่สามารถคัดลอกเลขบัญชีได้');
                         });
                     } else {
@@ -754,8 +1749,15 @@
 
             // Payment form submit handler - read file as base64 (if any) and send JSON via fetch
             if (paymentForm) {
-                paymentForm.addEventListener('submit', function(e) {
+                paymentForm.addEventListener('submit', function (e) {
                     e.preventDefault();
+
+                    // Honeypot Check
+                    const honeypot = document.getElementById('website-url-pay');
+                    if (honeypot && honeypot.value) {
+                        console.warn('Bot detected.');
+                        return;
+                    }
 
                     const amountEl = document.getElementById('amount');
                     const messageEl = document.getElementById('message');
@@ -766,13 +1768,13 @@
                     const amount = amountEl && amountEl.value ? amountEl.value.trim() : '';
                     if (!amount || Number(amount) <= 0) { alert('กรุณาระบุจำนวนเงินที่ถูกต้อง'); return; }
 
-                    // Prepare payload
+                    // Prepare payload with sanitization
                     const payload = {
                         action: 'payment',
-                        payerName: payerNameEl ? payerNameEl.value.trim() : '',
-                        payerEmail: payerEmailEl ? payerEmailEl.value.trim() : '',
-                        amount: amount,
-                        message: messageEl ? messageEl.value.trim() : '',
+                        payerName: payerNameEl ? sanitizeInput(payerNameEl.value.trim()) : '',
+                        payerEmail: payerEmailEl ? sanitizeInput(payerEmailEl.value.trim()) : '',
+                        amount: sanitizeInput(amount),
+                        message: messageEl ? sanitizeInput(messageEl.value.trim()) : '',
                         accountNumber: (document.getElementById('account-number') || {}).textContent || ''
                     };
 
@@ -780,37 +1782,61 @@
                         // Show simple sending state
                         if (progressWrap) { progressWrap.style.display = 'block'; progressPercent.textContent = 'กำลังส่ง...'; }
 
-                        fetch(scriptURL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        }).then(function(res) {
-                            if (!res.ok) throw new Error('Status ' + res.status);
-                            return res.text();
-                        }).then(function(txt) {
+                        // Create hidden iframe
+                        const iframeName = 'payment-frame-' + new Date().getTime();
+                        const iframe = document.createElement('iframe');
+                        iframe.style.display = 'none';
+                        iframe.name = iframeName;
+                        document.body.appendChild(iframe);
+
+                        // Create hidden form
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = scriptURL;
+                        form.target = iframeName;
+                        form.style.display = 'none';
+
+                        // Add all payload fields as hidden inputs
+                        for (const key in payload) {
+                            if (payload.hasOwnProperty(key)) {
+                                const input = document.createElement('input');
+                                input.type = 'hidden';
+                                input.name = key;
+                                input.value = payload[key];
+                                form.appendChild(input);
+                            }
+                        }
+
+                        document.body.appendChild(form);
+                        form.submit();
+
+                        // Emulate success callback (since we can't read response from cross-origin iframe)
+                        setTimeout(function () {
                             alert('อัพโหลดสลิปและแจ้งโอนเรียบร้อย ขอบคุณมากค่ะ');
                             paymentForm.reset();
                             if (progressWrap) progressWrap.style.display = 'none';
                             hideModal();
-                        }).catch(function(err) {
-                            console.error(err);
-                            alert('เกิดข้อผิดพลาดในการส่งข้อมูล โปรดลองอีกครั้ง');
-                            if (progressWrap) progressWrap.style.display = 'none';
-                        });
+
+                            // Clean up
+                            setTimeout(() => {
+                                document.body.removeChild(form);
+                                document.body.removeChild(iframe);
+                            }, 100);
+                        }, 2500); // Wait 2.5s to ensure submission
                     }
 
                     // If a file is selected, convert to base64 first
                     if (slipEl && slipEl.files && slipEl.files.length > 0) {
                         const file = slipEl.files[0];
                         const reader = new FileReader();
-                        reader.onload = function(evt) {
+                        reader.onload = function (evt) {
                             const dataUrl = evt.target.result;
                             // dataUrl like 'data:image/png;base64,....' - send full string
                             payload.slipDataUrl = dataUrl;
                             payload.slipName = file.name;
                             sendPayload();
                         };
-                        reader.onerror = function() {
+                        reader.onerror = function () {
                             alert('ไม่สามารถอ่านไฟล์สลิปได้');
                         };
                         reader.readAsDataURL(file);
@@ -827,4 +1853,5 @@
     </script>
 
 </body>
+
 </html>

@@ -23,8 +23,8 @@
  * - Who has access: Anyone
  */
 
-const SPREADSHEET_ID = 'REPLACE_WITH_SPREADSHEET_ID';
-const DRIVE_FOLDER_ID = 'REPLACE_WITH_DRIVE_FOLDER_ID'; // optional: leave as '' to save to root
+const SPREADSHEET_ID = '157lYB6x9qa86IQ4zDKcVg0B3Vrelw1kvkOMaSQw0pls';
+const DRIVE_FOLDER_ID = ''; // optional: leave as '' to save to root
 
 function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({status: 'ok', message: 'Apps Script running'})).setMimeType(ContentService.MimeType.JSON);
@@ -90,8 +90,8 @@ function handleRsvpSubmission(params, spreadsheet) {
       sheet = spreadsheet.insertSheet(sheetName);
       
       // Add headers
-      sheet.getRange(1, 1, 1, 3).setValues([['Date', 'GuestName', 'GuestCount']]);
-      sheet.getRange(1, 1, 1, 3).setFontWeight('bold');
+      sheet.getRange(1, 1, 1, 4).setValues([['Date', 'GuestName', 'GuestEmail', 'GuestCount']]);
+      sheet.getRange(1, 1, 1, 4).setFontWeight('bold');
     }
     
     // Get the next available row
@@ -100,12 +100,13 @@ function handleRsvpSubmission(params, spreadsheet) {
     // Prepare the data to insert
     let timestamp = new Date();
     let guestName = params.GuestName || 'Unknown Guest';
+    let guestEmail = params.GuestEmail || 'No Email';
     let guestCount = params.GuestCount || '1';
     
-    let rowData = [timestamp, guestName, guestCount];
+    let rowData = [timestamp, guestName, guestEmail, guestCount];
     
     // Insert the data into the sheet
-    sheet.getRange(newRow, 1, 1, 3).setValues([rowData]);
+    sheet.getRange(newRow, 1, 1, 4).setValues([rowData]);
     
     // Return success response
     return ContentService
@@ -230,8 +231,8 @@ function setupHeaders() {
     rsvpSheet = spreadsheet.insertSheet("Page1");
   }
   if (rsvpSheet.getLastRow() === 0) {
-    rsvpSheet.getRange(1, 1, 1, 3).setValues([['Date', 'GuestName', 'GuestCount']]);
-    const headerRange = rsvpSheet.getRange(1, 1, 1, 3);
+    rsvpSheet.getRange(1, 1, 1, 4).setValues([['Date', 'GuestName', 'GuestEmail', 'GuestCount']]);
+    const headerRange = rsvpSheet.getRange(1, 1, 1, 4);
     headerRange.setFontWeight('bold');
     headerRange.setBackground('#E8F0FE');
   }

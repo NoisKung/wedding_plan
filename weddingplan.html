@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Planner Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS (Animate On Scroll) Library for animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <!-- Chosen Palette: Romantic Blush -->
+    <!-- Application Structure Plan: The SPA is designed as a task-oriented dashboard. It uses a prominent tab-based navigation system to segment the planning process into manageable timeframes (e.g., 10-12 Months). This prevents user overload. A dynamic progress bar and summary statistics provide immediate feedback and motivation. The main content area displays tasks as interactive items. This structure transforms a static checklist into an engaging, user-friendly tool, making the complex planning process feel organized and achievable. -->
+    <!-- Visualization & Content Choices: Report Info: Hierarchical checklist. Goal: Organize and track progress. Viz/Presentation: Interactive HTML list items with custom checkbox styles. A dynamic progress bar (HTML/CSS) visualizes overall completion. Interaction: Clicking tabs filters the task list. Clicking a task toggles its 'completed' state, which visually updates the item (strikethrough, color change) and recalculates the progress bar and stats. Justification: This active feedback loop is more engaging and provides a clearer sense of accomplishment than a static list. Library/Method: Vanilla JS for all state management and interactivity, Tailwind CSS for a responsive, clean layout. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            background-color: #FEF7F7;
+            /* Light blush background */
+        }
+
+        .tab-active {
+            background-color: #D98B96;
+            /* Muted rose for active tab */
+            color: #FFFFFF;
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .task-item {
+            background-color: #FFFFFF;
+            border-left: 4px solid #F3D9DD;
+            /* Light pink border */
+        }
+
+        .task-item.completed {
+            background-color: #F9FAFB;
+            border-left-color: #A3D9A5;
+            /* Soft green for completed */
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #9CA3AF;
+        }
+
+        .task-item.completed .checkbox-icon {
+            background-color: #A3D9A5;
+            border-color: #A3D9A5;
+        }
+
+        .task-item.completed .checkbox-icon::after {
+            content: '✔';
+            color: white;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: bold;
+        }
+
+        .task-group-title {
+            color: #A36D76;
+            /* Darker rose for titles */
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #F3D9DD;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .progress-bar-fill {
+            background-color: #E8A0AA;
+            /* Main accent rose */
+        }
+    </style>
+</head>
+
+<body class="text-gray-700">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#8C5A63]">Wedding Checklist</h1>
+            <p class="text-lg text-gray-600 mt-2">คู่มือวางแผนเตรียมงานแต่งงานฉบับสมบูรณ์</p>
+        </header>
+
+        <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 mb-8 sticky top-4 z-10">
+            <h2 class="text-xl font-bold mb-3 text-[#8C5A63]">ภาพรวมความคืบหน้า</h2>
+            <div class="w-full bg-gray-200 rounded-full h-5">
+                <div id="progress-bar"
+                    class="progress-bar-fill h-5 rounded-full transition-all duration-500 flex items-center justify-center text-white text-xs font-bold"
+                    style="width: 0%">
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+            <div class="flex justify-between text-sm text-gray-600 mt-2">
+                <div class="flex items-center gap-4">
+                    <span>Let's get planning!</span>
+                    <div id="sync-status" class="flex items-center gap-2 text-xs">
+                        <span class="inline-block w-2 h-2 bg-green-500 rounded-full" id="sync-indicator"></span>
+                        <span id="sync-text">พร้อมใช้งาน</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="bg-[#D98B96] text-white px-3 py-1 rounded-md text-xs hover:bg-[#A36D76] transition-colors"
+                        onclick="exportToCSV()">
+                        📥 ส่งออก CSV
+                    </button>
+                    <button
+                        class="bg-[#8C5A63] text-white px-3 py-1 rounded-md text-xs hover:bg-[#A36D76] transition-colors"
+                        onclick="importFromCSV()">
+                        📤 นำเข้า CSV
+                    </button>
+                    <div>
+                        <span id="tasks-completed" class="font-bold">0</span>/<span id="tasks-total">0</span> Tasks
+                        Completed
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CSV Import/Export Panel -->
+        <div id="csv-import-area" class="hidden bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6">
+            <h3 class="text-lg font-bold text-[#8C5A63] mb-4">นำเข้าข้อมูลจากไฟล์ CSV</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">เลือกไฟล์ CSV:</label>
+                    <input type="file" id="csv-file-input" accept=".csv"
+                        class="w-full p-2 border border-gray-300 rounded-md text-sm">
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="processCSVImport()"
+                        class="bg-green-600 text-white px-4 py-2 rounded-md text-sm hover:bg-green-700 transition-colors">
+                        📤 นำเข้าข้อมูล
+                    </button>
+                    <button onclick="toggleCSVImport()"
+                        class="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600 transition-colors">
+                        ปิด
+                    </button>
+                </div>
+                <div class="p-3 bg-blue-50 border border-blue-200 rounded-md">
+                    <p class="text-sm text-blue-800"><strong>คำแนะนำ:</strong></p>
+                    <ul class="text-sm text-blue-700 mt-1 list-disc list-inside">
+                        <li>ไฟล์ CSV ต้องมีหัวคอลัมน์: Period, Group, Task, Completed, Available, Prepared By, Budget,
+                            Responsible, Notes</li>
+                        <li>ข้อมูลจะถูกอัปเดตตามชื่องานที่ตรงกัน</li>
+                        <li>คุณสามารถส่งออกข้อมูลปัจจุบันเป็น CSV เพื่อดูรูปแบบได้</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden file input for CSV import -->
+        <input type="file" id="hidden-csv-input" accept=".csv" style="display: none;">
+
+        <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+            <div id="tabs" class="flex flex-wrap gap-2 border-b border-gray-200 pb-4 mb-4">
+            </div>
+
+            <div id="task-container" class="min-h-[300px]">
+            </div>
+        </div>
+
+        <footer class="text-center mt-12 text-gray-500 text-sm">
+            <p>ขอให้การวางแผนวันสำคัญของคุณเต็มไปด้วยความสุข</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const weddingData = [
+            {
+                id: '10-12',
+                title: '10-12 เดือน',
+                groups: [
+                    {
+                        title: '1. กำหนดภาพรวมงานแต่ง',
+                        tasks: [
+                            { text: '1.1 หาฤกษ์แต่งงาน', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                            { text: '1.2 กำหนดงบประมาณ', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                            { text: '1.3 ร่างรายชื่อแขก (เบื้องต้น)', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                            { text: '1.4 กำหนดจำนวนแขก (ประมาณการ)', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                        ]
+                    },
+                    {
+                        title: '2. เลือกและจองสถานที่จัดงาน',
+                        tasks: [
+                            { text: '2.1 กำหนดประเภทสถานที่ (โบสถ์, โรงแรม, ริมทะเล, สวน, วัด)', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                            { text: '2.2 สำรวจตัวเลือกสถานที่', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                            { text: '2.3 ติดต่อและจองสถานที่ที่เลือกไว้ล่วงหน้า', completed: false, available: 'มี', preparedBy: 'สถานที่', budget: '', responsible: '', notes: '' },
+                        ]
+                    },
+                    {
+                        title: '3. จองผู้ให้บริการหลัก (ทีมงานในฝัน)',
+                        tasks: [
+                            { text: '3.1 เวดดิ้งแพลนเนอร์ (ถ้ามี)', completed: false, available: 'ไม่มี', preparedBy: 'ออแกไนซ์', budget: '', responsible: '', notes: '' },
+                            { text: '3.2 ช่างภาพและช่างวิดีโอ', completed: false, available: 'มี', preparedBy: 'ออแกไนซ์', budget: '', responsible: '', notes: '' },
+                        ]
+                    }
+                ]
+            },
+            {
+                id: '6-9',
+                title: '6-9 เดือน',
+                groups: [
+                    {
+                        title: '4. ออกแบบสไตล์งาน',
+                        tasks: [
+                            { text: '4.1 เลือกธีมงานและสี', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '5,000-10,000 บาท', responsible: 'เจ้าสาว', notes: 'เลือกตามสถานที่จัดงาน' },
+                            { text: '4.2 กำหนดรูปแบบงานเลี้ยง: เช้าเลี้ยงเที่ยง, บ่ายเลี้ยงเย็น, หรือเช้าเลี้ยงเย็น', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '-', responsible: 'ทั้งคู่', notes: 'ขึ้นกับงบประมาณ' },
+                        ]
+                    },
+                    {
+                        title: '5. เลือกแหวนแต่งงาน',
+                        tasks: [
+                            { text: '5.1 สำรวจแบบแหวน', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                            { text: '5.2 สั่งทำ/ซื้อแหวน', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                        ]
+                    },
+                    {
+                        title: '6. จองผู้ให้บริการเพิ่มเติม',
+                        tasks: [
+                            { text: '6.1 ร้านชุดแต่งงาน (ทั้งเช่าและสั่งตัด)', completed: false, available: 'มี', preparedBy: 'ออแกไนซ์', budget: '15,000-50,000 บาท', responsible: '', notes: 'จองล่วงหน้า 3-6 เดือน' },
+                            { text: '6.2 ช่างแต่งหน้าทำผม', completed: false, available: 'มี', preparedBy: 'ออแกไนซ์', budget: '5,000-15,000 บาท', responsible: '', notes: 'ลองทำก่อนวันงาน' },
+                            { text: '6.3 วงดนตรี / DJ', completed: false, available: 'มี', preparedBy: 'ออแกไนซ์', budget: '10,000-30,000 บาท', responsible: '', notes: '' },
+                            { text: '6.4 พิธีกร', completed: false, available: 'มี', preparedBy: 'ออแกไนซ์', budget: '3,000-8,000 บาท', responsible: '', notes: '' },
+                        ]
+                    },
+                    {
+                        title: '7. เลือกแบบการ์ดเชิญและของชำร่วย',
+                        tasks: [
+                            { text: '7.1 สำรวจแบบการ์ด', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '3-10 บาท/ใบ', responsible: '', notes: 'สั่งทำล่วงหน้า 1-2 เดือน' },
+                            { text: '7.2 สำรวจของชำร่วย', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '50-500 บาท/ชิ้น', responsible: '', notes: 'เลือกตามงบประมาณ' },
+                        ]
+                    }
+                ]
+            },
+            {
+                id: '3-5',
+                title: '3-5 เดือน',
+                groups: [
+                    {
+                        title: '8. จัดการเรื่องแขก',
+                        tasks: [
+                            { text: '8.1 สรุปรายชื่อแขก', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                            { text: '8.2 วางแผนการเดินทางและที่พักสำหรับแขก', completed: false, available: 'มี', preparedBy: 'บ่าวสาว', budget: '', responsible: '', notes: '' },
+                        ]
+                    },
+                    {
+                        title: '9. จัดการเรื่องอาหารและเครื่องดื่ม',
+                        tasks: [
+                            { text: '9.1 นัดชิมอาหารกับทางสถานที่', completed: false, available: 'มี', preparedBy: 'สถานที่', budget: '', responsible: '', notes: '' },
+                            { text: '9.2 สรุปเมนูอาหารและเครื่องดื่ม', completed: false, available: 'มี', preparedBy: 'สถานที่', budget: '', responsible: '', notes: '' },
+                            { text: '9.3 เลือกประเภทเครื่องดื่ม (แชมเปญ, ไวน์, เหล้า, เบียร์)', completed: false, available: 'มี', preparedBy: 'สถานที่', budget: '', responsible: '', notes: '' },
+                        ]
+                    },
+                    {
+                        title: '10. ดำเนินการเรื่องเอกสารและการผลิต',
+                        tasks: [
+                            { text: '10.1 สั่งทำการ์ดเชิญและของชำร่วย', completed: false },
+                            { text: '10.2 วางแผนวันจดทะเบียนสมรส', completed: false },
+                        ]
+                    },
+                    { title: '11. ถ่ายพรีเวดดิ้ง (ถ้ามี)', tasks: [{ text: 'นัดหมายและถ่ายพรีเวดดิ้ง', completed: false }] },
+                    { title: '12. คุยรายละเอียดลำดับพิธีการ', tasks: [{ text: 'ประชุมสรุปลำดับพิธีการทั้งหมด', completed: false }] },
+                ]
+            },
+            {
+                id: '1-2m',
+                title: '1-2 เดือน',
+                groups: [
+                    { title: '13. การ์ดและของชำร่วย', tasks: [{ text: '13.1 เริ่มแจกการ์ดเชิญ', completed: false }, { text: '13.2 ตรวจสอบความเรียบร้อยของชำร่วย', completed: false }] },
+                    { title: '14. การเตรียมตัวของบ่าวสาว', tasks: [{ text: '14.1 ลองชุดแต่งงานรอบสุดท้าย และนัดวันรับชุด', completed: false }, { text: '14.2 ลองแต่งหน้าทำผม', completed: false }] },
+                    { title: '15. การประสานงาน', tasks: [{ text: '15.1 นัดคุยสรุปกับทีมงานทั้งหมด', completed: false }] },
+                    { title: '16. เตรียมพิธีการ', tasks: [{ text: '16.1 เตรียมของสำหรับพิธีต่างๆ: ของรับไหว้, อุปกรณ์หลั่งน้ำสังข์, พานขันหมาก', completed: false }, { text: '16.2 เลือกเพลงประกอบ: เพลงเปิดตัว, ตัดเค้ก, บรรเลงในงาน', completed: false }] },
+                ]
+            },
+            {
+                id: '1-2w',
+                title: '1-2 สัปดาห์',
+                groups: [
+                    { title: '17. การยืนยัน', tasks: [{ text: '17.1 ยืนยันจำนวนแขกสุดท้ายกับสถานที่จัดงาน', completed: false }, { text: '17.2 ยืนยันคิวกับทีมงานทั้งหมดอีกครั้ง', completed: false }] },
+                    { title: '18. การเตรียมงาน', tasks: [{ text: '18.1 เตรียมสคริปต์สำหรับพิธีกรและคำกล่าวขอบคุณแขก', completed: false }, { text: '18.2 จัดเตรียมผังที่นั่ง (ถ้ามี)', completed: false }, { text: '18.3 เตรียมซองสำหรับค่าใช้จ่ายทีมงานในวันงาน', completed: false }] },
+                    { title: '19. การดูแลตัวเอง', tasks: [{ text: '19.1 ไปทำสปาหรือนวดผ่อนคลาย', completed: false }] },
+                ]
+            },
+            {
+                id: '1d',
+                title: '1 วันก่อนงาน',
+                groups: [
+                    { title: '20. นำของใช้ที่จำเป็นไปไว้ที่สถานที่จัดงาน', tasks: [{ text: 'นำชุด, ของชำร่วย, กล่องรับซอง ไปเตรียมไว้', completed: false }] },
+                    { title: '21. ยืนยันคิวงานกับทีมงานอีกครั้ง', tasks: [{ text: 'โทรคอนเฟิร์มทีมงานหลักทุกคน', completed: false }] },
+                    { title: '22. พักผ่อนให้เพียงพอ!', tasks: [{ text: 'เข้านอนแต่หัวค่ำ', completed: false }] },
+                ]
+            },
+            {
+                id: 'w-day',
+                title: 'วันแต่งงาน',
+                groups: [
+                    { title: '23. มีความสุขและสนุกกับวันพิเศษของคุณให้เต็มที่!', tasks: [{ text: 'Enjoy your big day!', completed: false }] },
+                ]
+            },
+            {
+                id: 'after',
+                title: 'หลังวันงาน',
+                groups: [
+                    { title: '24. ชำระค่าใช้จ่ายส่วนที่เหลือ', tasks: [{ text: 'เคลียร์ค่าใช้จ่ายกับผู้ให้บริการทั้งหมด', completed: false }] },
+                    { title: '25. ส่งคืนชุดและอุปกรณ์ที่เช่ามา', tasks: [{ text: 'นำชุดและของที่เช่าไปคืน', completed: false }] },
+                    { title: '26. ส่งการ์ดขอบคุณ', tasks: [{ text: 'ส่งการ์ดขอบคุณแขกและผู้ใหญ่ที่ให้ความช่วยเหลือ', completed: false }] },
+                ]
+            }
+        ];
+
+        const tabsContainer = document.getElementById('tabs');
+        const taskContainer = document.getElementById('task-container');
+        let currentTabId = weddingData[0].id;
+
+        function renderTabs() {
+            tabsContainer.innerHTML = '';
+            weddingData.forEach(period => {
+                const tabButton = document.createElement('button');
+                tabButton.textContent = period.title;
+                tabButton.className = `px-3 py-2 text-sm sm:text-base rounded-lg transition-all duration-300 transform hover:scale-105 ${currentTabId === period.id ? 'tab-active' : 'hover:bg-rose-100'}`;
+                tabButton.onclick = () => {
+                    currentTabId = period.id;
+                    render();
+                };
+                tabsContainer.appendChild(tabButton);
+            });
+        }
+
+        function renderTasks() {
+            taskContainer.innerHTML = '';
+            const currentPeriod = weddingData.find(p => p.id === currentTabId);
+            if (currentPeriod) {
+                currentPeriod.groups.forEach(group => {
+                    const groupTitle = document.createElement('h3');
+                    groupTitle.className = 'task-group-title';
+                    groupTitle.textContent = group.title;
+                    taskContainer.appendChild(groupTitle);
+
+                    const taskList = document.createElement('ul');
+                    taskList.className = 'space-y-3 mb-6';
+                    group.tasks.forEach(task => {
+                        const listItem = document.createElement('li');
+                        listItem.className = `task-item flex items-center p-4 rounded-lg cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md hover:translate-y-[-2px] ${task.completed ? 'completed' : ''}`;
+                        listItem.onclick = (e) => {
+                            // Only toggle task if clicking on checkbox or task text, not on input fields
+                            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
+                                toggleTask(currentPeriod.id, group.title, task.text);
+                            }
+                        };
+
+                        const checkbox = document.createElement('div');
+                        checkbox.className = 'checkbox-icon flex-shrink-0 w-5 h-5 border-2 border-gray-300 rounded-md mr-4 flex items-center justify-center transition-colors duration-200';
+
+                        const taskContent = document.createElement('div');
+                        taskContent.className = 'flex-grow';
+
+                        const taskText = document.createElement('div');
+                        taskText.textContent = task.text;
+                        taskText.className = 'task-text font-medium mb-3';
+
+                        const taskDetails = document.createElement('div');
+                        taskDetails.className = 'grid grid-cols-1 md:grid-cols-5 gap-3 text-sm';
+
+                        // Available field (มี/ไม่มี)
+                        const availableDiv = document.createElement('div');
+                        availableDiv.innerHTML = `
+                            <label class="block text-xs font-medium text-gray-500 mb-1">มี/ไม่มี:</label>
+                            <select class="w-full p-1 border border-gray-300 rounded text-xs" onchange="updateTaskField('${currentPeriod.id}', '${group.title}', '${task.text}', 'available', this.value)">
+                                <option value="มี" ${(task.available || 'มี') === 'มี' ? 'selected' : ''}>มี</option>
+                                <option value="ไม่มี" ${(task.available || 'มี') === 'ไม่มี' ? 'selected' : ''}>ไม่มี</option>
+                            </select>
+                        `;
+
+                        // Prepared By field (ผู้จัดเตรียม)
+                        const preparedByDiv = document.createElement('div');
+                        preparedByDiv.innerHTML = `
+                            <label class="block text-xs font-medium text-gray-500 mb-1">ผู้จัดเตรียม:</label>
+                            <select class="w-full p-1 border border-gray-300 rounded text-xs" onchange="updateTaskField('${currentPeriod.id}', '${group.title}', '${task.text}', 'preparedBy', this.value)">
+                                <option value="บ่าวสาว" ${(task.preparedBy || 'บ่าวสาว') === 'บ่าวสาว' ? 'selected' : ''}>บ่าวสาว</option>
+                                <option value="ออแกไนซ์" ${(task.preparedBy || 'บ่าวสาว') === 'ออแกไนซ์' ? 'selected' : ''}>ออแกไนซ์</option>
+                                <option value="สถานที่" ${(task.preparedBy || 'บ่าวสาว') === 'สถานที่' ? 'selected' : ''}>สถานที่</option>
+                            </select>
+                        `;
+
+                        // Budget field (งบประมาณ)
+                        const budgetDiv = document.createElement('div');
+                        budgetDiv.innerHTML = `
+                            <label class="block text-xs font-medium text-gray-500 mb-1">งบประมาณ:</label>
+                            <input type="text" class="w-full p-1 border border-gray-300 rounded text-xs" 
+                                   value="${task.budget || ''}" 
+                                   placeholder="เช่น 10,000 บาท"
+                                   onchange="updateTaskField('${currentPeriod.id}', '${group.title}', '${task.text}', 'budget', this.value)">
+                        `;
+
+                        // Responsible field (ผู้รับผิดชอบ)
+                        const responsibleDiv = document.createElement('div');
+                        responsibleDiv.innerHTML = `
+                            <label class="block text-xs font-medium text-gray-500 mb-1">ผู้รับผิดชอบ:</label>
+                            <input type="text" class="w-full p-1 border border-gray-300 rounded text-xs" 
+                                   value="${task.responsible || ''}" 
+                                   placeholder="ชื่อผู้รับผิดชอบ"
+                                   onchange="updateTaskField('${currentPeriod.id}', '${group.title}', '${task.text}', 'responsible', this.value)">
+                        `;
+
+                        // Notes field (หมายเหตุ)
+                        const notesDiv = document.createElement('div');
+                        notesDiv.innerHTML = `
+                            <label class="block text-xs font-medium text-gray-500 mb-1">หมายเหตุ:</label>
+                            <input type="text" class="w-full p-1 border border-gray-300 rounded text-xs" 
+                                   value="${task.notes || ''}" 
+                                   placeholder="หมายเหตุเพิ่มเติม"
+                                   onchange="updateTaskField('${currentPeriod.id}', '${group.title}', '${task.text}', 'notes', this.value)">
+                        `;
+
+                        taskDetails.appendChild(availableDiv);
+                        taskDetails.appendChild(preparedByDiv);
+                        taskDetails.appendChild(budgetDiv);
+                        taskDetails.appendChild(responsibleDiv);
+                        taskDetails.appendChild(notesDiv);
+
+                        taskContent.appendChild(taskText);
+                        taskContent.appendChild(taskDetails);
+
+                        listItem.appendChild(checkbox);
+                        listItem.appendChild(taskContent);
+                        taskList.appendChild(listItem);
+                    });
+                    taskContainer.appendChild(taskList);
+                });
+            }
+        }
+
+        function toggleTask(periodId, groupTitle, taskText) {
+            const period = weddingData.find(p => p.id === periodId);
+            if (period) {
+                const group = period.groups.find(g => g.title === groupTitle);
+                if (group) {
+                    const task = group.tasks.find(t => t.text === taskText);
+                    if (task) {
+                        task.completed = !task.completed;
+                        // Save to localStorage
+                        localStorage.setItem('weddingPlanData', JSON.stringify(weddingData));
+                        render();
+                    }
+                }
+            }
+        }
+
+        function updateProgress() {
+            const allTasks = weddingData.flatMap(p => p.groups.flatMap(g => g.tasks));
+            const totalTasks = allTasks.length;
+            const completedTasks = allTasks.filter(t => t.completed).length;
+            const percentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${Math.round(percentage)}%`;
+
+            if (percentage < 40) {
+                progressText.classList.add('text-gray-800');
+                progressText.classList.remove('text-white');
+            } else {
+                progressText.classList.remove('text-gray-800');
+                progressText.classList.add('text-white');
+            }
+
+            document.getElementById('tasks-completed').textContent = completedTasks;
+            document.getElementById('tasks-total').textContent = totalTasks;
+        }
+
+        function updateTaskField(periodId, groupTitle, taskText, fieldName, value) {
+            const period = weddingData.find(p => p.id === periodId);
+            if (period) {
+                const group = period.groups.find(g => g.title === groupTitle);
+                if (group) {
+                    const task = group.tasks.find(t => t.text === taskText);
+                    if (task) {
+                        task[fieldName] = value;
+                        // Save to localStorage
+                        localStorage.setItem('weddingPlanData', JSON.stringify(weddingData));
+                    }
+                }
+            }
+        }
+
+        function render() {
+            renderTabs();
+            renderTasks();
+            updateProgress();
+
+        }
+
+        // Load saved data on page load
+        function loadSavedData() {
+            const savedData = localStorage.getItem('weddingPlanData');
+            if (savedData) {
+                try {
+                    const parsedData = JSON.parse(savedData);
+                    // Merge saved data with default structure
+                    parsedData.forEach(savedPeriod => {
+                        const defaultPeriod = weddingData.find(p => p.id === savedPeriod.id);
+                        if (defaultPeriod) {
+                            savedPeriod.groups.forEach(savedGroup => {
+                                const defaultGroup = defaultPeriod.groups.find(g => g.title === savedGroup.title);
+                                if (defaultGroup) {
+                                    savedGroup.tasks.forEach(savedTask => {
+                                        const defaultTask = defaultGroup.tasks.find(t => t.text === savedTask.text);
+                                        if (defaultTask) {
+                                            Object.assign(defaultTask, savedTask);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error loading saved data:', error);
+                }
+            }
+        }
+
+        // CSV Import/Export Functions
+
+        function exportToCSV() {
+            // Prepare CSV data
+            const csvData = [
+                ['Period', 'Group', 'Task', 'Completed', 'Available', 'Prepared By', 'Budget', 'Responsible', 'Notes']
+            ];
+
+            weddingData.forEach(period => {
+                period.groups.forEach(group => {
+                    group.tasks.forEach(task => {
+                        csvData.push([
+                            period.title,
+                            group.title,
+                            task.text,
+                            task.completed ? 'Yes' : 'No',
+                            task.available || 'มี',
+                            task.preparedBy || 'บ่าวสาว',
+                            task.budget || '',
+                            task.responsible || '',
+                            task.notes || ''
+                        ]);
+                    });
+                });
+            });
+
+            // Convert to CSV string
+            const csvContent = csvData.map(row =>
+                row.map(field => `"${String(field).replace(/"/g, '""')}"`)
+                    .join(',')
+            ).join('\n');
+
+            // Create and download file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            link.setAttribute('href', url);
+            link.setAttribute('download', `Wedding-Planner-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            updateSyncStatus('ส่งออกสำเร็จ', 'green');
+            setTimeout(() => {
+                updateSyncStatus('พร้อมใช้งาน', 'green');
+            }, 2000);
+        }
+
+        function importFromCSV() {
+            document.getElementById('hidden-csv-input').click();
+        }
+
+        function toggleCSVImport() {
+            const area = document.getElementById('csv-import-area');
+            area.classList.toggle('hidden');
+        }
+
+        function processCSVImport() {
+            const fileInput = document.getElementById('csv-file-input');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('กรุณาเลือกไฟล์ CSV');
+                return;
+            }
+
+            updateSyncStatus('กำลังนำเข้าข้อมูล...', 'yellow');
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const csv = e.target.result;
+                    const lines = csv.split('\n');
+
+                    if (lines.length < 2) {
+                        alert('ไฟล์ CSV ไม่มีข้อมูล');
+                        updateSyncStatus('พร้อมใช้งาน', 'green');
+                        return;
+                    }
+
+                    // Parse CSV
+                    const headers = parseCSVLine(lines[0]);
+                    const expectedHeaders = ['Period', 'Group', 'Task', 'Completed', 'Available', 'Prepared By', 'Budget', 'Responsible', 'Notes'];
+
+                    // Check headers
+                    if (!expectedHeaders.every(header => headers.includes(header))) {
+                        alert('ไฟล์ CSV ไม่มีหัวคอลัมน์ที่ถูกต้อง\nต้องมี: ' + expectedHeaders.join(', '));
+                        updateSyncStatus('พร้อมใช้งาน', 'green');
+                        return;
+                    }
+
+                    // Process data
+                    let importedCount = 0;
+                    for (let i = 1; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        if (!line) continue;
+
+                        const values = parseCSVLine(line);
+                        if (values.length < expectedHeaders.length) continue;
+
+                        const rowData = {};
+                        headers.forEach((header, index) => {
+                            rowData[header] = values[index] || '';
+                        });
+
+                        // Find and update task
+                        const periodData = weddingData.find(p => p.title === rowData.Period);
+                        if (periodData) {
+                            const groupData = periodData.groups.find(g => g.title === rowData.Group);
+                            if (groupData) {
+                                const task = groupData.tasks.find(t => t.text === rowData.Task);
+                                if (task) {
+                                    task.completed = rowData.Completed === 'Yes';
+                                    task.available = rowData.Available || 'มี';
+                                    task.preparedBy = rowData['Prepared By'] || 'บ่าวสาว';
+                                    task.budget = rowData.Budget || '';
+                                    task.responsible = rowData.Responsible || '';
+                                    task.notes = rowData.Notes || '';
+                                    importedCount++;
+                                }
+                            }
+                        }
+                    }
+
+                    // Save and refresh
+                    localStorage.setItem('weddingPlanData', JSON.stringify(weddingData));
+                    render();
+
+                    updateSyncStatus('นำเข้าสำเร็จ', 'green');
+                    alert(`นำเข้าข้อมูลสำเร็จ ${importedCount} รายการ`);
+
+                    // Hide import area
+                    toggleCSVImport();
+
+                    setTimeout(() => {
+                        updateSyncStatus('พร้อมใช้งาน', 'green');
+                    }, 2000);
+
+                } catch (error) {
+                    console.error('Error importing CSV:', error);
+                    alert('เกิดข้อผิดพลาดในการนำเข้าข้อมูล');
+                    updateSyncStatus('พร้อมใช้งาน', 'green');
+                }
+            };
+
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+
+                if (char === '"') {
+                    if (inQuotes && line[i + 1] === '"') {
+                        current += '"';
+                        i++; // Skip next quote
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+
+            result.push(current.trim());
+            return result;
+        }
+
+        function updateSyncStatus(text, color) {
+            const indicator = document.getElementById('sync-indicator');
+            const syncText = document.getElementById('sync-text');
+
+            const colors = {
+                green: 'bg-green-500',
+                yellow: 'bg-yellow-500',
+                red: 'bg-red-500',
+                gray: 'bg-gray-400'
+            };
+
+            indicator.className = `inline-block w-2 h-2 rounded-full ${colors[color] || colors.gray}`;
+            syncText.textContent = text;
+        }
+
+        // Add CSV import functionality to hidden input
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
+            render();
+
+            // Setup CSV file input handler
+            const hiddenInput = document.getElementById('hidden-csv-input');
+            hiddenInput.addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    toggleCSVImport();
+                    document.getElementById('csv-file-input').files = e.target.files;
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
