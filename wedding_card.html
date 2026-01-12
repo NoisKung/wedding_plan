@@ -1188,6 +1188,300 @@
                 display: none;
             }
         }
+
+        /* ================================================
+           DARK MODE - Sweet & Romantic Wedding Theme
+           Color Palette: Rose Gold, Champagne, Dusty Rose, Blush
+           ================================================ */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --c-rose-gold: #E8B4B8;
+                --c-blush: #F4A5A5;
+                --c-champagne: #D4C4B0;
+                --c-cream-dark: #2D2226;
+                --c-text-dark: #F5E6E8;
+                --c-card-bg: #3D2F33;
+                --c-card-border: rgba(232, 180, 184, 0.2);
+                --c-soft-rose: #F5D6D8;
+            }
+
+            /* Body and main backgrounds */
+            body,
+            .font-noto,
+            .font-display {
+                background-color: var(--c-cream-dark) !important;
+                color: var(--c-text-dark) !important;
+                background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E8B4B8' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+            }
+
+            .main-bg {
+                background-color: var(--c-cream-dark) !important;
+            }
+
+            /* Text colors - Warm tones */
+            .dark-text,
+            .accent-text {
+                color: var(--c-text-dark) !important;
+            }
+
+            .text-gray-500,
+            .text-gray-600 {
+                color: #C4A99A !important;
+            }
+
+            .einv-section,
+            .einv-message-text,
+            .einv-timeline-desc,
+            .einv-venue-name,
+            .einv-section-title,
+            .einv-success-title {
+                color: var(--c-text-dark) !important;
+            }
+
+            /* Accent colors - Blush & Rose Gold */
+            .einv-hero-names,
+            .einv-schedule-note,
+            .einv-footer-heart,
+            .accent-text {
+                color: var(--c-blush) !important;
+            }
+
+            .einv-hero-tagline,
+            .einv-timeline-time,
+            .highlight-text {
+                color: var(--c-champagne) !important;
+            }
+
+            /* Cards and containers - Warm card backgrounds */
+            .bg-white,
+            .einv-message-card,
+            .einv-timeline-content,
+            .einv-venue-card,
+            .einv-rsvp-card {
+                background-color: var(--c-card-bg) !important;
+                border-color: var(--c-card-border) !important;
+                box-shadow: 0 10px 30px rgba(45, 34, 38, 0.4) !important;
+            }
+
+            /* Navigation - Warm dark */
+            .einv-nav {
+                background: rgba(45, 34, 38, 0.95) !important;
+                border-bottom-color: var(--c-card-border) !important;
+            }
+
+            .einv-nav-link {
+                color: var(--c-soft-rose) !important;
+            }
+
+            .einv-nav-link:hover {
+                color: var(--c-blush) !important;
+                background: rgba(244, 165, 165, 0.1) !important;
+            }
+
+            /* Hero section */
+            .einv-hero-date {
+                background: rgba(232, 180, 184, 0.12) !important;
+                color: var(--c-text-dark) !important;
+            }
+
+            .einv-paper-bg,
+            .einv-emboss-lines {
+                background: transparent !important;
+            }
+
+            .einv-paper-bg::before,
+            .einv-emboss-lines::after {
+                opacity: 0.3 !important;
+            }
+
+            /* Buttons - Blush tones */
+            .einv-btn-primary {
+                background: var(--c-blush) !important;
+                box-shadow: 0 4px 12px rgba(244, 165, 165, 0.35) !important;
+            }
+
+            .einv-btn-secondary {
+                background: rgba(212, 196, 176, 0.15) !important;
+                color: var(--c-champagne) !important;
+                border-color: rgba(212, 196, 176, 0.4) !important;
+            }
+
+            /* Forms - Warm borders */
+            .einv-input,
+            .einv-select {
+                background: var(--c-card-bg) !important;
+                border-color: rgba(232, 180, 184, 0.3) !important;
+                color: var(--c-text-dark) !important;
+            }
+
+            .einv-input::placeholder {
+                color: #9E8578 !important;
+            }
+
+            .einv-label {
+                color: var(--c-text-dark) !important;
+            }
+
+            .einv-radio-label {
+                border-color: rgba(232, 180, 184, 0.3) !important;
+                color: var(--c-text-dark) !important;
+            }
+
+            .einv-radio-label:hover {
+                background: rgba(232, 180, 184, 0.1) !important;
+            }
+
+            .einv-radio-label.selected {
+                background: rgba(244, 165, 165, 0.15) !important;
+                border-color: var(--c-blush) !important;
+                color: var(--c-blush) !important;
+            }
+
+            /* Timeline - Rose accents */
+            .einv-timeline-dot {
+                background: var(--c-blush) !important;
+                box-shadow: 0 0 0 4px rgba(244, 165, 165, 0.2) !important;
+            }
+
+            /* Footer - Deep romantic */
+            .einv-footer {
+                background: #231A1D !important;
+            }
+
+            .einv-footer-text {
+                color: var(--c-soft-rose) !important;
+            }
+
+            /* Countdown - Warm romantic */
+            #countdown>div {
+                background: rgba(61, 47, 51, 0.8) !important;
+                border-color: rgba(232, 180, 184, 0.25) !important;
+            }
+
+            #countdown .highlight-text {
+                color: var(--c-blush) !important;
+            }
+
+            /* Modal - Warm dark */
+            .modal {
+                background: var(--c-card-bg) !important;
+                color: var(--c-text-dark) !important;
+            }
+
+            .modal-header h4 {
+                color: var(--c-text-dark) !important;
+            }
+
+            #close-pay:hover {
+                background: rgba(232, 180, 184, 0.1) !important;
+            }
+
+            .account-line {
+                background: rgba(232, 180, 184, 0.08) !important;
+                color: var(--c-text-dark) !important;
+            }
+
+            .account-line span {
+                color: var(--c-champagne) !important;
+            }
+
+            #payment-form label {
+                color: var(--c-text-dark) !important;
+            }
+
+            #payment-form input,
+            #payment-form textarea {
+                background: rgba(232, 180, 184, 0.05) !important;
+                border-color: rgba(232, 180, 184, 0.3) !important;
+                color: var(--c-text-dark) !important;
+            }
+
+            #copy-account {
+                background: rgba(232, 180, 184, 0.1) !important;
+                border-color: rgba(232, 180, 184, 0.25) !important;
+                color: var(--c-soft-rose) !important;
+            }
+
+            #copy-account:hover {
+                background: rgba(232, 180, 184, 0.18) !important;
+            }
+
+            .modal-footer-note {
+                color: #9E8578 !important;
+                border-top-color: rgba(232, 180, 184, 0.15) !important;
+            }
+
+            #payment-progress {
+                background: rgba(16, 185, 129, 0.1) !important;
+                border-color: rgba(16, 185, 129, 0.2) !important;
+            }
+
+            /* Pay button - Keep amber/gold for gifting */
+            .pay-btn {
+                box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4) !important;
+            }
+
+            /* Language Switcher - Warm romantic */
+            .lang-btn {
+                background: rgba(61, 47, 51, 0.95) !important;
+                border-color: rgba(232, 180, 184, 0.4) !important;
+                color: var(--c-soft-rose) !important;
+            }
+
+            .lang-btn:hover {
+                border-color: var(--c-blush) !important;
+            }
+
+            .lang-dropdown {
+                background: rgba(61, 47, 51, 0.98) !important;
+                border-color: rgba(232, 180, 184, 0.3) !important;
+            }
+
+            .lang-option {
+                color: var(--c-soft-rose) !important;
+            }
+
+            .lang-option:hover {
+                background: rgba(244, 165, 165, 0.12) !important;
+                color: var(--c-blush) !important;
+            }
+
+            .lang-option.active {
+                background: rgba(244, 165, 165, 0.18) !important;
+                color: var(--c-blush) !important;
+            }
+
+            /* Venue address */
+            .einv-venue-address {
+                color: #C4A99A !important;
+            }
+
+            /* Success state */
+            .einv-success-icon {
+                background: rgba(16, 185, 129, 0.15) !important;
+            }
+
+            .einv-success-text {
+                color: #C4A99A !important;
+            }
+
+            /* Icons - Rose gold accent */
+            div.rounded-full.bg-gray-100 {
+                background-color: rgba(61, 47, 51, 0.8) !important;
+                border-color: var(--c-rose-gold) !important;
+            }
+
+            /* QR Code - Keep white for scanability */
+            .qr-img {
+                border-color: rgba(232, 180, 184, 0.3) !important;
+                background: #fff !important;
+            }
+
+            /* Scroll down arrow */
+            .animate-bounce-slow svg {
+                color: var(--c-champagne) !important;
+            }
+        }
     </style>
 </head>
 
@@ -1589,8 +1883,11 @@
                         <input type="text" id="website-url-pay" name="website-url" autocomplete="off" tabindex="-1">
                     </div>
 
-                    <p class="mt-1 account-line">ชื่อบัญชี: สุนีย์ มงคลวรกิจชัย<br>ธนาคาร: ธนาคาร
-                        (ตัวอย่าง)<br>เลขที่บัญชี: <span id="account-number">012-3-45678-9</span></p>
+                    <p class="mt-1 account-line">ชื่อบัญชี: นางสาวสุนีย์ มงคลวรกิจชัย และ/หรือ นายศุภกิตติ์
+                        สุจริตชีววงศ์
+                        <br>ธนาคาร: ธนาคาร
+                        (ตัวอย่าง)<br>เลขที่บัญชี: <span id="account-number">012-3-45678-9</span>
+                    </p>
 
                     <div class="flex items-center justify-between">
                         <div class="flex space-x-2">
@@ -1658,12 +1955,31 @@
         let currentUser = null;
         const scriptURL = 'https://script.google.com/macros/s/AKfycbz4aY1uz9X68BxN5zR_Xf-E8h65zHyCO4fnEAyqDxIg5dVr-S5ZXYhR6WvJn6MZ8Wy_/exec';
 
-        // Security: Input Sanitization
-        function sanitizeInput(str) {
+        // Security: Input Sanitization (Enhanced)
+        function sanitizeInput(str, maxLength = 500) {
             if (!str) return '';
+            // Truncate to max length first
+            str = String(str).substring(0, maxLength);
+            // Create text node to escape HTML entities
             const temp = document.createElement('div');
             temp.textContent = str;
-            return temp.innerHTML.replace(/[<>"'/]/g, ''); // Basic strip tags & special chars
+            // Remove potentially dangerous characters
+            return temp.innerHTML.replace(/[<>"'`\\]/g, '').trim();
+        }
+
+        // Security: File validation
+        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+        const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
+
+        function validateFile(file) {
+            if (!file) return { valid: true };
+            if (file.size > MAX_FILE_SIZE) {
+                return { valid: false, error: 'ไฟล์มีขนาดใหญ่เกินไป (สูงสุด 5MB)' };
+            }
+            if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+                return { valid: false, error: 'ประเภทไฟล์ไม่ถูกต้อง (รองรับ JPG, PNG, GIF, WebP, PDF)' };
+            }
+            return { valid: true };
         }
 
         // Handle Google Sign-In Response
@@ -1993,15 +2309,23 @@
                         }, 2500); // Wait 2.5s to ensure submission
                     }
 
-                    // If a file is selected, convert to base64 first
+                    // If a file is selected, validate and convert to base64
                     if (slipEl && slipEl.files && slipEl.files.length > 0) {
                         const file = slipEl.files[0];
+
+                        // Validate file before processing
+                        const fileValidation = validateFile(file);
+                        if (!fileValidation.valid) {
+                            alert(fileValidation.error);
+                            return;
+                        }
+
                         const reader = new FileReader();
                         reader.onload = function (evt) {
                             const dataUrl = evt.target.result;
                             // dataUrl like 'data:image/png;base64,....' - send full string
                             payload.slipDataUrl = dataUrl;
-                            payload.slipName = file.name;
+                            payload.slipName = sanitizeInput(file.name, 100);
                             sendPayload();
                         };
                         reader.onerror = function () {

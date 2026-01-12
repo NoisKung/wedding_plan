@@ -13,24 +13,38 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;700&family=Mali:wght@400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap"
         rel="stylesheet">
 
     <style>
+        /* ================================================
+           ROOT VARIABLES - Same as wedding_card.html
+           ================================================ */
+        :root {
+            --c-peach: #FFB7A5;
+            --c-coral: #FF6F61;
+            --c-dusty-blue: #8FAADC;
+            --c-cream: #FFF4E8;
+            --c-text: #444444;
+            --c-white: #FFFFFF;
+            --font-main: 'IBM Plex Sans Thai', sans-serif;
+        }
+
         body {
-            background-color: #FEFDFB;
-            font-family: 'Noto Sans Thai', sans-serif;
+            background-color: var(--c-cream);
+            font-family: var(--font-main);
+            color: var(--c-text);
             overflow: hidden;
-            /* Prevent scroll on landing if content fits */
         }
 
         .font-display {
             font-family: 'UID Nanno', 'Mali', cursive;
         }
 
+        /* Textured paper background - Same as wedding_card.html */
         .main-bg {
-            background-color: #F7F9FB;
-            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%238D9DB0" fill-opacity="0.05"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v--9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            background-color: var(--c-cream);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFB7A5' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         /* ================================================
@@ -41,7 +55,7 @@
             top: 16px;
             right: 16px;
             z-index: 200;
-            font-family: 'Noto Sans Thai', sans-serif;
+            font-family: var(--font-main);
         }
 
         .lang-btn {
@@ -55,7 +69,7 @@
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
-            color: #8D9DB0;
+            color: var(--c-text);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
             transition: all 0.2s ease;
             backdrop-filter: blur(10px);
@@ -65,7 +79,7 @@
         .lang-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-            border-color: #FFB7A5;
+            border-color: var(--c-coral);
         }
 
         .lang-btn .flag {
@@ -115,7 +129,7 @@
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
-            color: #8D9DB0;
+            color: var(--c-text);
             transition: all 0.15s ease;
             border: none;
             background: transparent;
@@ -124,13 +138,13 @@
         }
 
         .lang-option:hover {
-            background: rgba(255, 183, 165, 0.15);
-            color: #FFB7A5;
+            background: rgba(255, 111, 97, 0.08);
+            color: var(--c-coral);
         }
 
         .lang-option.active {
-            background: rgba(255, 183, 165, 0.2);
-            color: #FFB7A5;
+            background: rgba(255, 111, 97, 0.12);
+            color: var(--c-coral);
         }
 
         .lang-option .flag {
@@ -160,6 +174,84 @@
 
             .lang-btn .lang-name {
                 display: none;
+            }
+        }
+
+        /* ================================================
+           DARK MODE - Sweet & Romantic Wedding Theme
+           Color Palette: Rose, Champagne, Dusty Rose, Blush
+           ================================================ */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #2D2226 !important;
+                background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%23E8B4B8" fill-opacity="0.06"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E') !important;
+            }
+
+            .main-bg {
+                background-color: #2D2226 !important;
+                background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%23E8B4B8" fill-opacity="0.06"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E') !important;
+            }
+
+            /* Title - Rose Gold */
+            h1 {
+                color: #E8B4B8 !important;
+            }
+
+            /* Subtitle text - Soft champagne */
+            .text-gray-500,
+            .text-gray-400 {
+                color: #C4A99A !important;
+            }
+
+            .w-1.h-1.bg-gray-400 {
+                background-color: #9E8578 !important;
+            }
+
+            /* Entry button - Dusty rose style */
+            a.group {
+                background: #3D2F33 !important;
+                color: #F5D6D8 !important;
+                border-color: #E8B4B8 !important;
+            }
+
+            a.group:hover {
+                background: #E8B4B8 !important;
+                color: #2D2226 !important;
+            }
+
+            /* Heart icon - Warm coral pink */
+            .text-\[#FF6F61\] {
+                color: #F4A5A5 !important;
+            }
+
+            /* Language Switcher - Warm romantic style */
+            .lang-btn {
+                background: rgba(61, 47, 51, 0.95) !important;
+                border-color: rgba(232, 180, 184, 0.4) !important;
+                color: #F5D6D8 !important;
+            }
+
+            .lang-btn:hover {
+                border-color: #F4A5A5 !important;
+            }
+
+            .lang-dropdown {
+                background: rgba(61, 47, 51, 0.98) !important;
+                border-color: rgba(232, 180, 184, 0.3) !important;
+            }
+
+            .lang-option {
+                color: #F5D6D8 !important;
+            }
+
+            .lang-option:hover {
+                background: rgba(244, 165, 165, 0.15) !important;
+                color: #F4A5A5 !important;
+            }
+
+            .lang-option.active {
+                background: rgba(244, 165, 165, 0.2) !important;
+                color: #F4A5A5 !important;
             }
         }
     </style>
@@ -211,14 +303,14 @@
         <!-- Animated Heart Icon -->
         <div class="mb-6 flex justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="w-16 h-16 text-[#FFB7A5] animate-pulse">
+                class="w-16 h-16 text-[#FF6F61] animate-pulse">
                 <path
                     d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
             </svg>
         </div>
 
         <!-- Wedding Title / Hashtag -->
-        <h1 class="text-3xl md:text-5xl font-display text-[#8D9DB0] mb-4 tracking-wide">
+        <h1 class="text-3xl md:text-5xl font-display text-[#FF6F61] mb-4 tracking-wide">
             #SuneeSupakitWedding
         </h1>
 
@@ -233,7 +325,7 @@
 
         <!-- Entry Button -->
         <a href="wedding_card.html"
-            class="group relative inline-flex items-center justify-center px-8 py-3 bg-white text-[#8D9DB0] border-2 border-[#8D9DB0] hover:bg-[#8D9DB0] hover:text-white rounded-full font-medium transition-all duration-300 transform hover:-translate-y-1 shadow-sm hover:shadow-md">
+            class="group relative inline-flex items-center justify-center px-8 py-3 bg-white text-[#FF6F61] border-2 border-[#FF6F61] hover:bg-[#FF6F61] hover:text-white rounded-full font-medium transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
             <span data-i18n="enterBtn">การ์ดเชิญ</span>
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none"

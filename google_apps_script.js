@@ -26,6 +26,94 @@
 const SPREADSHEET_ID = '157lYB6x9qa86IQ4zDKcVg0B3Vrelw1kvkOMaSQw0pls';
 const DRIVE_FOLDER_ID = ''; // optional: leave as '' to save to root
 
+// ============================================
+// SECURITY: Input Validation & Sanitization
+// ============================================
+
+/**
+ * Sanitize string input to prevent XSS and injection attacks
+ */
+function sanitizeString(str, maxLength = 500) {
+  if (!str) return '';
+  str = String(str).substring(0, maxLength);
+  // Remove potentially dangerous characters and HTML tags
+  return str.replace(/<[^>]*>/g, '')
+            .replace(/[<>"'`\\]/g, '')
+            .trim();
+}
+
+/**
+ * Validate email format
+ */
+function isValidEmail(email) {
+  if (!email || email === 'No Email') return true; // Optional field
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 100;
+}
+
+/**
+ * Validate amount is a positive number
+ */
+function isValidAmount(amount) {
+  if (!amount) return true;
+  const num = parseFloat(amount);
+  return !isNaN(num) && num >= 0 && num <= 10000000; // Max 10 million
+}
+
+/**
+ * Validate guest count
+ */
+function isValidGuestCount(count) {
+  const num = parseInt(count);
+  return !isNaN(num) && num >= 1 && num <= 20;
+}
+
+/**
+ * Validate file MIME type for slip uploads
+ */
+const ALLOWED_MIME_TYPES = [
+  'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'
+];
+
+function isValidMimeType(dataUrl) {
+  if (!dataUrl) return true;
+  const mimeMatch = dataUrl.match(/data:([^;]+);base64/);
+  if (!mimeMatch) return false;
+  return ALLOWED_MIME_TYPES.includes(mimeMatch[1]);
+}
+
+/**
+ * Simple rate limiting using CacheService
+ * Returns true if request should be allowed, false if rate limited
+ */
+function checkRateLimit(identifier, maxRequests = 10, windowSeconds = 60) {
+  try {
+    const cache = CacheService.getScriptCache();
+    const key = 'ratelimit_' + identifier;
+    const current = cache.get(key);
+    
+    if (current === null) {
+      cache.put(key, '1', windowSeconds);
+      return true;
+    }
+    
+    const count = parseInt(current);
+    if (count >= maxRequests) {
+      return false; // Rate limited
+    }
+    
+    cache.put(key, String(count + 1), windowSeconds);
+    return true;
+  } catch (e) {
+    // If cache fails, allow request
+    return true;
+  }
+}
+
+// ============================================
+// Main Entry Points
+// ============================================
+
 function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({status: 'ok', message: 'Apps Script running'})).setMimeType(ContentService.MimeType.JSON);
 }
@@ -82,6 +170,13 @@ function doPost(e) {
 
 function handleRsvpSubmission(params, spreadsheet) {
   try {
+    // Rate limiting by action type
+    if (!checkRateLimit('rsvp', 50, 60)) {
+      return ContentService
+        .createTextOutput('Too many requests. Please try again later.')
+        .setMimeType(ContentService.MimeType.TEXT);
+    }
+    
     let sheetName = "Page1";
     let sheet = spreadsheet.getSheetByName(sheetName);
     
@@ -97,11 +192,19 @@ function handleRsvpSubmission(params, spreadsheet) {
     // Get the next available row
     let newRow = sheet.getLastRow() + 1;
     
-    // Prepare the data to insert
+    // Prepare and SANITIZE the data to insert
     let timestamp = new Date();
-    let guestName = params.GuestName || 'Unknown Guest';
-    let guestEmail = params.GuestEmail || 'No Email';
+    let guestName = sanitizeString(params.GuestName || 'Unknown Guest', 100);
+    let guestEmail = sanitizeString(params.GuestEmail || 'No Email', 100);
     let guestCount = params.GuestCount || '1';
+    
+    // Validate inputs
+    if (!isValidEmail(guestEmail)) {
+      guestEmail = 'Invalid Email';
+    }
+    if (!isValidGuestCount(guestCount)) {
+      guestCount = '1';
+    }
     
     let rowData = [timestamp, guestName, guestEmail, guestCount];
     
@@ -122,13 +225,45 @@ function handleRsvpSubmission(params, spreadsheet) {
 
 function handlePaymentSubmission(params, spreadsheet) {
   try {
-    const payerName = params.payerName || '';
-    const payerEmail = params.payerEmail || '';
-    const amount = params.amount || '';
-    const message = params.message || '';
-    const accountNumber = params.accountNumber || '';
-    const slipDataUrl = params.slipDataUrl || null; // optional data URL
-    const slipName = params.slipName || ('slip_' + new Date().getTime());
+    // Rate limiting for payment submissions
+    if (!checkRateLimit('payment', 20, 60)) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'error', 
+        message: 'Too many requests. Please try again later.'
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    // SANITIZE all inputs
+    const payerName = sanitizeString(params.payerName || '', 100);
+    const payerEmail = sanitizeString(params.payerEmail || '', 100);
+    const amount = sanitizeString(params.amount || '', 20);
+    const message = sanitizeString(params.message || '', 500);
+    const accountNumber = sanitizeString(params.accountNumber || '', 50);
+    const slipDataUrl = params.slipDataUrl || null; // Keep as-is for processing
+    const slipName = sanitizeString(params.slipName || ('slip_' + new Date().getTime()), 100);
+    
+    // Validate inputs
+    if (!isValidEmail(payerEmail)) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'error', 
+        message: 'Invalid email format'
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    if (!isValidAmount(amount)) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'error', 
+        message: 'Invalid amount'
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    // Validate file MIME type if slip is provided
+    if (slipDataUrl && !isValidMimeType(slipDataUrl)) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'error', 
+        message: 'Invalid file type. Only images and PDF allowed.'
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
 
     // Save slip to Drive (if provided)
     let fileUrl = '';
@@ -140,7 +275,17 @@ function handlePaymentSubmission(params, spreadsheet) {
         const base64 = parts[1];
         const mimeMatch = meta.match(/data:([^;]+);base64/);
         const mimeType = mimeMatch ? mimeMatch[1] : 'application/octet-stream';
-        const blob = Utilities.newBlob(Utilities.base64Decode(base64), mimeType, slipName);
+        
+        // Check decoded size (guard against extremely large files)
+        const decodedBytes = Utilities.base64Decode(base64);
+        if (decodedBytes.length > 5 * 1024 * 1024) { // 5MB limit
+          return ContentService.createTextOutput(JSON.stringify({
+            status: 'error', 
+            message: 'File too large. Maximum 5MB allowed.'
+          })).setMimeType(ContentService.MimeType.JSON);
+        }
+        
+        const blob = Utilities.newBlob(decodedBytes, mimeType, slipName);
         if (DRIVE_FOLDER_ID && DRIVE_FOLDER_ID !== 'REPLACE_WITH_DRIVE_FOLDER_ID' && DRIVE_FOLDER_ID !== '') {
           try {
             const folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
