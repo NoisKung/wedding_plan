@@ -1058,10 +1058,178 @@
                 font-size: 1.75rem !important;
             }
         }
+
+        /* ================================================
+           I18N LANGUAGE SWITCHER STYLES
+           ================================================ */
+        .lang-switcher {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 200;
+            font-family: var(--font-main);
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(143, 170, 220, 0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--c-text);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            border-color: var(--c-coral);
+        }
+
+        .lang-btn .flag {
+            font-size: 18px;
+        }
+
+        .lang-btn .chevron {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .lang-switcher.open .lang-btn .chevron {
+            transform: rotate(180deg);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(143, 170, 220, 0.2);
+            border-radius: 16px;
+            padding: 8px;
+            min-width: 160px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .lang-switcher.open .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--c-text);
+            transition: all 0.15s ease;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+
+        .lang-option:hover {
+            background: rgba(255, 111, 97, 0.08);
+            color: var(--c-coral);
+        }
+
+        .lang-option.active {
+            background: rgba(255, 111, 97, 0.12);
+            color: var(--c-coral);
+        }
+
+        .lang-option .flag {
+            font-size: 18px;
+        }
+
+        .lang-option .check {
+            margin-left: auto;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .lang-option.active .check {
+            opacity: 1;
+        }
+
+        @media (max-width: 640px) {
+            .lang-switcher {
+                top: 12px;
+                right: 12px;
+            }
+
+            .lang-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .lang-btn .lang-name {
+                display: none;
+            }
+        }
     </style>
 </head>
 
 <body class="font-noto dark-text">
+
+    <!-- Language Switcher (i18n) -->
+    <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-btn" id="langBtn" aria-label="Change language" aria-expanded="false">
+            <span class="flag" id="currentFlag">🇹🇭</span>
+            <span class="lang-name" id="currentLangName">ไทย</span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+            </svg>
+        </button>
+        <div class="lang-dropdown" id="langDropdown" role="listbox">
+            <button class="lang-option active" data-lang="th" role="option" aria-selected="true">
+                <span class="flag">🇹🇭</span>
+                <span>ไทย</span>
+                <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M20 6L9 17l-5-5" />
+                </svg>
+            </button>
+            <button class="lang-option" data-lang="en" role="option" aria-selected="false">
+                <span class="flag">🇺🇸</span>
+                <span>English</span>
+                <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M20 6L9 17l-5-5" />
+                </svg>
+            </button>
+            <button class="lang-option" data-lang="ja" role="option" aria-selected="false">
+                <span class="flag">🇯🇵</span>
+                <span>日本語</span>
+                <svg class="check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M20 6L9 17l-5-5" />
+                </svg>
+            </button>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="min-h-screen w-full flex flex-col items-center justify-center text-center p-4 main-bg relative">
@@ -1850,6 +2018,563 @@
 
         window.onload = generateCalendarLink;
 
+    </script>
+
+    <!-- I18N Language Switching Script -->
+    <script>
+        (function () {
+            // ===========================================
+            // I18N TRANSLATIONS
+            // ===========================================
+            const translations = {
+                th: {
+                    langName: 'ไทย',
+                    flag: '🇹🇭',
+                    // Hero
+                    heroSubtitle: "We're Getting Married",
+                    heroNames: "สุนีย์ และ ศุภกิตติ์",
+                    heroDate: "22.11.2026",
+                    // Invitation
+                    invitationText: "ขอเรียนเชิญเพื่อเป็นเกียรติในพิธีมงคลสมรสระหว่าง",
+                    brideName: "สุนีย์",
+                    brideFullname: "(สุนีย์ มงคลวรกิจชัย)",
+                    brideParents: "บุตรีของ (ชาญชัย มงคลวรกิจชัย) และ (มาลัย วรรณภูงา)",
+                    groomName: "ศุภกิตติ์",
+                    groomFullname: "(ศุภกิตติ์ สุจริตชีววงศ์)",
+                    groomParents: "บุตรของ (สมชัย สุจริตชีววงศ์) และ (สุพร ซูพูล)",
+                    // Countdown
+                    countdownTitle: "นับถอยหลังสู่วันของเรา",
+                    days: "วัน",
+                    hours: "ชั่วโมง",
+                    minutes: "นาที",
+                    seconds: "วินาที",
+                    // Schedule
+                    scheduleTitle: "กำหนดการ",
+                    scheduleSubtitle: '"งานเช้า เลี้ยงเที่ยง"',
+                    buddhist: "พิธีสงฆ์",
+                    procession: "แห่ขันหมาก",
+                    waterBlessing: "พิธีรดน้ำสังข์",
+                    luncheon: "รับประทานอาหาร",
+                    // Gallery
+                    galleryTitle: "แกลเลอรี่ความทรงจำ",
+                    // Location
+                    venueTitle: "สถานที่จัดงาน",
+                    venueName: "ณ VIVACE WEDDING HALL ราชพฤกษ์",
+                    venueAddress: "18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด จังหวัดนนทบุรี 11120",
+                    viewMap: "ดูแผนที่",
+                    dressCode: "การแต่งกาย",
+                    themeColor: "ธีมสี:",
+                    // RSVP
+                    rsvpTitle: "ตอบรับการเข้าร่วมงาน",
+                    signInPrompt: "กรุณาเข้าสู่ระบบด้วย Google เพื่อตอบรับการเข้าร่วมงาน",
+                    guestToggle: "ไม่ได้ใช้ Gmail? ลงทะเบียนด้วยชื่อ",
+                    nameLabel: "ชื่อ-นามสกุล",
+                    namePlaceholder: "เช่น: สมชาย ใจดี",
+                    emailLabel: "อีเมล (ไม่บังคับ)",
+                    attending: "เข้าร่วม",
+                    notAttending: "ไม่เข้าร่วม",
+                    guestsLabel: "จำนวนผู้ติดตาม",
+                    guestCountPlaceholder: "จำนวนผู้ร่วมงาน (รวมตัวท่าน)",
+                    submitRsvp: "ยืนยันการเข้าร่วม",
+                    rsvpThanks: "ขอบคุณที่ตอบรับ",
+                    rsvpSuccess: "แล้วพบกันในวันงานนะคะ!",
+                    signOutBtn: "เปลี่ยนบัญชี / ยกเลิก",
+                    // Calendar
+                    calendarTitle: "บันทึกวันสำคัญของเรา",
+                    calendarDesc: "เพิ่มวันแต่งงานของเราลงในปฏิทินของคุณ",
+                    addToCalendar: "เพิ่มในปฏิทิน",
+                    // Footer
+                    footerApology: "ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง",
+                    // Payment Modal
+                    payBtn: "โอนเงิน",
+                    payTitle: "สนับสนุนของขวัญ — โอนเงิน",
+                    payVenueInfo: "วันที่จัดงาน: 22/11/2569\nสถานที่: VIVACE WEDDING HALL ราชพฤกษ์\n18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด จังหวัดนนทบุรี 11120",
+                    payerNameLabel: "ชื่อผู้โอน (แสดงบนสลิป)",
+                    payerNamePlaceholder: "ชื่อ - นามสกุล",
+                    payerEmailLabel: "อีเมล (ไม่บังคับ)",
+                    amountLabel: "จำนวนเงิน (บาท)",
+                    messageLabel: "คำอวยพร / ข้อความ",
+                    messagePlaceholder: "คำอวยพรถึงคู่บ่าวสาว",
+                    uploadSlip: "อัพโหลดสลิป (รูปหรือ PDF)",
+                    copyAccount: "คัดลอกเลขบัญชี",
+                    submitPayment: "แจ้งโอน & สลิป",
+                    payFooterNote: "โปรดแนบสลิปหรือแจ้งชื่อ-จำนวนผู้เข้าร่วมหากต้องการ",
+                    // General
+                    submit: "ส่ง",
+                    cancel: "ยกเลิก",
+                    close: "ปิด"
+                },
+                en: {
+                    langName: 'English',
+                    flag: '🇺🇸',
+                    // Hero
+                    heroSubtitle: "We're Getting Married",
+                    heroNames: "Sunee & Supakit",
+                    heroDate: "22.11.2026",
+                    // Invitation
+                    invitationText: "You are cordially invited to the wedding ceremony of",
+                    brideName: "Sunee",
+                    brideFullname: "(Sunee Mongkolvorakitchai)",
+                    brideParents: "Daughter of Mr. Chanchai Mongkolvorakitchai & Mrs. Malai Wannapoonga",
+                    groomName: "Supakit",
+                    groomFullname: "(Supakit Sujaritcheewawong)",
+                    groomParents: "Son of Mr. Somchai Sujaritcheewawong & Mrs. Suporn Supool",
+                    // Countdown
+                    countdownTitle: "Counting Down to Our Day",
+                    days: "Days",
+                    hours: "Hours",
+                    minutes: "Minutes",
+                    seconds: "Seconds",
+                    // Schedule
+                    scheduleTitle: "Wedding Schedule",
+                    scheduleSubtitle: "\"Morning Ceremony, Luncheon Reception\"",
+                    buddhist: "Buddhist Ceremony",
+                    procession: "Groom's Procession",
+                    waterBlessing: "Water Blessing Ceremony",
+                    luncheon: "Luncheon Reception",
+                    // Gallery
+                    galleryTitle: "Our Memories",
+                    // Location
+                    venueTitle: "Venue",
+                    venueName: "VIVACE WEDDING HALL Ratchapruek",
+                    venueAddress: "18/15 Ratchapruek Road, Om Kret, Pak Kret, Nonthaburi 11120, Thailand",
+                    viewMap: "View Map",
+                    dressCode: "Dress Code",
+                    themeColor: "Theme Colors:",
+                    // RSVP
+                    rsvpTitle: "RSVP",
+                    signInPrompt: "Please sign in with Google to RSVP",
+                    guestToggle: "No Gmail? Register with your name",
+                    nameLabel: "Full Name",
+                    namePlaceholder: "e.g., John Smith",
+                    emailLabel: "Email (optional)",
+                    attending: "Attending",
+                    notAttending: "Not Attending",
+                    guestsLabel: "Number of Guests",
+                    guestCountPlaceholder: "Number of guests (including yourself)",
+                    submitRsvp: "Confirm Attendance",
+                    rsvpThanks: "Thank you for your response",
+                    rsvpSuccess: "See you at the wedding!",
+                    signOutBtn: "Change account / Cancel",
+                    // Calendar
+                    calendarTitle: "Save Our Date",
+                    calendarDesc: "Add our wedding to your calendar",
+                    addToCalendar: "Add to Calendar",
+                    // Footer
+                    footerApology: "We apologize if we could not invite you in person",
+                    // Payment Modal
+                    payBtn: "Send Gift",
+                    payTitle: "Wedding Gift — Bank Transfer",
+                    payVenueInfo: "Event Date: November 22, 2026\nVenue: VIVACE WEDDING HALL Ratchapruek\n18/15 Ratchapruek Road, Om Kret, Pak Kret, Nonthaburi 11120, Thailand",
+                    payerNameLabel: "Your Name (as shown on slip)",
+                    payerNamePlaceholder: "Full Name",
+                    payerEmailLabel: "Email (optional)",
+                    amountLabel: "Amount (THB)",
+                    messageLabel: "Blessing Message",
+                    messagePlaceholder: "Your blessing to the couple",
+                    uploadSlip: "Upload Slip (Image or PDF)",
+                    copyAccount: "Copy Account",
+                    submitPayment: "Submit Transfer",
+                    payFooterNote: "Please attach slip or provide your name and guest count if needed",
+                    // General
+                    submit: "Submit",
+                    cancel: "Cancel",
+                    close: "Close"
+                },
+                ja: {
+                    langName: '日本語',
+                    flag: '🇯🇵',
+                    // Hero
+                    heroSubtitle: "私たちは結婚します",
+                    heroNames: "スニー & スパキット",
+                    heroDate: "2026年11月22日",
+                    // Invitation
+                    invitationText: "謹んで結婚式へご招待申し上げます",
+                    brideName: "スニー",
+                    brideFullname: "(スニー・モンコンウォラキットチャイ)",
+                    brideParents: "父チャンチャイ・モンコンウォラキットチャイ、母マライ・ワンナプーンガの長女",
+                    groomName: "スパキット",
+                    groomFullname: "(スパキット・スチャリットチーワウォン)",
+                    groomParents: "父ソムチャイ・スチャリットチーワウォン、母スポーン・スプールの長男",
+                    // Countdown
+                    countdownTitle: "カウントダウン",
+                    days: "日",
+                    hours: "時間",
+                    minutes: "分",
+                    seconds: "秒",
+                    // Schedule
+                    scheduleTitle: "スケジュール",
+                    scheduleSubtitle: "「午前の式典、昼食会」",
+                    buddhist: "仏式",
+                    procession: "花婿行列",
+                    waterBlessing: "水祝福の儀式",
+                    luncheon: "昼食会",
+                    // Gallery
+                    galleryTitle: "思い出ギャラリー",
+                    // Location
+                    venueTitle: "会場",
+                    venueName: "ヴィヴァーチェ・ウェディングホール・ラチャプルック",
+                    venueAddress: "18/15 ラチャプルック通り、オームクレット、パッククレット、ノンタブリー県 11120、タイ",
+                    viewMap: "地図を見る",
+                    dressCode: "ドレスコード",
+                    themeColor: "テーマカラー：",
+                    // RSVP
+                    rsvpTitle: "出欠確認",
+                    signInPrompt: "Googleでサインインして出欠を回答してください",
+                    guestToggle: "Gmailをお持ちでない方はこちら",
+                    nameLabel: "お名前",
+                    namePlaceholder: "例：山田 太郎",
+                    emailLabel: "メールアドレス（任意）",
+                    attending: "出席",
+                    notAttending: "欠席",
+                    guestsLabel: "同伴者数",
+                    guestCountPlaceholder: "参加人数（ご本人を含む）",
+                    submitRsvp: "出席を確認する",
+                    rsvpThanks: "ご回答ありがとうございます",
+                    rsvpSuccess: "当日お会いできるのを楽しみにしております！",
+                    signOutBtn: "アカウント変更 / キャンセル",
+                    // Calendar
+                    calendarTitle: "大切な日を記録",
+                    calendarDesc: "カレンダーに追加してください",
+                    addToCalendar: "カレンダーに追加",
+                    // Footer
+                    footerApology: "直接ご招待できなかった場合はお詫び申し上げます",
+                    // Payment Modal
+                    payBtn: "ご祝儀",
+                    payTitle: "ご祝儀 — 銀行振込",
+                    payVenueInfo: "開催日: 2026年11月22日\n会場: ヴィヴァーチェ・ウェディングホール・ラチャプルック\n18/15 ラチャプルック通り、オームクレット、パッククレット、ノンタブリー県 11120、タイ",
+                    payerNameLabel: "お名前（振込名義）",
+                    payerNamePlaceholder: "氏名",
+                    payerEmailLabel: "メールアドレス（任意）",
+                    amountLabel: "金額（タイバーツ）",
+                    messageLabel: "お祝いメッセージ",
+                    messagePlaceholder: "新郎新婦へのメッセージ",
+                    uploadSlip: "振込明細をアップロード",
+                    copyAccount: "口座番号をコピー",
+                    submitPayment: "送信",
+                    payFooterNote: "振込明細または参加者情報をお知らせください",
+                    // General
+                    submit: "送信",
+                    cancel: "キャンセル",
+                    close: "閉じる"
+                }
+            };
+
+            // ===========================================
+            // I18N CORE FUNCTIONS
+            // ===========================================
+            let currentLang = localStorage.getItem('wedding_lang') || 'th';
+
+            function setLanguage(lang) {
+                if (!translations[lang]) return;
+                currentLang = lang;
+                localStorage.setItem('wedding_lang', lang);
+
+                // Update HTML lang attribute
+                document.documentElement.lang = lang === 'th' ? 'th' : (lang === 'ja' ? 'ja' : 'en');
+
+                // Update all elements with data-i18n attribute
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+
+                // Update placeholders with data-i18n-placeholder attribute
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-placeholder');
+                    if (translations[lang][key]) {
+                        el.placeholder = translations[lang][key];
+                    }
+                });
+
+                // Update language switcher button
+                const currentFlag = document.getElementById('currentFlag');
+                const currentLangName = document.getElementById('currentLangName');
+                if (currentFlag) currentFlag.textContent = translations[lang].flag;
+                if (currentLangName) currentLangName.textContent = translations[lang].langName;
+
+                // Update dropdown active state
+                document.querySelectorAll('.lang-option').forEach(option => {
+                    const optionLang = option.getAttribute('data-lang');
+                    if (optionLang === lang) {
+                        option.classList.add('active');
+                        option.setAttribute('aria-selected', 'true');
+                    } else {
+                        option.classList.remove('active');
+                        option.setAttribute('aria-selected', 'false');
+                    }
+                });
+            }
+
+            function initLangSwitcher() {
+                const switcher = document.getElementById('langSwitcher');
+                const btn = document.getElementById('langBtn');
+                const dropdown = document.getElementById('langDropdown');
+
+                if (!switcher || !btn) return;
+
+                // Toggle dropdown
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const isOpen = switcher.classList.toggle('open');
+                    btn.setAttribute('aria-expanded', isOpen);
+                });
+
+                // Handle language selection
+                document.querySelectorAll('.lang-option').forEach(option => {
+                    option.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        const lang = this.getAttribute('data-lang');
+                        setLanguage(lang);
+                        switcher.classList.remove('open');
+                        btn.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
+                // Close on outside click
+                document.addEventListener('click', function () {
+                    switcher.classList.remove('open');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+
+                // Close on escape key
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        switcher.classList.remove('open');
+                        btn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            // ===========================================
+            // ADD DATA-I18N ATTRIBUTES TO ELEMENTS
+            // ===========================================
+            function addI18nAttributes() {
+                // Hero Section
+                const heroSubtitle = document.querySelector('section:first-of-type p.tracking-widest');
+                if (heroSubtitle) heroSubtitle.setAttribute('data-i18n', 'heroSubtitle');
+
+                const heroNames = document.querySelector('section:first-of-type h1.font-display');
+                if (heroNames) heroNames.setAttribute('data-i18n', 'heroNames');
+
+                const heroDate = document.querySelector('section:first-of-type p.highlight-text');
+                if (heroDate) heroDate.setAttribute('data-i18n', 'heroDate');
+
+                // Invitation Section
+                const invitationText = document.querySelector('#invitation .text-lg.leading-relaxed');
+                if (invitationText) invitationText.setAttribute('data-i18n', 'invitationText');
+
+                // Find bride and groom names by content
+                const invitationDivs = document.querySelectorAll('#invitation .grid > div');
+
+                // Bride section (first div)
+                if (invitationDivs[0]) {
+                    const brideNameEl = invitationDivs[0].querySelector('h2');
+                    const brideFullnameEl = invitationDivs[0].querySelector('p.text-gray-600');
+                    const brideParentsEl = invitationDivs[0].querySelector('p.text-gray-500');
+                    if (brideNameEl) brideNameEl.setAttribute('data-i18n', 'brideName');
+                    if (brideFullnameEl) brideFullnameEl.setAttribute('data-i18n', 'brideFullname');
+                    if (brideParentsEl) brideParentsEl.setAttribute('data-i18n', 'brideParents');
+                }
+
+                // Groom section (third div, index 2 because heart is in the middle)
+                if (invitationDivs[2]) {
+                    const groomNameEl = invitationDivs[2].querySelector('h2');
+                    const groomFullnameEl = invitationDivs[2].querySelector('p.text-gray-600');
+                    const groomParentsEl = invitationDivs[2].querySelector('p.text-gray-500');
+                    if (groomNameEl) groomNameEl.setAttribute('data-i18n', 'groomName');
+                    if (groomFullnameEl) groomFullnameEl.setAttribute('data-i18n', 'groomFullname');
+                    if (groomParentsEl) groomParentsEl.setAttribute('data-i18n', 'groomParents');
+                }
+
+                // Countdown Section
+                const countdownTitle = document.querySelector('#countdown').parentElement.querySelector('h3');
+                if (countdownTitle) countdownTitle.setAttribute('data-i18n', 'countdownTitle');
+
+                const countdownLabels = document.querySelectorAll('#countdown .text-sm');
+                if (countdownLabels[0]) countdownLabels[0].setAttribute('data-i18n', 'days');
+                if (countdownLabels[1]) countdownLabels[1].setAttribute('data-i18n', 'hours');
+                if (countdownLabels[2]) countdownLabels[2].setAttribute('data-i18n', 'minutes');
+                if (countdownLabels[3]) countdownLabels[3].setAttribute('data-i18n', 'seconds');
+
+                // Schedule Section - find by class
+                const scheduleTitle = document.querySelector('.schedule-header-group h3');
+                if (scheduleTitle) scheduleTitle.setAttribute('data-i18n', 'scheduleTitle');
+
+                const scheduleSubtitle = document.querySelector('.schedule-subtitle');
+                if (scheduleSubtitle) scheduleSubtitle.setAttribute('data-i18n', 'scheduleSubtitle');
+
+                // Schedule items
+                const scheduleItems = document.querySelectorAll('.grid.md\\:grid-cols-4 .text-gray-600');
+                if (scheduleItems[0]) scheduleItems[0].setAttribute('data-i18n', 'buddhist');
+                if (scheduleItems[1]) scheduleItems[1].setAttribute('data-i18n', 'procession');
+                if (scheduleItems[2]) scheduleItems[2].setAttribute('data-i18n', 'waterBlessing');
+                if (scheduleItems[3]) scheduleItems[3].setAttribute('data-i18n', 'luncheon');
+
+                // Gallery Title
+                const gallerySection = document.querySelectorAll('section')[4];
+                if (gallerySection) {
+                    const galleryTitle = gallerySection.querySelector('h3');
+                    if (galleryTitle) galleryTitle.setAttribute('data-i18n', 'galleryTitle');
+                }
+
+                // Location Section
+                const locationTitle = document.querySelector('section:nth-of-type(6) h3.font-display-low-priority');
+                if (locationTitle) locationTitle.setAttribute('data-i18n', 'venueTitle');
+
+                const venueName = document.querySelector('section:nth-of-type(6) p.font-semibold.text-lg');
+                if (venueName) venueName.setAttribute('data-i18n', 'venueName');
+
+                const venueAddress = document.querySelector('section:nth-of-type(6) p.text-gray-600.mb-8');
+                if (venueAddress) venueAddress.setAttribute('data-i18n', 'venueAddress');
+
+                const viewMapBtn = document.querySelector('section:nth-of-type(6) a.accent-bg');
+                if (viewMapBtn) viewMapBtn.setAttribute('data-i18n', 'viewMap');
+
+                const dressCodeTitle = document.querySelector('section:nth-of-type(6) h3.text-2xl');
+                if (dressCodeTitle) dressCodeTitle.setAttribute('data-i18n', 'dressCode');
+
+                const themeColorLabel = document.querySelector('section:nth-of-type(6) p.text-gray-600.mb-2');
+                if (themeColorLabel) themeColorLabel.setAttribute('data-i18n', 'themeColor');
+
+                // RSVP Section
+                const rsvpTitle = document.querySelector('#rsvp h3.font-display');
+                if (rsvpTitle) rsvpTitle.setAttribute('data-i18n', 'rsvpTitle');
+
+                const signInPrompt = document.querySelector('#auth-required p.text-gray-600');
+                if (signInPrompt) signInPrompt.setAttribute('data-i18n', 'signInPrompt');
+
+                const guestToggle = document.querySelector('#guest-toggle-btn');
+                if (guestToggle) guestToggle.setAttribute('data-i18n', 'guestToggle');
+
+                // RSVP Manual Guest Form
+                const manualGuestInputs = document.querySelector('#manual-guest-inputs');
+                if (manualGuestInputs) {
+                    const nameLabel = manualGuestInputs.querySelector('label[for="manual-name"]');
+                    if (nameLabel) nameLabel.setAttribute('data-i18n', 'nameLabel');
+
+                    const nameInput = document.querySelector('#manual-name');
+                    if (nameInput) nameInput.setAttribute('data-i18n-placeholder', 'namePlaceholder');
+
+                    const emailLabel = manualGuestInputs.querySelector('label[for="manual-email"]');
+                    if (emailLabel) emailLabel.setAttribute('data-i18n', 'emailLabel');
+                }
+
+                // RSVP Form
+                const guestCountInput = document.querySelector('#guest-count');
+                if (guestCountInput) guestCountInput.setAttribute('data-i18n-placeholder', 'guestCountPlaceholder');
+
+                const submitRsvpBtn = document.querySelector('#submit-btn');
+                if (submitRsvpBtn) submitRsvpBtn.setAttribute('data-i18n', 'submitRsvp');
+
+                // Sign out button
+                const signOutBtn = document.querySelector('#sign-out-btn');
+                if (signOutBtn) signOutBtn.setAttribute('data-i18n', 'signOutBtn');
+
+                // RSVP Confirmation section
+                const rsvpConfirmation = document.querySelector('#rsvp-confirmation');
+                if (rsvpConfirmation) {
+                    const thanksMsg = rsvpConfirmation.querySelector('p.accent-text');
+                    if (thanksMsg) thanksMsg.setAttribute('data-i18n', 'rsvpThanks');
+
+                    const successMsg = rsvpConfirmation.querySelector('p.text-gray-600');
+                    if (successMsg) successMsg.setAttribute('data-i18n', 'rsvpSuccess');
+                }
+
+                // RSVP Success message (alternative selector)
+                const rsvpSuccessSection = document.querySelector('#rsvp-success-state');
+                if (rsvpSuccessSection) {
+                    const successMsg = rsvpSuccessSection.querySelector('p.text-gray-600');
+                    if (successMsg) successMsg.setAttribute('data-i18n', 'rsvpSuccess');
+                }
+
+                // Calendar Section
+                const calendarTitle = document.querySelector('h4.font-display.dark-text');
+                if (calendarTitle && calendarTitle.textContent.includes('บันทึก')) {
+                    calendarTitle.setAttribute('data-i18n', 'calendarTitle');
+                }
+
+                const calendarDesc = document.querySelector('h4.font-display.dark-text + p.text-gray-600');
+                if (calendarDesc) calendarDesc.setAttribute('data-i18n', 'calendarDesc');
+
+                const addToCalendarBtn = document.querySelector('#add-to-calendar-link');
+                if (addToCalendarBtn) {
+                    // Store the SVG element before replacing
+                    const svgElement = addToCalendarBtn.querySelector('svg');
+                    addToCalendarBtn.setAttribute('data-i18n', 'addToCalendar');
+                    // Create a span for text and keep svg
+                    if (svgElement) {
+                        const svgClone = svgElement.cloneNode(true);
+                        addToCalendarBtn.innerHTML = '';
+                        addToCalendarBtn.appendChild(svgClone);
+                        const textSpan = document.createElement('span');
+                        textSpan.setAttribute('data-i18n', 'addToCalendar');
+                        addToCalendarBtn.appendChild(textSpan);
+                        addToCalendarBtn.removeAttribute('data-i18n');
+                    }
+                }
+
+                // Footer
+                const footerApology = document.querySelector('footer p.text-gray-500');
+                if (footerApology) footerApology.setAttribute('data-i18n', 'footerApology');
+
+                // Payment Button
+                const payBtn = document.querySelector('#open-pay');
+                if (payBtn) payBtn.setAttribute('data-i18n', 'payBtn');
+
+                // Payment Modal
+                const payTitle = document.querySelector('#pay-title');
+                if (payTitle) payTitle.setAttribute('data-i18n', 'payTitle');
+
+                // Payment Modal Venue Info - the paragraph after the header
+                const payVenueInfo = document.querySelector('#pay-modal .modal p.text-sm.text-gray-600');
+                if (payVenueInfo) payVenueInfo.setAttribute('data-i18n', 'payVenueInfo');
+
+                // Payment Form Labels
+                const paymentForm = document.querySelector('#payment-form');
+                if (paymentForm) {
+                    const labels = paymentForm.querySelectorAll('label.text-sm.font-medium');
+                    if (labels[0]) labels[0].setAttribute('data-i18n', 'payerNameLabel');
+                    if (labels[1]) labels[1].setAttribute('data-i18n', 'payerEmailLabel');
+                    if (labels[2]) labels[2].setAttribute('data-i18n', 'amountLabel');
+                    if (labels[3]) labels[3].setAttribute('data-i18n', 'messageLabel');
+                    if (labels[4]) labels[4].setAttribute('data-i18n', 'uploadSlip');
+
+                    // Placeholders
+                    const payerNameInput = document.querySelector('#payer-name');
+                    if (payerNameInput) payerNameInput.setAttribute('data-i18n-placeholder', 'payerNamePlaceholder');
+
+                    const messageTextarea = document.querySelector('#message');
+                    if (messageTextarea) messageTextarea.setAttribute('data-i18n-placeholder', 'messagePlaceholder');
+                }
+
+                // Payment Buttons
+                const copyAccountBtn = document.querySelector('#copy-account');
+                if (copyAccountBtn) copyAccountBtn.setAttribute('data-i18n', 'copyAccount');
+
+                const submitPaymentBtn = document.querySelector('#submit-payment');
+                if (submitPaymentBtn) submitPaymentBtn.setAttribute('data-i18n', 'submitPayment');
+
+                // Modal view map button
+                const modalViewMapBtn = document.querySelector('#pay-modal .map-btn');
+                if (modalViewMapBtn) modalViewMapBtn.setAttribute('data-i18n', 'viewMap');
+
+                // Payment footer note
+                const payFooterNote = document.querySelector('.modal-footer-note');
+                if (payFooterNote) payFooterNote.setAttribute('data-i18n', 'payFooterNote');
+            }
+
+            // ===========================================
+            // INITIALIZE ON DOM READY
+            // ===========================================
+            document.addEventListener('DOMContentLoaded', function () {
+                addI18nAttributes();
+                initLangSwitcher();
+                setLanguage(currentLang);
+            });
+        })();
     </script>
 
 </body>
