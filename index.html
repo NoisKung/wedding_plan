@@ -13,42 +13,812 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;700&family=Mali:wght@400;500&family=Noto+Sans+Thai:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;700&family=Great+Vibes&family=Noto+Sans+Thai:wght@300;400;500&display=swap"
         rel="stylesheet">
 
     <style>
         /* ================================================
-           ROOT VARIABLES - Same as wedding_card.html
+           ROOT VARIABLES
            ================================================ */
         :root {
-            --c-peach: #FFB7A5;
-            --c-coral: #FF6F61;
-            --c-dusty-blue: #8FAADC;
-            --c-cream: #FFF4E8;
+            --c-envelope: #F5EFE6;
+            --c-envelope-dark: #E8DFD3;
+            --c-envelope-shadow: #D4C9BC;
+            --c-cream: #FFF8F0;
+            --c-wax-seal: #B22222;
+            --c-wax-seal-dark: #8B0000;
+            --c-gold: #C9A962;
             --c-text: #444444;
-            --c-white: #FFFFFF;
+            --c-text-dark: #2D2226;
             --font-main: 'IBM Plex Sans Thai', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--c-cream);
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFE4D6 50%, #FFF0E8 100%);
             font-family: var(--font-main);
             color: var(--c-text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
 
-        .font-display {
-            font-family: 'UID Nanno', 'Mali', cursive;
+        /* Rose petals background */
+        .petals-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
         }
 
-        /* Textured paper background - Same as wedding_card.html */
-        .main-bg {
-            background-color: var(--c-cream);
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFB7A5' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        .petal {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(ellipse at 30% 30%, #FFCEC2 0%, #FFB7A5 50%, #F5A799 100%);
+            border-radius: 50% 0 50% 50%;
+            opacity: 0.6;
+            animation: fall linear infinite;
+            transform-origin: center;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* ================================================
-           I18N LANGUAGE SWITCHER STYLES
+           ENVELOPE STYLES - LUXURY EDITION
+           ================================================ */
+        .envelope-container {
+            position: relative;
+            width: 340px;
+            height: 220px;
+            perspective: 1200px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15));
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.03) translateY(-5px);
+            filter: drop-shadow(0 35px 60px rgba(0, 0, 0, 0.2));
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Envelope body - Premium paper texture */
+        .envelope-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.4) 0%,
+                    transparent 50%),
+                linear-gradient(145deg, #F8F3EC 0%, #F0E8DD 40%, #E8DFD3 100%);
+            border-radius: 6px;
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.12),
+                0 10px 30px rgba(0, 0, 0, 0.08),
+                inset 0 2px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        /* Paper texture overlay */
+        .envelope-body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        /* Gold foil shimmer effect */
+        .envelope-body::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                    transparent 0%,
+                    rgba(201, 169, 98, 0.08) 25%,
+                    transparent 50%,
+                    rgba(201, 169, 98, 0.08) 75%,
+                    transparent 100%);
+            background-size: 400% 400%;
+            animation: shimmer 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+
+            0%,
+            100% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+        }
+
+        .envelope-container:hover .envelope-body {
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.15),
+                0 15px 40px rgba(0, 0, 0, 0.1),
+                inset 0 2px 0 rgba(255, 255, 255, 1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        /* Floral emboss pattern */
+        .envelope-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.15;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23A08060' fill-opacity='0.8'%3E%3Cpath d='M10 30 Q15 20 25 25 Q20 35 10 30 M10 30 Q5 25 10 15 Q15 20 10 30'/%3E%3Cpath d='M85 70 Q90 60 100 65 Q95 75 85 70 M85 70 Q80 65 85 55 Q90 60 85 70'/%3E%3Cpath d='M5 80 Q10 70 20 75 Q15 85 5 80'/%3E%3Cpath d='M90 20 Q95 10 105 15 Q100 25 90 20' transform='translate(-5,0)'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* Bottom left decorative branch */
+        .envelope-decor-left {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            width: 60px;
+            height: 40px;
+            opacity: 0.2;
+        }
+
+        .envelope-decor-left::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #8B7355);
+            transform: rotate(-20deg);
+            top: 20px;
+        }
+
+        .envelope-decor-left::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 15px;
+            border: 1px solid #8B7355;
+            border-radius: 50% 0 50% 50%;
+            top: 10px;
+            left: 30px;
+            transform: rotate(-30deg);
+        }
+
+        /* Bottom right decorative branch */
+        .envelope-decor-right {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 60px;
+            height: 40px;
+            opacity: 0.2;
+            transform: scaleX(-1);
+        }
+
+        .envelope-decor-right::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #8B7355);
+            transform: rotate(-20deg);
+            top: 20px;
+        }
+
+        .envelope-decor-right::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 15px;
+            border: 1px solid #8B7355;
+            border-radius: 50% 0 50% 50%;
+            top: 10px;
+            left: 30px;
+            transform: rotate(-30deg);
+        }
+
+        /* "My dear" text */
+        .envelope-text {
+            position: absolute;
+            bottom: 50px;
+            left: 30px;
+            font-family: var(--font-script);
+            font-size: 1.8rem;
+            color: #5C4A3A;
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+
+        /* Top flap (triangle) - Premium finish */
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 110px;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 60%),
+                linear-gradient(180deg, #F5EDE2 0%, #EBE3D8 50%, #E0D8CD 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transform-origin: top center;
+            transform: rotateX(0deg);
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .envelope-flap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .envelope-flap::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.08) 100%);
+            pointer-events: none;
+        }
+
+        /* Inner flap shadow - deeper for luxury feel */
+        .envelope-inner-shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 110px;
+            background: linear-gradient(180deg, #C8BFB4 0%, #D8CFC4 40%, #E8DFD3 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 1;
+        }
+
+        /* Rosemary sprig - Realistic design */
+        .rosemary {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            z-index: 5;
+            width: 80px;
+            height: 100px;
+            transition: all 0.5s ease;
+            filter: drop-shadow(2px 3px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Main stem */
+        .rosemary-stem {
+            position: absolute;
+            width: 3px;
+            height: 90px;
+            background: linear-gradient(to bottom,
+                    #5A7350 0%,
+                    #4A6341 30%,
+                    #3D5636 60%,
+                    #324A2D 100%);
+            left: 50%;
+            top: 5px;
+            transform: translateX(-50%);
+            border-radius: 3px;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Rosemary leaves - needle-like */
+        .rosemary-leaf {
+            position: absolute;
+            width: 4px;
+            height: 18px;
+            background: linear-gradient(to top,
+                    #3D5636 0%,
+                    #5A7D50 40%,
+                    #6B8E5A 70%,
+                    #7A9E68 100%);
+            border-radius: 50% 50% 30% 30%;
+            transform-origin: bottom center;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Left side leaves */
+        .rosemary-leaf:nth-child(2) {
+            left: calc(50% - 3px);
+            top: 8px;
+            transform: rotate(-55deg);
+            height: 16px;
+        }
+
+        .rosemary-leaf:nth-child(3) {
+            left: calc(50% - 3px);
+            top: 18px;
+            transform: rotate(-50deg);
+            height: 18px;
+        }
+
+        .rosemary-leaf:nth-child(4) {
+            left: calc(50% - 3px);
+            top: 28px;
+            transform: rotate(-45deg);
+            height: 20px;
+        }
+
+        .rosemary-leaf:nth-child(5) {
+            left: calc(50% - 3px);
+            top: 38px;
+            transform: rotate(-40deg);
+            height: 20px;
+        }
+
+        .rosemary-leaf:nth-child(6) {
+            left: calc(50% - 3px);
+            top: 48px;
+            transform: rotate(-35deg);
+            height: 18px;
+        }
+
+        .rosemary-leaf:nth-child(7) {
+            left: calc(50% - 3px);
+            top: 58px;
+            transform: rotate(-30deg);
+            height: 16px;
+        }
+
+        .rosemary-leaf:nth-child(8) {
+            left: calc(50% - 3px);
+            top: 68px;
+            transform: rotate(-25deg);
+            height: 14px;
+        }
+
+        .rosemary-leaf:nth-child(9) {
+            left: calc(50% - 3px);
+            top: 78px;
+            transform: rotate(-20deg);
+            height: 12px;
+        }
+
+        /* Right side leaves */
+        .rosemary-leaf:nth-child(10) {
+            left: calc(50% - 1px);
+            top: 8px;
+            transform: rotate(55deg);
+            height: 16px;
+        }
+
+        .rosemary-leaf:nth-child(11) {
+            left: calc(50% - 1px);
+            top: 18px;
+            transform: rotate(50deg);
+            height: 18px;
+        }
+
+        .rosemary-leaf:nth-child(12) {
+            left: calc(50% - 1px);
+            top: 28px;
+            transform: rotate(45deg);
+            height: 20px;
+        }
+
+        .rosemary-leaf:nth-child(13) {
+            left: calc(50% - 1px);
+            top: 38px;
+            transform: rotate(40deg);
+            height: 20px;
+        }
+
+        .rosemary-leaf:nth-child(14) {
+            left: calc(50% - 1px);
+            top: 48px;
+            transform: rotate(35deg);
+            height: 18px;
+        }
+
+        .rosemary-leaf:nth-child(15) {
+            left: calc(50% - 1px);
+            top: 58px;
+            transform: rotate(30deg);
+            height: 16px;
+        }
+
+        .rosemary-leaf:nth-child(16) {
+            left: calc(50% - 1px);
+            top: 68px;
+            transform: rotate(25deg);
+            height: 14px;
+        }
+
+        .rosemary-leaf:nth-child(17) {
+            left: calc(50% - 1px);
+            top: 78px;
+            transform: rotate(20deg);
+            height: 12px;
+        }
+
+        /* Additional smaller leaves for fullness */
+        .rosemary-leaf:nth-child(18) {
+            left: calc(50% - 2px);
+            top: 13px;
+            transform: rotate(-52deg);
+            height: 12px;
+            width: 3px;
+            opacity: 0.8;
+        }
+
+        .rosemary-leaf:nth-child(19) {
+            left: calc(50% - 2px);
+            top: 23px;
+            transform: rotate(-47deg);
+            height: 14px;
+            width: 3px;
+            opacity: 0.8;
+        }
+
+        .rosemary-leaf:nth-child(20) {
+            left: calc(50% - 2px);
+            top: 33px;
+            transform: rotate(-42deg);
+            height: 14px;
+            width: 3px;
+            opacity: 0.8;
+        }
+
+        .rosemary-leaf:nth-child(21) {
+            left: calc(50%);
+            top: 13px;
+            transform: rotate(52deg);
+            height: 12px;
+            width: 3px;
+            opacity: 0.8;
+        }
+
+        .rosemary-leaf:nth-child(22) {
+            left: calc(50%);
+            top: 23px;
+            transform: rotate(47deg);
+            height: 14px;
+            width: 3px;
+            opacity: 0.8;
+        }
+
+        .rosemary-leaf:nth-child(23) {
+            left: calc(50%);
+            top: 33px;
+            transform: rotate(42deg);
+            height: 14px;
+            width: 3px;
+            opacity: 0.8;
+        }
+
+        /* ================================================
+           WAX SEAL - ULTRA REALISTIC
+           ================================================ */
+        .wax-seal {
+            position: absolute;
+            top: calc(50% + 20px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            z-index: 6;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wax-seal:hover {
+            transform: translate(-50%, -50%) scale(1.08) rotate(2deg);
+        }
+
+        .wax-seal-body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 50%;
+            /* Complex wax gradient for realism */
+            background:
+                radial-gradient(ellipse at 25% 25%, rgba(255, 120, 100, 0.6) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 70%, rgba(60, 0, 0, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 30% 30%,
+                    #E85555 0%,
+                    #D63030 15%,
+                    #B22222 35%,
+                    #8B1A1A 55%,
+                    #6B0000 75%,
+                    #4A0000 100%);
+            box-shadow:
+                /* Outer glow */
+                0 0 20px rgba(139, 0, 0, 0.3),
+                /* Main shadow */
+                0 8px 25px rgba(107, 0, 0, 0.5),
+                0 4px 10px rgba(0, 0, 0, 0.3),
+                /* Inner highlights */
+                inset 0 3px 8px rgba(255, 150, 130, 0.4),
+                inset 0 -4px 12px rgba(40, 0, 0, 0.5),
+                /* Edge definition */
+                inset 0 0 2px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wax-seal:hover .wax-seal-body {
+            box-shadow:
+                0 0 25px rgba(139, 0, 0, 0.4),
+                0 12px 35px rgba(107, 0, 0, 0.6),
+                0 6px 15px rgba(0, 0, 0, 0.35),
+                inset 0 3px 8px rgba(255, 150, 130, 0.5),
+                inset 0 -4px 12px rgba(40, 0, 0, 0.5),
+                inset 0 0 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Wax seal irregular edge - realistic melted wax shape */
+        .wax-seal-body::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: inherit;
+            border-radius: 45% 55% 48% 52% / 52% 45% 55% 48%;
+            z-index: -1;
+            filter: blur(0.5px);
+        }
+
+        /* Wax drips for ultra realism */
+        .wax-seal-body::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 50% 30%,
+                    #C03030 0%,
+                    #8B1A1A 50%,
+                    #5A0000 100%);
+            border-radius: 50% 50% 60% 60%;
+            box-shadow:
+                0 2px 6px rgba(0, 0, 0, 0.3),
+                inset 0 1px 2px rgba(255, 100, 80, 0.3);
+        }
+
+        /* Additional wax drip details */
+        .wax-drip {
+            position: absolute;
+            background: radial-gradient(circle at 50% 30%,
+                    #C03030 0%,
+                    #8B1A1A 50%,
+                    #5A0000 100%);
+            border-radius: 50% 50% 60% 60%;
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.25),
+                inset 0 1px 2px rgba(255, 100, 80, 0.2);
+        }
+
+        .wax-drip:nth-child(1) {
+            bottom: -5px;
+            left: 20%;
+            width: 8px;
+            height: 8px;
+        }
+
+        .wax-drip:nth-child(2) {
+            bottom: -6px;
+            right: 25%;
+            width: 6px;
+            height: 9px;
+        }
+
+        /* Wax seal emboss pattern - elegant initials */
+        .wax-seal-emboss {
+            position: absolute;
+            inset: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            /* Embossed ring */
+            box-shadow:
+                inset 0 1px 3px rgba(0, 0, 0, 0.3),
+                inset 0 -1px 2px rgba(255, 150, 130, 0.2);
+        }
+
+        .wax-seal-emboss::before {
+            content: '♥';
+            font-size: 1.4rem;
+            color: transparent;
+            background: linear-gradient(180deg,
+                    rgba(255, 180, 160, 0.5) 0%,
+                    rgba(180, 80, 80, 0.3) 50%,
+                    rgba(60, 0, 0, 0.4) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.4),
+                0 -1px 1px rgba(255, 150, 130, 0.3);
+            filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Inner ring detail */
+        .wax-seal-emboss::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border: 1px solid rgba(255, 150, 130, 0.15);
+            border-radius: 50%;
+            box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Wax texture overlay */
+        .wax-seal-texture {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+        }
+
+        /* Shine reflection on wax */
+        .wax-seal-shine {
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            width: 18px;
+            height: 10px;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.35) 0%,
+                    rgba(255, 200, 180, 0.2) 50%,
+                    transparent 100%);
+            border-radius: 50%;
+            transform: rotate(-20deg);
+            pointer-events: none;
+        }
+
+        /* ================================================
+           OPEN ANIMATION
+           ================================================ */
+        .envelope-container.opening .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-container.opening .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        .envelope-container.opening .rosemary {
+            opacity: 0;
+            transform: translate(-50%, -30%) translateY(-30px);
+        }
+
+        /* Card emerging */
+        .invitation-card {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            width: 90%;
+            height: 180px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF8F0 100%);
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+            opacity: 0;
+        }
+
+        .envelope-container.opening .invitation-card {
+            transform: translateX(-50%) translateY(-100px);
+            opacity: 1;
+        }
+
+        .invitation-card-title {
+            font-family: var(--font-script);
+            font-size: 1.8rem;
+            color: #B8860B;
+            margin-bottom: 10px;
+        }
+
+        .invitation-card-names {
+            font-family: var(--font-main);
+            font-size: 1rem;
+            color: var(--c-text);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .invitation-card-date {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        /* Click hint */
+        .click-hint {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: #888;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .envelope-container.opening .click-hint {
+            opacity: 0;
+        }
+
+        /* After opening - continue hint */
+        /* Hidden - Auto warp to wedding card now */
+        .continue-hint {
+            display: none !important;
+        }
+
+        /* ================================================
+           LANGUAGE SWITCHER
            ================================================ */
         .lang-switcher {
             position: fixed;
@@ -79,7 +849,7 @@
         .lang-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-            border-color: var(--c-coral);
+            border-color: #FF6F61;
         }
 
         .lang-btn .flag {
@@ -139,12 +909,12 @@
 
         .lang-option:hover {
             background: rgba(255, 111, 97, 0.08);
-            color: var(--c-coral);
+            color: #FF6F61;
         }
 
         .lang-option.active {
             background: rgba(255, 111, 97, 0.12);
-            color: var(--c-coral);
+            color: #FF6F61;
         }
 
         .lang-option .flag {
@@ -161,6 +931,128 @@
             opacity: 1;
         }
 
+        /* ================================================
+           RESPONSIVE BREAKPOINTS
+           ================================================ */
+
+        /* Large Desktop (1200px+) */
+        @media (min-width: 1200px) {
+            .envelope-container {
+                width: 400px;
+                height: 260px;
+            }
+
+            .envelope-flap {
+                height: 130px;
+            }
+
+            .envelope-inner-shadow {
+                height: 130px;
+            }
+
+            .envelope-text {
+                font-size: 2.2rem;
+                bottom: 60px;
+                left: 40px;
+            }
+
+            .wax-seal {
+                width: 65px;
+                height: 65px;
+            }
+
+            .rosemary {
+                width: 90px;
+                height: 110px;
+            }
+
+            .invitation-card {
+                height: 210px;
+            }
+
+            .invitation-card-title {
+                font-size: 2.2rem;
+            }
+
+            .invitation-card-names {
+                font-size: 1.1rem;
+            }
+
+            .continue-hint {
+                padding: 14px 36px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Tablet Landscape (1024px) */
+        @media (max-width: 1024px) {
+            .envelope-container {
+                width: 360px;
+                height: 235px;
+            }
+
+            .envelope-flap {
+                height: 118px;
+            }
+
+            .envelope-inner-shadow {
+                height: 118px;
+            }
+        }
+
+        /* Tablet Portrait (768px) */
+        @media (max-width: 768px) {
+            .envelope-container {
+                width: 320px;
+                height: 210px;
+            }
+
+            .envelope-flap {
+                height: 105px;
+            }
+
+            .envelope-inner-shadow {
+                height: 105px;
+            }
+
+            .envelope-text {
+                font-size: 1.6rem;
+                bottom: 45px;
+                left: 28px;
+            }
+
+            .wax-seal {
+                width: 50px;
+                height: 50px;
+            }
+
+            .rosemary {
+                width: 70px;
+                height: 85px;
+            }
+
+            .rosemary-stem {
+                height: 75px;
+            }
+
+            .invitation-card {
+                height: 165px;
+            }
+
+            .invitation-card-title {
+                font-size: 1.6rem;
+            }
+
+            .invitation-card-names {
+                font-size: 0.9rem;
+            }
+
+            .click-hint {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Mobile Large (640px) */
         @media (max-width: 640px) {
             .lang-switcher {
                 top: 12px;
@@ -175,56 +1067,295 @@
             .lang-btn .lang-name {
                 display: none;
             }
+
+            .envelope-container {
+                width: 290px;
+                height: 190px;
+            }
+
+            .envelope-flap {
+                height: 95px;
+            }
+
+            .envelope-inner-shadow {
+                height: 95px;
+            }
+
+            .envelope-text {
+                font-size: 1.4rem;
+                bottom: 38px;
+                left: 22px;
+            }
+
+            .wax-seal {
+                width: 45px;
+                height: 45px;
+                top: calc(50% + 15px);
+            }
+
+            .wax-seal-emboss::before {
+                font-size: 1.2rem;
+            }
+
+            .rosemary {
+                width: 60px;
+                height: 75px;
+                top: 42%;
+            }
+
+            .rosemary-stem {
+                height: 65px;
+                width: 2px;
+            }
+
+            .rosemary-leaf {
+                width: 3px;
+            }
+
+            .invitation-card {
+                height: 145px;
+                padding: 15px;
+            }
+
+            .envelope-container.opening .invitation-card {
+                transform: translateX(-50%) translateY(-85px);
+            }
+
+            .invitation-card-title {
+                font-size: 1.3rem;
+            }
+
+            .invitation-card-names {
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+
+            .invitation-card-date {
+                font-size: 0.75rem;
+            }
+
+            .click-hint {
+                bottom: -40px;
+                font-size: 0.8rem;
+            }
+
+            .continue-hint {
+                bottom: -70px;
+                padding: 10px 24px;
+                font-size: 0.85rem;
+            }
+
+            .envelope-decor-left,
+            .envelope-decor-right {
+                bottom: 10px;
+                width: 50px;
+                height: 30px;
+            }
+        }
+
+        /* Mobile Medium (480px) */
+        @media (max-width: 480px) {
+            .envelope-container {
+                width: 260px;
+                height: 170px;
+            }
+
+            .envelope-flap {
+                height: 85px;
+            }
+
+            .envelope-inner-shadow {
+                height: 85px;
+            }
+
+            .envelope-text {
+                font-size: 1.2rem;
+                bottom: 32px;
+                left: 18px;
+            }
+
+            .wax-seal {
+                width: 40px;
+                height: 40px;
+                top: calc(50% + 12px);
+            }
+
+            .wax-seal-emboss::before {
+                font-size: 1rem;
+            }
+
+            .rosemary {
+                width: 50px;
+                height: 65px;
+                top: 40%;
+            }
+
+            .rosemary-stem {
+                height: 55px;
+            }
+
+            .invitation-card {
+                height: 130px;
+                padding: 12px;
+            }
+
+            .envelope-container.opening .invitation-card {
+                transform: translateX(-50%) translateY(-75px);
+            }
+
+            .invitation-card-title {
+                font-size: 1.1rem;
+                margin-bottom: 6px;
+            }
+
+            .invitation-card-names {
+                font-size: 0.7rem;
+            }
+
+            .invitation-card-date {
+                font-size: 0.65rem;
+                margin-top: 5px;
+            }
+
+            .click-hint {
+                bottom: -35px;
+                font-size: 0.75rem;
+            }
+
+            .continue-hint {
+                bottom: -60px;
+                padding: 8px 20px;
+                font-size: 0.8rem;
+            }
+
+            .envelope-decor-left,
+            .envelope-decor-right {
+                display: none;
+            }
+        }
+
+        /* Mobile Small (360px) */
+        @media (max-width: 360px) {
+            .envelope-container {
+                width: 240px;
+                height: 155px;
+            }
+
+            .envelope-flap {
+                height: 78px;
+            }
+
+            .envelope-inner-shadow {
+                height: 78px;
+            }
+
+            .envelope-text {
+                font-size: 1.1rem;
+                bottom: 28px;
+                left: 15px;
+            }
+
+            .wax-seal {
+                width: 36px;
+                height: 36px;
+                top: calc(50% + 10px);
+            }
+
+            .wax-seal-emboss::before {
+                font-size: 0.9rem;
+            }
+
+            .rosemary {
+                width: 45px;
+                height: 55px;
+                top: 38%;
+            }
+
+            .rosemary-stem {
+                height: 48px;
+            }
+
+            .invitation-card {
+                height: 115px;
+                width: 92%;
+                padding: 10px;
+            }
+
+            .envelope-container.opening .invitation-card {
+                transform: translateX(-50%) translateY(-65px);
+            }
+
+            .invitation-card-title {
+                font-size: 1rem;
+                margin-bottom: 4px;
+            }
+
+            .invitation-card-names {
+                font-size: 0.65rem;
+            }
+
+            .invitation-card-date {
+                font-size: 0.6rem;
+                margin-top: 4px;
+            }
+
+            .click-hint {
+                bottom: -30px;
+                font-size: 0.7rem;
+            }
+
+            .continue-hint {
+                bottom: -55px;
+                padding: 8px 18px;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Landscape orientation on mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .envelope-container {
+                width: 280px;
+                height: 180px;
+                transform: scale(0.85);
+            }
+
+            .click-hint {
+                bottom: -25px;
+            }
+
+            .continue-hint {
+                bottom: -50px;
+            }
         }
 
         /* ================================================
-           DARK MODE - Sweet & Romantic Wedding Theme
-           Color Palette: Rose, Champagne, Dusty Rose, Blush
+           DARK MODE
            ================================================ */
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #2D2226 !important;
-                background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%23E8B4B8" fill-opacity="0.06"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E') !important;
+                background: linear-gradient(135deg, #2D2226 0%, #3D2F33 50%, #2D2226 100%) !important;
             }
 
-            .main-bg {
-                background-color: #2D2226 !important;
-                background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%23E8B4B8" fill-opacity="0.06"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E') !important;
+            .envelope-body {
+                background: linear-gradient(145deg, #D4C9BC 0%, #C8BDB0 100%);
             }
 
-            /* Title - Rose Gold */
-            h1 {
-                color: #E8B4B8 !important;
+            .envelope-flap {
+                background: linear-gradient(180deg, #CFC4B7 0%, #C0B5A8 100%);
             }
 
-            /* Subtitle text - Soft champagne */
-            .text-gray-500,
-            .text-gray-400 {
-                color: #C4A99A !important;
+            .envelope-inner-shadow {
+                background: linear-gradient(180deg, #B8ADA0 0%, #C0B5A8 100%);
             }
 
-            .w-1.h-1.bg-gray-400 {
-                background-color: #9E8578 !important;
+            .invitation-card {
+                background: linear-gradient(135deg, #F5EFE6 0%, #EDE5DA 100%);
             }
 
-            /* Entry button - Dusty rose style */
-            a.group {
-                background: #3D2F33 !important;
-                color: #F5D6D8 !important;
-                border-color: #E8B4B8 !important;
+            .click-hint {
+                color: #C4A99A;
             }
 
-            a.group:hover {
-                background: #E8B4B8 !important;
-                color: #2D2226 !important;
-            }
-
-            /* Heart icon - Warm coral pink */
-            .text-\[#FF6F61\] {
-                color: #F4A5A5 !important;
-            }
-
-            /* Language Switcher - Warm romantic style */
             .lang-btn {
                 background: rgba(61, 47, 51, 0.95) !important;
                 border-color: rgba(232, 180, 184, 0.4) !important;
@@ -253,11 +1384,17 @@
                 background: rgba(244, 165, 165, 0.2) !important;
                 color: #F4A5A5 !important;
             }
+
+            .petal {
+                opacity: 0.3;
+            }
         }
     </style>
 </head>
 
-<body class="main-bg h-screen w-screen flex flex-col items-center justify-center p-4">
+<body>
+    <!-- Rose Petals Background -->
+    <div class="petals-bg" id="petalsBg"></div>
 
     <!-- Language Switcher (i18n) -->
     <div class="lang-switcher" id="langSwitcher">
@@ -297,52 +1434,149 @@
         </div>
     </div>
 
-    <!-- Content Container -->
-    <div class="text-center" data-aos="fade-up" data-aos-duration="1200">
+    <!-- Envelope Container -->
+    <div class="envelope-container" id="envelopeContainer" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="envelope">
+            <!-- Inner shadow (behind main flap) -->
+            <div class="envelope-inner-shadow"></div>
 
-        <!-- Animated Heart Icon -->
-        <div class="mb-6 flex justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="w-16 h-16 text-[#FF6F61] animate-pulse">
-                <path
-                    d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-            </svg>
+            <!-- Envelope body -->
+            <div class="envelope-body">
+                <div class="envelope-pattern"></div>
+                <div class="envelope-decor-left"></div>
+                <div class="envelope-decor-right"></div>
+                <div class="envelope-text" data-i18n="myDear">My dear</div>
+            </div>
+
+            <!-- Invitation card inside -->
+            <div class="invitation-card">
+                <div class="invitation-card-title">Wedding Invitation</div>
+                <div class="invitation-card-names">SUNEE & SUPAKIT</div>
+                <div class="invitation-card-date">22 • 11 • 2026</div>
+            </div>
+
+            <!-- Top flap -->
+            <div class="envelope-flap"></div>
+
+            <!-- Rosemary sprig -->
+            <div class="rosemary">
+                <div class="rosemary-stem"></div>
+                <!-- Left side leaves -->
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <!-- Right side leaves -->
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <!-- Additional smaller leaves for fullness -->
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+                <div class="rosemary-leaf"></div>
+            </div>
+
+            <!-- Wax seal - Ultra Realistic -->
+            <div class="wax-seal">
+                <div class="wax-seal-body">
+                    <!-- Wax drips -->
+                    <div class="wax-drip"></div>
+                    <div class="wax-drip"></div>
+                    <!-- Texture overlay -->
+                    <div class="wax-seal-texture"></div>
+                    <!-- Shine reflection -->
+                    <div class="wax-seal-shine"></div>
+                    <!-- Embossed design -->
+                    <div class="wax-seal-emboss"></div>
+                </div>
+            </div>
         </div>
 
-        <!-- Wedding Title / Hashtag -->
-        <h1 class="text-3xl md:text-5xl font-display text-[#FF6F61] mb-4 tracking-wide">
-            #SuneeSupakitWedding
-        </h1>
+        <!-- Click hint -->
+        <div class="click-hint" data-i18n="clickHint">แตะเพื่อเปิดซอง</div>
 
-        <!-- Date -->
-        <div class="flex items-center justify-center space-x-2 text-gray-500 mb-10 text-lg" id="dateDisplay">
-            <span>22</span>
-            <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
-            <span data-i18n="month">November</span>
-            <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
-            <span>2026</span>
-        </div>
-
-        <!-- Entry Button -->
-        <a href="wedding_card.html"
-            class="group relative inline-flex items-center justify-center px-8 py-3 bg-white text-[#FF6F61] border-2 border-[#FF6F61] hover:bg-[#FF6F61] hover:text-white rounded-full font-medium transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
-            <span data-i18n="enterBtn">การ์ดเชิญ</span>
-            <svg xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-        </a>
-
+        <!-- Continue button (appears after opening) -->
+        <div class="continue-hint" id="continueBtn" data-i18n="continueBtn">ดูการ์ดเชิญ</div>
     </div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Initialize AOS
         AOS.init({
             duration: 800,
             easing: 'ease-out-cubic',
             once: true
+        });
+
+        // Create floating petals
+        function createPetals() {
+            const petalsBg = document.getElementById('petalsBg');
+            const petalCount = 15;
+
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                petal.style.animationDelay = (Math.random() * 15) + 's';
+                petal.style.width = (Math.random() * 15 + 20) + 'px';
+                petal.style.height = (Math.random() * 15 + 20) + 'px';
+                petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+                petalsBg.appendChild(petal);
+            }
+        }
+
+        createPetals();
+
+        // Envelope interaction - Direct warp to wedding card
+        const envelopeContainer = document.getElementById('envelopeContainer');
+        let isOpened = false;
+
+        envelopeContainer.addEventListener('click', function (e) {
+            if (isOpened) return;
+
+            // Start opening animation
+            envelopeContainer.classList.add('opening');
+            isOpened = true;
+
+            // After animation, warp to wedding card
+            setTimeout(() => {
+                // Create warp transition overlay
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed;
+                    inset: 0;
+                    background: radial-gradient(circle at center, #FFF8F0 0%, #FFE4D6 100%);
+                    z-index: 9999;
+                    opacity: 0;
+                    transition: opacity 0.6s ease-in-out;
+                    pointer-events: none;
+                `;
+                document.body.appendChild(overlay);
+
+                // Fade in overlay
+                requestAnimationFrame(() => {
+                    overlay.style.opacity = '1';
+                });
+
+                // Navigate after fade
+                setTimeout(() => {
+                    window.location.href = 'wedding_card.html';
+                }, 600);
+            }, 1200); // Wait for envelope animation to complete
         });
 
         // ===========================================
@@ -353,20 +1587,23 @@
                 th: {
                     langName: 'ไทย',
                     flag: '🇹🇭',
-                    month: 'พฤศจิกายน',
-                    enterBtn: 'การ์ดเชิญ'
+                    myDear: 'My dear',
+                    clickHint: 'แตะเพื่อเปิดซอง',
+                    continueBtn: 'ดูการ์ดเชิญ'
                 },
                 en: {
                     langName: 'English',
                     flag: '🇺🇸',
-                    month: 'November',
-                    enterBtn: 'Invitation'
+                    myDear: 'My dear',
+                    clickHint: 'Tap to open',
+                    continueBtn: 'View Invitation'
                 },
                 ja: {
                     langName: '日本語',
                     flag: '🇯🇵',
-                    month: '11月',
-                    enterBtn: '招待状'
+                    myDear: 'My dear',
+                    clickHint: 'タップして開く',
+                    continueBtn: '招待状を見る'
                 }
             };
 

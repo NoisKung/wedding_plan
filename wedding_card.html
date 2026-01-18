@@ -1902,7 +1902,8 @@
                     </div>
 
                     <div id="payment-progress" class="mt-2" style="display:none;">
-                        <div class="text-sm text-gray-600">กำลังอัพโหลด: <span id="upload-percent">0%</span></div>
+                        <div class="text-sm text-gray-600"><span data-i18n="uploading">กำลังอัพโหลด:</span> <span
+                                id="upload-percent">0%</span></div>
                         <div style="height:6px;background:#e5e7eb;border-radius:6px;margin-top:6px;">
                             <div id="upload-bar" style="height:6px;width:0%;background:#34d399;border-radius:6px;">
                             </div>
@@ -1947,7 +1948,8 @@
             document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdown").innerHTML = "<div class='text-2xl highlight-text font-bold'>The Wedding Day is Here!</div>";
+                const msg = window.getT ? window.getT('countdownComplete') : 'The Wedding Day is Here!';
+                document.getElementById("countdown").innerHTML = "<div class='text-2xl highlight-text font-bold'>" + msg + "</div>";
             }
         }, 1000);
 
@@ -1974,10 +1976,12 @@
         function validateFile(file) {
             if (!file) return { valid: true };
             if (file.size > MAX_FILE_SIZE) {
-                return { valid: false, error: 'ไฟล์มีขนาดใหญ่เกินไป (สูงสุด 5MB)' };
+                const errMsg = window.getT ? window.getT('alertFileTooLarge') : 'ไฟล์มีขนาดใหญ่เกินไป (สูงสุด 5MB)';
+                return { valid: false, error: errMsg };
             }
             if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-                return { valid: false, error: 'ประเภทไฟล์ไม่ถูกต้อง (รองรับ JPG, PNG, GIF, WebP, PDF)' };
+                const errMsg = window.getT ? window.getT('alertInvalidFileType') : 'ประเภทไฟล์ไม่ถูกต้อง (รองรับ JPG, PNG, GIF, WebP, PDF)';
+                return { valid: false, error: errMsg };
             }
             return { valid: true };
         }
@@ -2079,7 +2083,7 @@
                 const manualEmailInput = document.getElementById('manual-email');
 
                 if (!manualNameInput || !manualNameInput.value.trim()) {
-                    alert('กรุณากรอกชื่อของคุณ');
+                    alert(window.getT ? window.getT('alertPleaseEnterName') : 'กรุณากรอกชื่อของคุณ');
                     manualNameInput.focus();
                     return;
                 }
@@ -2092,7 +2096,7 @@
 
             // Disable submit button and show loading state
             submitBtn.disabled = true;
-            submitBtn.textContent = 'กำลังส่ง...';
+            submitBtn.textContent = window.getT ? window.getT('alertSending') : 'กำลังส่ง...';
 
             // Sanitize inputs
             guestName = sanitizeInput(guestName);
@@ -2147,11 +2151,11 @@
 
         // Add to Calendar Link Generator
         function generateCalendarLink() {
-            const title = encodeURIComponent('งานแต่งงานสุนีย์ & ศุภกิตติ์');
+            const title = encodeURIComponent(window.getT ? window.getT('calendarEventTitle') : 'งานแต่งงานสุนีย์ & ศุภกิตติ์');
             // Format: YYYYMMDDTHHMMSS/YYYYMMDDTHHMMSS
             const startTime = '20261121T080000'; // 8:00 AM
             const endTime = '20261121T220000'; // 10:00 PM (covers whole day event)
-            const details = encodeURIComponent('ร่วมแสดงความยินดีในวันสำคัญของเรา - #SuneeSupakitWedding');
+            const details = encodeURIComponent(window.getT ? window.getT('calendarEventDetails') : 'ร่วมแสดงความยินดีในวันสำคัญของเรา - #SuneeSupakitWedding');
             const location = encodeURIComponent('VIVACE WEDDING HALL ราชพฤกษ์ - 18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด นนทบุรี 11120'); // updated venue/address
 
             const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startTime}/${endTime}&details=${details}&location=${location}`;
@@ -2195,14 +2199,14 @@
                 copyBtn.addEventListener('click', function () {
                     const acct = (document.getElementById('account-number') || {}).textContent || '';
                     if (!acct) {
-                        alert('ไม่มีเลขบัญชีที่สามารถคัดลอกได้');
+                        alert(window.getT ? window.getT('alertNoAccountNumber') : 'ไม่มีเลขบัญชีที่สามารถคัดลอกได้');
                         return;
                     }
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(acct.trim()).then(function () {
-                            alert('คัดลอกเลขบัญชีเรียบร้อย: ' + acct.trim());
+                            alert((window.getT ? window.getT('alertAccountCopied') : 'คัดลอกเลขบัญชีเรียบร้อย: ') + acct.trim());
                         }).catch(function () {
-                            alert('ไม่สามารถคัดลอกเลขบัญชีได้');
+                            alert(window.getT ? window.getT('alertCannotCopyAccount') : 'ไม่สามารถคัดลอกเลขบัญชีได้');
                         });
                     } else {
                         // Fallback
@@ -2210,7 +2214,7 @@
                         ta.value = acct.trim();
                         document.body.appendChild(ta);
                         ta.select();
-                        try { document.execCommand('copy'); alert('คัดลอกเลขบัญชีเรียบร้อย: ' + acct.trim()); } catch (e) { alert('ไม่สามารถคัดลอกเลขบัญชีได้'); }
+                        try { document.execCommand('copy'); alert((window.getT ? window.getT('alertAccountCopied') : 'คัดลอกเลขบัญชีเรียบร้อย: ') + acct.trim()); } catch (e) { alert(window.getT ? window.getT('alertCannotCopyAccount') : 'ไม่สามารถคัดลอกเลขบัญชีได้'); }
                         document.body.removeChild(ta);
                     }
                 });
@@ -2250,7 +2254,7 @@
                     const payerEmailEl = document.getElementById('payer-email');
 
                     const amount = amountEl && amountEl.value ? amountEl.value.trim() : '';
-                    if (!amount || Number(amount) <= 0) { alert('กรุณาระบุจำนวนเงินที่ถูกต้อง'); return; }
+                    if (!amount || Number(amount) <= 0) { alert(window.getT ? window.getT('alertPleaseEnterValidAmount') : 'กรุณาระบุจำนวนเงินที่ถูกต้อง'); return; }
 
                     // Prepare payload with sanitization
                     const payload = {
@@ -2264,7 +2268,7 @@
 
                     function sendPayload() {
                         // Show simple sending state
-                        if (progressWrap) { progressWrap.style.display = 'block'; progressPercent.textContent = 'กำลังส่ง...'; }
+                        if (progressWrap) { progressWrap.style.display = 'block'; progressPercent.textContent = window.getT ? window.getT('alertSending') : 'กำลังส่ง...'; }
 
                         // Create hidden iframe
                         const iframeName = 'payment-frame-' + new Date().getTime();
@@ -2296,7 +2300,7 @@
 
                         // Emulate success callback (since we can't read response from cross-origin iframe)
                         setTimeout(function () {
-                            alert('อัพโหลดสลิปและแจ้งโอนเรียบร้อย ขอบคุณมากค่ะ');
+                            alert(window.getT ? window.getT('alertPaymentSuccess') : 'อัพโหลดสลิปและแจ้งโอนเรียบร้อย ขอบคุณมากค่ะ');
                             paymentForm.reset();
                             if (progressWrap) progressWrap.style.display = 'none';
                             hideModal();
@@ -2329,7 +2333,7 @@
                             sendPayload();
                         };
                         reader.onerror = function () {
-                            alert('ไม่สามารถอ่านไฟล์สลิปได้');
+                            alert(window.getT ? window.getT('alertCannotReadSlip') : 'ไม่สามารถอ่านไฟล์สลิปได้');
                         };
                         reader.readAsDataURL(file);
                     } else {
@@ -2423,10 +2427,26 @@
                     copyAccount: "คัดลอกเลขบัญชี",
                     submitPayment: "แจ้งโอน & สลิป",
                     payFooterNote: "โปรดแนบสลิปหรือแจ้งชื่อ-จำนวนผู้เข้าร่วมหากต้องการ",
+                    // Alerts
+                    alertPleaseEnterName: "กรุณากรอกชื่อของคุณ",
+                    alertNoAccountNumber: "ไม่มีเลขบัญชีที่สามารถคัดลอกได้",
+                    alertAccountCopied: "คัดลอกเลขบัญชีเรียบร้อย: ",
+                    alertCannotCopyAccount: "ไม่สามารถคัดลอกเลขบัญชีได้",
+                    alertPleaseEnterValidAmount: "กรุณาระบุจำนวนเงินที่ถูกต้อง",
+                    alertPaymentSuccess: "อัพโหลดสลิปและแจ้งโอนเรียบร้อย ขอบคุณมากค่ะ",
+                    alertCannotReadSlip: "ไม่สามารถอ่านไฟล์สลิปได้",
+                    alertSending: "กำลังส่ง...",
+                    alertFileTooLarge: "ไฟล์มีขนาดใหญ่เกินไป (สูงสุด 5MB)",
+                    alertInvalidFileType: "ประเภทไฟล์ไม่ถูกต้อง (รองรับ JPG, PNG, GIF, WebP, PDF)",
                     // General
                     submit: "ส่ง",
                     cancel: "ยกเลิก",
-                    close: "ปิด"
+                    close: "ปิด",
+                    // Additional i18n strings
+                    countdownComplete: "วันแต่งงานมาถึงแล้ว!",
+                    uploading: "กำลังอัพโหลด:",
+                    calendarEventTitle: "งานแต่งงานสุนีย์ & ศุภกิตติ์",
+                    calendarEventDetails: "ร่วมแสดงความยินดีในวันสำคัญของเรา - #SuneeSupakitWedding"
                 },
                 en: {
                     langName: 'English',
@@ -2500,10 +2520,26 @@
                     copyAccount: "Copy Account",
                     submitPayment: "Submit Transfer",
                     payFooterNote: "Please attach slip or provide your name and guest count if needed",
+                    // Alerts
+                    alertPleaseEnterName: "Please enter your name",
+                    alertNoAccountNumber: "No account number available to copy",
+                    alertAccountCopied: "Account number copied: ",
+                    alertCannotCopyAccount: "Cannot copy account number",
+                    alertPleaseEnterValidAmount: "Please enter a valid amount",
+                    alertPaymentSuccess: "Slip uploaded and payment confirmed. Thank you!",
+                    alertCannotReadSlip: "Cannot read slip file",
+                    alertSending: "Sending...",
+                    alertFileTooLarge: "File is too large (max 5MB)",
+                    alertInvalidFileType: "Invalid file type (only JPG, PNG, GIF, WebP, PDF allowed)",
                     // General
                     submit: "Submit",
                     cancel: "Cancel",
-                    close: "Close"
+                    close: "Close",
+                    // Additional i18n strings
+                    countdownComplete: "The Wedding Day is Here!",
+                    uploading: "Uploading:",
+                    calendarEventTitle: "Sunee & Supakit Wedding",
+                    calendarEventDetails: "Join us for our special day - #SuneeSupakitWedding"
                 },
                 ja: {
                     langName: '日本語',
@@ -2577,10 +2613,26 @@
                     copyAccount: "口座番号をコピー",
                     submitPayment: "送信",
                     payFooterNote: "振込明細または参加者情報をお知らせください",
+                    // Alerts
+                    alertPleaseEnterName: "名前を入力してください",
+                    alertNoAccountNumber: "コピーできる口座番号がありません",
+                    alertAccountCopied: "口座番号をコピーしました: ",
+                    alertCannotCopyAccount: "口座番号をコピーできません",
+                    alertPleaseEnterValidAmount: "有効な金額を入力してください",
+                    alertPaymentSuccess: "振込明細のアップロードが完了しました。ありがとうございます！",
+                    alertCannotReadSlip: "振込明細を読み取れません",
+                    alertSending: "送信中...",
+                    alertFileTooLarge: "ファイルが大きすぎます（最大5MB）",
+                    alertInvalidFileType: "無効なファイル形式です（JPG, PNG, GIF, WebP, PDFのみ）",
                     // General
                     submit: "送信",
                     cancel: "キャンセル",
-                    close: "閉じる"
+                    close: "閉じる",
+                    // Additional i18n strings
+                    countdownComplete: "結婚式の日がやってきました！",
+                    uploading: "アップロード中:",
+                    calendarEventTitle: "スニーとスパキットの結婚式",
+                    calendarEventDetails: "私たちの特別な日へぜひご参加ください - #SuneeSupakitWedding"
                 }
             };
 
@@ -2588,6 +2640,15 @@
             // I18N CORE FUNCTIONS
             // ===========================================
             let currentLang = localStorage.getItem('wedding_lang') || 'th';
+
+            // Helper function to get translation strings (for use in alerts and dynamic messages)
+            function getT(key) {
+                const lang = currentLang || 'th';
+                return (translations[lang] && translations[lang][key]) || translations['th'][key] || key;
+            }
+
+            // Make getT available globally for other scripts
+            window.getT = getT;
 
             function setLanguage(lang) {
                 if (!translations[lang]) return;
@@ -2630,6 +2691,11 @@
                         option.setAttribute('aria-selected', 'false');
                     }
                 });
+
+                // Regenerate calendar link with new language
+                if (typeof generateCalendarLink === 'function') {
+                    generateCalendarLink();
+                }
             }
 
             function initLangSwitcher() {
