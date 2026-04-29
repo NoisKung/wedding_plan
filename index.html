@@ -1,549 +1,718 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>Sunee & Supakit | The Wedding</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500&display=swap"
+            rel="stylesheet"
+        />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sunee & Supakit | The Wedding</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap"
-        rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-warm: #FFF8F0;
-            --orange-primary: #E67E22;
-            --orange-dark: #D35400;
-            --brown-text: #5D4037;
-            --gold-accent: #C9A962;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'IBM Plex Sans Thai', sans-serif;
-            background-color: var(--bg-warm);
-            background-image: url('assets/theme/floral_bg.png');
-            background-size: 400px;
-            background-repeat: repeat;
-        }
-
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .scene {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1200px;
-        }
-
-        /* ================================================
-           ENVELOPE
-           ================================================ */
-        .envelope-container {
-            position: relative;
-            cursor: pointer;
-            filter: drop-shadow(0 20px 30px rgba(93, 64, 55, 0.15));
-        }
-
-        .envelope {
-            position: relative;
-            width: 85vw;
-            max-width: 520px;
-            aspect-ratio: 1.5 / 1;
-            transform-style: preserve-3d;
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .envelope-container:hover .envelope {
-            transform: scale(1.02) translateY(-5px);
-        }
-
-        .envelope-container.opening:hover .envelope {
-            transform: none;
-        }
-
-        /* Texture mixin */
-        .texture-bg {
-            background-image: url('assets/theme/envelope_texture.png');
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* ================================================
-           ENVELOPE BACK (Inside view)
-           ================================================ */
-        .envelope-back {
-            position: absolute;
-            inset: 0;
-            background-color: #D35400;
-            /* Fallback */
-            background-image: url('assets/theme/envelope_texture.png');
-            background-size: cover;
-            filter: brightness(0.7);
-            /* Darker for inside */
-            border-radius: 6px;
-            z-index: 1;
-        }
-
-        /* ================================================
-           CARD INSIDE
-           ================================================ */
-        .card-wrapper {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 5px;
-            z-index: 2;
-            transition: transform 2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform-origin: bottom center;
-        }
-
-        .envelope-container.opening .card-wrapper {
-            transform: translateY(-80px);
-            z-index: 40;
-            /* Pop out above envelope front */
-        }
-
-        .card {
-            width: 100%;
-            height: 100%;
-            background: #FFF;
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-bg-pattern {
-            position: absolute;
-            inset: 0;
-            background-image: url('assets/theme/floral_bg.png');
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .fox-illustration {
-            width: 120px;
-            height: auto;
-            margin-bottom: 10px;
-            z-index: 2;
-        }
-
-        .card-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            color: var(--orange-dark);
-            margin-bottom: 5px;
-            z-index: 2;
-            text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
-        }
-
-        .card-names {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-            font-weight: 600;
-            color: var(--brown-text);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            z-index: 2;
-        }
-
-        .card-date {
-            font-family: 'IBM Plex Sans Thai', sans-serif;
-            font-size: 0.8rem;
-            color: var(--orange-primary);
-            margin-top: 10px;
-            font-weight: 500;
-            z-index: 2;
-        }
-
-        /* ================================================
-           ENVELOPE FRONT
-           ================================================ */
-        .envelope-front {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 65%;
-            /* Lower pocket */
-            z-index: 10;
-        }
-
-        .envelope-body {
-            position: absolute;
-            inset: 0;
-            background-color: #E67E22;
-            background-image: url('assets/theme/envelope_texture.png');
-            background-size: cover;
-            border-radius: 0 0 6px 6px;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-            /* V-Cut shape mask */
-            clip-path: polygon(0 0, 50% 30%, 100% 0, 100% 100%, 0 100%);
-        }
-
-        /* Add depth borders */
-        .envelope-body::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent 30%);
-            pointer-events: none;
-        }
-
-        /* ================================================
-           FLAP
-           ================================================ */
-        .flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 65%;
-            /* Matches front height overlap */
-            z-index: 20;
-            transform-origin: top;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s linear 0.3s, opacity 0.4s ease 0.2s;
-        }
-
-        .envelope-container.opening .flap {
-            transform: rotateX(180deg);
-            z-index: 0;
-            opacity: 0;
-            /* Move behind and Disappear */
-        }
-
-        .flap-content {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #E67E22;
-            background-image: url('assets/theme/envelope_texture.png');
-            background-size: cover;
-            /* Pentagon shape to cover side gaps: Full width until 55%, then point to 90% */
-            clip-path: polygon(0 0, 100% 0, 100% 55%, 50% 90%, 0 55%);
-            border-radius: 6px 6px 0 0;
-            backface-visibility: hidden;
-            /* Hide when flipped */
-        }
-
-        /* The inside of the flap when flipped open */
-        .flap-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #D35400;
-            background-image: url('assets/theme/envelope_texture.png');
-            background-size: cover;
-            filter: brightness(0.8);
-            clip-path: polygon(0 0, 100% 0, 50% 55%);
-            border-radius: 6px 6px 0 0;
-            transform: rotateX(180deg);
-            backface-visibility: hidden;
-        }
-
-        /* ================================================
-           WAX SEAL
-           ================================================ */
-        .wax-seal-img {
-            position: absolute;
-            top: 55%;
-            /* Position at tip of flap */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            z-index: 25;
-            transition: transform 0.4s ease, opacity 0.4s ease;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
-        }
-
-        .envelope-container.opening .wax-seal-img {
-            transform: translate(-50%, -50%) scale(1.5);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* ================================================
-           TAP HINT
-           ================================================ */
-        .tap-hint {
-            text-align: center;
-            margin-top: 50px;
-            transition: opacity 0.3s ease;
-        }
-
-        .tap-hint-text {
-            font-size: 0.9rem;
-            color: var(--brown-text);
-            letter-spacing: 1px;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .envelope-container.opening .tap-hint {
-            opacity: 0;
-        }
-
-        /* ================================================
-           OVERLAY & TRANSITION
-           ================================================ */
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: #FFF8F0;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.8s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-        }
-
-        /* Language Switcher Overrides for visibility */
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: var(--gold-accent);
-            color: var(--brown-text);
-        }
-
-        @media (max-width: 480px) {
-            .envelope {
-                width: 90vw;
+        <style>
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
-        }
 
-        /* ================================================
-           DARK MODE
-           ================================================ */
-        @media (prefers-color-scheme: dark) {
             :root {
-                --bg-warm: #2D2226;
-                --orange-primary: #D35400;
-                /* Darker orange for envelope */
-                --orange-dark: #A04000;
-                --brown-text: #F5E6E8;
-                /* Light text */
-                --gold-accent: #E8B4B8;
-                /* Rose gold */
+                --blush: #ffcdd6;
+                --blush-pale: #fff0f5;
+                --wine: #8b3045;
+                --wine-mid: #c47585;
+                --white: #ffffff;
+                --text: #2d1f22;
+                --text-soft: #8b6068;
             }
 
+            html,
             body {
-                background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E8B4B8' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-color: var(--blush-pale);
+                font-family: "IBM Plex Sans Thai", sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* ── SCENE ── */
+            .scene {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* ── ENVELOPE CONTAINER ── */
+            .envelope-container {
+                position: relative;
+                cursor: pointer;
+                filter: drop-shadow(0 20px 48px rgba(139, 48, 69, 0.18));
+                transition: opacity 0.5s ease;
+            }
+            .envelope-container.hide {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .envelope {
+                position: relative;
+                width: min(88vw, 480px);
+                aspect-ratio: 3/2;
+                transform-style: preserve-3d;
+                transition: transform 0.4s ease;
+            }
+            .envelope-container:hover .envelope {
+                transform: translateY(-6px) scale(1.01);
+            }
+            .envelope-container.opening:hover .envelope {
+                transform: none;
+            }
+
+            .env-back {
+                position: absolute;
+                inset: 0;
+                background: var(--wine);
+                border-radius: 6px;
+                z-index: 1;
+            }
+
+            .card-wrapper {
+                position: absolute;
+                top: 8px;
+                left: 8px;
+                right: 8px;
+                bottom: 5px;
+                z-index: 2;
+                transition: transform 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                transform-origin: bottom center;
+            }
+            .envelope-container.opening .card-wrapper {
+                transform: translateY(-90px);
+                z-index: 40;
             }
 
             .card {
-                background: #3D2F33;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+                width: 100%;
+                height: 100%;
+                background: var(--white);
+                border-radius: 4px;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                overflow: hidden;
             }
-
+            .card-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: clamp(14px, 4vw, 24px);
+                gap: 5px;
+            }
+            .card-label {
+                font-family: "Cormorant Garamond", serif;
+                font-style: italic;
+                font-size: clamp(0.52rem, 1.4vw, 0.68rem);
+                color: var(--wine-mid);
+                letter-spacing: 3px;
+                text-transform: uppercase;
+            }
             .card-title {
-                color: #E8B4B8;
-                /* Rose Gold */
-                text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+                font-family: "Cormorant Garamond", serif;
+                font-size: clamp(1.4rem, 3.8vw, 2.1rem);
+                font-weight: 500;
+                color: var(--wine);
+                line-height: 1.1;
             }
-
+            .card-rule {
+                width: 30px;
+                height: 1px;
+                background: var(--wine-mid);
+                opacity: 0.45;
+                margin: 3px 0;
+            }
             .card-names {
-                color: #F5E6E8;
+                font-family: "Cormorant Garamond", serif;
+                font-size: clamp(0.78rem, 1.9vw, 0.98rem);
+                font-weight: 600;
+                color: var(--text);
+                letter-spacing: 0.8px;
             }
-
             .card-date {
-                color: #D4C4B0;
-                /* Champagne */
+                font-size: clamp(0.54rem, 1.3vw, 0.68rem);
+                color: var(--text-soft);
+                letter-spacing: 0.5px;
+                margin-top: 2px;
+            }
+            .card-right {
+                display: flex;
+                height: 100%;
+            }
+            .card-photo {
+                width: clamp(68px, 17vw, 108px);
+                height: 100%;
+                object-fit: cover;
+                object-position: center top;
+                display: block;
+            }
+            .card-date-bar {
+                width: 24px;
+                height: 100%;
+                background: var(--wine);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                flex-shrink: 0;
+            }
+            .card-date-bar span {
+                font-family: "Cormorant Garamond", serif;
+                font-size: clamp(0.62rem, 1.6vw, 0.82rem);
+                font-weight: 600;
+                color: #fff;
+                writing-mode: vertical-lr;
+                transform: rotate(180deg);
+                letter-spacing: 2px;
+            }
+            .card-date-bar .dot {
+                width: 2px;
+                height: 2px;
+                background: rgba(255, 255, 255, 0.38);
+                border-radius: 50%;
             }
 
+            /* ── ENVELOPE FRONT ── */
+            .env-front {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 62%;
+                z-index: 10;
+            }
+            .env-body {
+                position: absolute;
+                inset: 0;
+                background: var(--blush);
+                border-radius: 0 0 6px 6px;
+                clip-path: polygon(0 0, 50% 28%, 100% 0, 100% 100%, 0 100%);
+            }
+
+            /* ── FLAP ── */
+            .env-flap {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 62%;
+                z-index: 20;
+                transform-origin: top;
+                transition:
+                    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.4s ease 0.2s;
+            }
+            .envelope-container.opening .env-flap {
+                transform: rotateX(180deg);
+                z-index: 0;
+                opacity: 0;
+            }
+            .env-flap-front {
+                position: absolute;
+                inset: 0;
+                background: var(--blush);
+                clip-path: polygon(0 0, 100% 0, 100% 55%, 50% 90%, 0 55%);
+                border-radius: 6px 6px 0 0;
+                backface-visibility: hidden;
+            }
+            .env-flap-back {
+                position: absolute;
+                inset: 0;
+                background: var(--wine);
+                opacity: 0.55;
+                clip-path: polygon(0 0, 100% 0, 50% 55%);
+                border-radius: 6px 6px 0 0;
+                transform: rotateX(180deg);
+                backface-visibility: hidden;
+            }
+
+            /* ── WAX SEAL ── */
+            .wax-seal {
+                position: absolute;
+                top: 56%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: clamp(50px, 11vw, 70px);
+                height: clamp(50px, 11vw, 70px);
+                z-index: 25;
+                transition:
+                    transform 0.4s ease,
+                    opacity 0.3s ease;
+                filter: drop-shadow(0 3px 8px rgba(139, 48, 69, 0.32));
+            }
+            .envelope-container.opening .wax-seal {
+                transform: translate(-50%, -50%) scale(1.4);
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            /* ── TAP HINT ── */
+            .tap-hint {
+                margin-top: 34px;
+                text-align: center;
+                transition: opacity 0.3s ease;
+            }
+            .envelope-container.opening .tap-hint {
+                opacity: 0;
+            }
+            .tap-hint span {
+                display: inline-block;
+                font-size: 0.78rem;
+                color: var(--wine);
+                letter-spacing: 2px;
+                background: rgba(255, 255, 255, 0.78);
+                padding: 5px 18px;
+                border-radius: 20px;
+                backdrop-filter: blur(6px);
+                font-weight: 500;
+            }
+
+            /* ════════════════════════════════════════════════
+           PORTRAIT CARD — appears after envelope opens
+        ════════════════════════════════════════════════ */
+            .portrait-stage {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.8s ease;
+                z-index: 60;
+            }
+            .portrait-stage.show {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .portrait-card {
+                position: relative;
+                width: min(82vw, 400px);
+                aspect-ratio: 3 / 4.2;
+                background: var(--white);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 30px 60px rgba(139, 48, 69, 0.28);
+                cursor: pointer;
+                transform: translateY(40px) scale(0.9);
+                transition:
+                    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    box-shadow 0.3s ease;
+            }
+            .portrait-stage.show .portrait-card {
+                transform: translateY(0) scale(1);
+            }
+            .portrait-stage.show .portrait-card:hover {
+                box-shadow: 0 36px 72px rgba(139, 48, 69, 0.36);
+            }
+
+            .pc-photo {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                display: block;
+            }
+
+            /* Curved blush panel on the right */
+            .pc-panel,
+            .pc-panel-text {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
+            .pc-panel-text {
+                z-index: 10;
+            }
+
+            /* Vertical date stack — top right */
+            .pc-date {
+                position: absolute;
+                top: 4%;
+                right: 7%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-family: "Cormorant Garamond", serif;
+                color: var(--wine);
+                z-index: 10;
+                line-height: 1;
+            }
+            .pc-num {
+                font-size: clamp(1.7rem, 6vw, 2.4rem);
+                font-weight: 400;
+                line-height: 1;
+            }
+            .pc-box {
+                font-size: clamp(1.7rem, 6vw, 2.4rem);
+                font-family: "Cormorant Garamond", serif;
+                line-height: 1;
+                color: var(--wine);
+            }
+            .pc-dot {
+                font-size: clamp(1rem, 2.8vw, 1.4rem);
+                color: var(--wine);
+                line-height: 0.35;
+                margin: 2px 0;
+            }
+
+            /* Curved names — SVG textPath */
+            .pc-name-svg {
+                font-family: "Cormorant Garamond", serif;
+                font-style: italic;
+                font-size: 3.8px;
+                fill: var(--wine);
+                letter-spacing: 0.2px;
+                user-select: none;
+            }
+
+            .pc-hint {
+                margin-top: 28px;
+            }
+
+            /* ── OVERLAY ── */
             .overlay {
-                background: #2D2226;
+                position: fixed;
+                inset: 0;
+                background: var(--blush-pale);
+                z-index: 1000;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.8s ease;
+            }
+            .overlay.active {
+                opacity: 1;
             }
 
-            /* Slightly darken envelope in dark mode */
-            .envelope-body,
-            .flap-content {
-                filter: brightness(0.9) saturate(1.1);
+            /* ── LANGUAGE SWITCHER ── */
+            .lang-switcher {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 200;
             }
-
-            .tap-hint-text {
-                background: rgba(61, 47, 51, 0.9);
-                color: #E8B4B8;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            }
-
-            /* Language Switcher Dark Mode */
             .lang-btn {
-                background: rgba(61, 47, 51, 0.95);
-                border-color: rgba(232, 180, 184, 0.4);
-                color: #F5D6D8;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 14px;
+                background: rgba(255, 255, 255, 0.92);
+                border: 1px solid rgba(139, 48, 69, 0.18);
+                border-radius: 50px;
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--wine);
+                box-shadow: 0 2px 10px rgba(139, 48, 69, 0.09);
+                backdrop-filter: blur(8px);
+                font-family: "IBM Plex Sans Thai", sans-serif;
+                transition: all 0.2s;
+            }
+            .lang-btn:hover {
+                border-color: var(--wine);
             }
 
             .lang-dropdown {
-                background: rgba(61, 47, 51, 0.98);
-                border: 1px solid rgba(232, 180, 184, 0.3);
+                position: absolute;
+                top: calc(100% + 6px);
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                border: 1px solid rgba(139, 48, 69, 0.12);
+                border-radius: 14px;
+                padding: 6px;
+                min-width: 148px;
+                box-shadow: 0 8px 24px rgba(139, 48, 69, 0.11);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-8px);
+                transition: all 0.2s ease;
             }
-
+            .lang-switcher.open .lang-dropdown {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
             .lang-option {
-                color: #F5D6D8;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+                padding: 8px 10px;
+                border: none;
+                background: transparent;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 13px;
+                font-family: "IBM Plex Sans Thai", sans-serif;
+                color: var(--text);
+                transition: background 0.15s;
             }
-
-            .lang-option:hover,
+            .lang-option:hover {
+                background: rgba(139, 48, 69, 0.06);
+            }
             .lang-option.active {
-                background: rgba(244, 165, 165, 0.15);
-                color: #F4A5A5;
+                color: var(--wine);
+                font-weight: 600;
             }
-        }
-    </style>
-</head>
+        </style>
+    </head>
 
-<body>
-    <div class="overlay" id="overlay"></div>
+    <body>
+        <div class="overlay" id="overlay"></div>
 
-    <div class="lang-switcher" id="langSwitcher">
-        <button class="lang-btn" id="langBtn">
-            <span class="flag" id="currentFlag">🇹🇭</span>
-            <span id="currentLangName">ไทย</span>
-        </button>
-        <div class="lang-dropdown">
-            <button class="lang-option active" data-lang="th">
-                <span class="flag">🇹🇭</span>
-                <span>ไทย</span>
+        <!-- Language Switcher -->
+        <div class="lang-switcher" id="langSwitcher">
+            <button class="lang-btn" id="langBtn">
+                <span id="currentFlag">🇹🇭</span>
+                <span id="currentLangName">ไทย</span>
             </button>
-            <button class="lang-option" data-lang="en">
-                <span class="flag">🇺🇸</span>
-                <span>English</span>
-            </button>
-            <button class="lang-option" data-lang="ja">
-                <span class="flag">🇯🇵</span>
-                <span>日本語</span>
-            </button>
+            <div class="lang-dropdown">
+                <button class="lang-option active" data-lang="th">
+                    <span>🇹🇭</span><span>ไทย</span>
+                </button>
+                <button class="lang-option" data-lang="en">
+                    <span>🇺🇸</span><span>English</span>
+                </button>
+                <button class="lang-option" data-lang="ja">
+                    <span>🇯🇵</span><span>日本語</span>
+                </button>
+            </div>
         </div>
-    </div>
 
-    <div class="scene">
-        <div class="envelope-container" id="envelopeContainer">
-            <div class="envelope">
-                <!-- Back of envelope -->
-                <div class="envelope-back"></div>
+        <div class="scene">
+            <!-- Envelope -->
+            <div class="envelope-container" id="envelopeContainer">
+                <div class="envelope">
+                    <div class="env-back"></div>
 
-                <!-- Card inside -->
-                <div class="card-wrapper">
-                    <div class="card">
-                        <div class="card-bg-pattern"></div>
-                        <img src="assets/theme/fox_couple.png" alt="Fox Couple" class="fox-illustration">
-                        <div class="card-title">Wedding Invitation</div>
-                        <div class="card-names">
-                            Sunee & Supakit
+                    <div class="card-wrapper">
+                        <div class="card">
+                            <div class="card-left">
+                                <div class="card-label">Wedding Invitation</div>
+                                <div class="card-title">
+                                    Sunee<br />&amp; Supakit
+                                </div>
+                                <div class="card-rule"></div>
+                                <div class="card-names">
+                                    สุนีย์ &amp; ศุภกิตติ์
+                                </div>
+                                <div class="card-date">
+                                    22 · NOVEMBER · 2026
+                                </div>
+                            </div>
+                            <div class="card-right">
+                                <img
+                                    src="assets/theme/fox_couple.png"
+                                    alt="Couple"
+                                    class="card-photo"
+                                />
+                                <div class="card-date-bar">
+                                    <span>22</span>
+                                    <div class="dot"></div>
+                                    <span>11</span>
+                                    <div class="dot"></div>
+                                    <span>26</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-date">22 • NOVEMBER • 2026</div>
                     </div>
-                </div>
 
-                <!-- Front of envelope -->
-                <div class="envelope-front">
-                    <div class="envelope-body"></div>
+                    <div class="env-front">
+                        <div class="env-body"></div>
+                    </div>
+                    <div class="env-flap">
+                        <div class="env-flap-front"></div>
+                        <div class="env-flap-back"></div>
+                    </div>
+                    <img
+                        src="assets/theme/fox_seal.png"
+                        class="wax-seal"
+                        alt="Seal"
+                    />
                 </div>
-
-                <!-- Flap -->
-                <div class="flap">
-                    <div class="flap-content"></div> <!-- Front of flap -->
-                    <div class="flap-back"></div> <!-- Back of flap -->
+                <div class="tap-hint">
+                    <span data-i18n="clickHint">แตะเพื่อเปิดซอง</span>
                 </div>
-
-                <!-- Wax seal Image -->
-                <img src="assets/theme/fox_seal.png" class="wax-seal-img" alt="Fox Wax Seal">
             </div>
 
-            <div class="tap-hint">
-                <span class="tap-hint-text" data-i18n="clickHint" style="display:inline-block;">แตะเพื่อเปิดซอง</span>
-                <!-- Hand icon simplified or removed for cleaner look, or custom icon -->
+            <!-- Portrait Card (revealed after envelope opens) -->
+            <div class="portrait-stage" id="portraitStage">
+                <div class="portrait-card" id="portraitCard">
+                    <img
+                        class="pc-photo"
+                        src="assets/theme/fox_couple.png"
+                        alt="Couple"
+                    />
+
+                    <!-- Curved blush panel background -->
+                    <svg
+                        class="pc-panel"
+                        viewBox="0 0 100 140"
+                        preserveAspectRatio="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M 100 0 L 100 140 L 70 140 C 30 100, 110 40, 70 0 Z"
+                            fill="#FFCDD6"
+                        />
+                    </svg>
+
+                    <!-- Vertical date stack -->
+                    <div class="pc-date">
+                        <div class="pc-num">22</div>
+                        <div class="pc-dot">·</div>
+                        <div class="pc-box">11</div>
+                        <div class="pc-dot">·</div>
+                        <div class="pc-num">26</div>
+                    </div>
+
+                    <!-- Curved names on top -->
+                    <svg
+                        class="pc-panel-text"
+                        viewBox="0 0 110 140"
+                        preserveAspectRatio="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            id="namePath"
+                            d="M 82 0 C 122 40, 42 100, 82 140"
+                            fill="none"
+                        />
+                        <text class="pc-name-svg">
+                            <textPath
+                                href="#namePath"
+                                startOffset="62%"
+                                text-anchor="middle"
+                                dominant-baseline="middle"
+                            >
+                                Sunee Mongkolvorakitchai &amp; Supakit
+                                Sujaritcheewawong
+                            </textPath>
+                        </text>
+                    </svg>
+                </div>
+                <div class="tap-hint pc-hint">
+                    <span data-i18n="enterHint">แตะการ์ดเพื่อเข้าชม</span>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        const container = document.getElementById('envelopeContainer');
-        const overlay = document.getElementById('overlay');
-        let opened = false;
+        <script>
+            const container = document.getElementById("envelopeContainer");
+            const overlay = document.getElementById("overlay");
+            const portraitStage = document.getElementById("portraitStage");
+            const portraitCard = document.getElementById("portraitCard");
+            let opened = false;
+            let entered = false;
 
-        container.addEventListener('click', () => {
-            if (opened) return;
-            opened = true;
-            container.classList.add('opening');
-
-            // Show card for 3s then navigate
-            setTimeout(() => {
-                overlay.classList.add('active');
+            container.addEventListener("click", () => {
+                if (opened) return;
+                opened = true;
+                container.classList.add("opening");
                 setTimeout(() => {
-                    window.location.href = 'wedding_card.html';
-                }, 500);
-            }, 3500);  // Wait for card animation (2s) + pause
-        });
-
-        // Language Switcher
-        (function () {
-            const t = {
-                th: { langName: 'ไทย', flag: '🇹🇭', clickHint: 'แตะเพื่อเปิดซอง' },
-                en: { langName: 'English', flag: '🇺🇸', clickHint: 'Tap to open' },
-                ja: { langName: '日本語', flag: '🇯🇵', clickHint: 'タップして開く' }
-            };
-
-            let lang = localStorage.getItem('wedding_lang') || 'th';
-            const s = document.getElementById('langSwitcher');
-            const b = document.getElementById('langBtn');
-
-            function set(l) {
-                if (!t[l]) return;
-                lang = l;
-                localStorage.setItem('wedding_lang', l);
-                document.querySelectorAll('[data-i18n]').forEach(e => {
-                    const k = e.getAttribute('data-i18n');
-                    if (t[l][k]) e.textContent = t[l][k];
-                });
-                document.getElementById('currentFlag').textContent = t[l].flag;
-                document.getElementById('currentLangName').textContent = t[l].langName;
-                document.querySelectorAll('.lang-option').forEach(o => {
-                    o.classList.toggle('active', o.dataset.lang === l);
-                });
-            }
-
-            b.addEventListener('click', e => { e.stopPropagation(); s.classList.toggle('open'); });
-            document.querySelectorAll('.lang-option').forEach(o => {
-                o.addEventListener('click', e => {
-                    e.stopPropagation();
-                    set(o.dataset.lang);
-                    s.classList.remove('open');
-                });
+                    container.classList.add("hide");
+                    portraitStage.classList.add("show");
+                }, 1800);
             });
-            document.addEventListener('click', () => s.classList.remove('open'));
-            set(lang);
-        })();
-    </script>
-</body>
 
+            portraitCard.addEventListener("click", () => {
+                if (entered) return;
+                entered = true;
+                overlay.classList.add("active");
+                setTimeout(() => {
+                    window.location.href = "wedding_card.html";
+                }, 500);
+            });
+
+            // Language switcher
+            (function () {
+                const t = {
+                    th: {
+                        langName: "ไทย",
+                        flag: "🇹🇭",
+                        clickHint: "แตะเพื่อเปิดซอง",
+                        enterHint: "แตะการ์ดเพื่อเข้าชม",
+                    },
+                    en: {
+                        langName: "English",
+                        flag: "🇺🇸",
+                        clickHint: "Tap to open",
+                        enterHint: "Tap card to enter",
+                    },
+                    ja: {
+                        langName: "日本語",
+                        flag: "🇯🇵",
+                        clickHint: "タップして開く",
+                        enterHint: "カードをタップ",
+                    },
+                };
+                let lang = localStorage.getItem("wedding_lang") || "th";
+                const s = document.getElementById("langSwitcher");
+                const b = document.getElementById("langBtn");
+
+                function set(l) {
+                    if (!t[l]) return;
+                    lang = l;
+                    localStorage.setItem("wedding_lang", l);
+                    document.querySelectorAll("[data-i18n]").forEach((e) => {
+                        const k = e.getAttribute("data-i18n");
+                        if (t[l][k]) e.textContent = t[l][k];
+                    });
+                    document.getElementById("currentFlag").textContent =
+                        t[l].flag;
+                    document.getElementById("currentLangName").textContent =
+                        t[l].langName;
+                    document
+                        .querySelectorAll(".lang-option")
+                        .forEach((o) =>
+                            o.classList.toggle("active", o.dataset.lang === l),
+                        );
+                }
+
+                b.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    s.classList.toggle("open");
+                });
+                document.querySelectorAll(".lang-option").forEach((o) =>
+                    o.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        set(o.dataset.lang);
+                        s.classList.remove("open");
+                    }),
+                );
+                document.addEventListener("click", () =>
+                    s.classList.remove("open"),
+                );
+                set(lang);
+            })();
+        </script>
+    </body>
 </html>
