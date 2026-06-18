@@ -33,16 +33,16 @@
             }
 
             :root {
-                --blush: #ffcdd6;
-                --blush-pale: #fff0f5;
-                --blush-mid: #f5b8c5;
-                --wine: #8b3045;
-                --wine-mid: #c47585;
+                --blush: #ede8df;
+                --blush-pale: #f8f6f2;
+                --blush-mid: #d9d2c6;
+                --wine: #4a6b48;
+                --wine-mid: #7d9e7b;
                 --white: #ffffff;
-                --text: #2d1f22;
-                --text-soft: #8b6068;
+                --text: #1c1c1c;
+                --text-soft: #6b6b6b;
                 --card-bg: rgba(255, 255, 255, 0.92);
-                --section-alt: #fff8fa;
+                --section-alt: #f2ede5;
             }
 
             /* ── BASE ── */
@@ -93,6 +93,7 @@
                 font-weight: 500;
                 color: var(--wine);
                 box-shadow: 0 2px 10px rgba(139, 48, 69, 0.1);
+                -webkit-backdrop-filter: blur(8px);
                 backdrop-filter: blur(8px);
                 font-family: "IBM Plex Sans Thai", sans-serif;
                 transition: all 0.2s;
@@ -154,6 +155,7 @@
         ═══════════════════════════════════════════════════ */
             .inv-section {
                 position: relative;
+                min-height: 100vh;
                 min-height: 100svh;
                 background: var(--blush);
                 display: flex;
@@ -168,6 +170,7 @@
                 width: 100%;
                 max-width: 560px;
                 background: rgba(255, 255, 255, 0.6);
+                -webkit-backdrop-filter: blur(10px);
                 backdrop-filter: blur(10px);
                 border-radius: 20px;
                 padding: clamp(28px, 6vw, 52px) clamp(24px, 5vw, 44px);
@@ -481,34 +484,38 @@
                 text-align: center;
             }
             .gal-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 14px;
-                max-width: 800px;
+                columns: 2;
+                column-gap: 12px;
+                max-width: 900px;
                 margin: 0 auto;
             }
             @media (min-width: 600px) {
                 .gal-grid {
-                    grid-template-columns: repeat(3, 1fr);
+                    columns: 3;
                 }
             }
             .gal-item {
-                border-radius: 16px;
+                break-inside: avoid;
+                display: inline-block;
+                width: 100%;
+                margin-bottom: 12px;
+                border-radius: 14px;
                 overflow: hidden;
-                aspect-ratio: 3/4;
-                position: relative;
                 border: 3px solid var(--white);
-                box-shadow: 0 4px 14px rgba(139, 48, 69, 0.12);
+                box-shadow: 0 4px 14px rgba(74, 107, 72, 0.12);
                 transition: transform 0.35s ease;
                 cursor: pointer;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
             }
-            .gal-item:hover {
-                transform: translateY(-4px) scale(1.02);
+            @media (hover: hover) and (pointer: fine) {
+                .gal-item:hover {
+                    transform: translateY(-4px) scale(1.02);
+                }
             }
             .gal-item img {
                 width: 100%;
-                height: 100%;
-                object-fit: cover;
+                height: auto;
                 display: block;
             }
 
@@ -971,7 +978,7 @@
                 margin-bottom: 14px;
                 white-space: pre-line;
             }
-            .qr-img {
+            .qr-wrap {
                 width: 200px;
                 max-width: 100%;
                 margin: 12px auto;
@@ -981,10 +988,27 @@
                 padding: 6px;
                 cursor: pointer;
                 transition: transform 0.3s;
+                touch-action: manipulation;
             }
-            .qr-img:hover,
-            .qr-img.scale-150 {
+            .qr-wrap:hover,
+            .qr-wrap.scale-150 {
                 transform: scale(1.4);
+            }
+            .qr-wrap img {
+                width: 100%;
+                display: block;
+                border-radius: 8px;
+            }
+            /* Prevent image download/save across all images */
+            img {
+                -webkit-touch-callout: none;
+                -webkit-user-drag: none;
+                user-select: none;
+                pointer-events: none;
+            }
+            /* Re-enable pointer events only where needed */
+            .qr-wrap {
+                pointer-events: auto;
             }
 
             .modal-form-group {
@@ -1281,7 +1305,7 @@
                     >
                         <div class="inv-arch">
                             <img
-                                src="https://placehold.co/400x600/FFCDD6/8B3045?text=Bride"
+                                src="C4D20F07-3D9D-4484-94F3-3324C1D50CBF_4_5005_c.jpeg"
                                 alt="Bride"
                             />
                         </div>
@@ -1315,7 +1339,7 @@
                     >
                         <div class="inv-arch">
                             <img
-                                src="https://placehold.co/400x600/FFCDD6/8B3045?text=Groom"
+                                src="25E11052-D0F6-4C88-8FFE-3DF9C8A81D85_4_5005_c.jpeg"
                                 alt="Groom"
                             />
                         </div>
@@ -1514,41 +1538,62 @@
                 แกลเลอรี่ความทรงจำ
             </h3>
             <div class="gal-grid">
-                <div class="gal-item" data-aos="zoom-in" data-aos-delay="100">
-                    <img
-                        src="https://placehold.co/400x533/FFCDD6/8B3045?text=Photo+1"
-                        alt="Photo 1"
-                    />
+                <div class="gal-item">
+                    <img src="gallory/0DDC2E8C-D066-4D08-8E29-4EE235F49664_4_5005_c.jpeg" alt="Photo 1" loading="lazy" />
                 </div>
-                <div class="gal-item" data-aos="zoom-in" data-aos-delay="200">
-                    <img
-                        src="https://placehold.co/400x533/F5C0C8/8B3045?text=Photo+2"
-                        alt="Photo 2"
-                    />
+                <div class="gal-item">
+                    <img src="gallory/1D7A9659-D955-4901-A46E-D2750CC311CB_4_5005_c.jpeg" alt="Photo 2" loading="lazy" />
                 </div>
-                <div class="gal-item" data-aos="zoom-in" data-aos-delay="300">
-                    <img
-                        src="https://placehold.co/400x533/FFCDD6/8B3045?text=Photo+3"
-                        alt="Photo 3"
-                    />
+                <div class="gal-item">
+                    <img src="gallory/2444242F-7559-4BCE-8078-7DB2821EB427_4_5005_c.jpeg" alt="Photo 3" loading="lazy" />
                 </div>
-                <div class="gal-item" data-aos="zoom-in" data-aos-delay="400">
-                    <img
-                        src="https://placehold.co/400x533/F5C0C8/8B3045?text=Photo+4"
-                        alt="Photo 4"
-                    />
+                <div class="gal-item">
+                    <img src="gallory/2C109171-DFD5-42AA-95DD-707182DD5D91_4_5005_c.jpeg" alt="Photo 4" loading="lazy" />
                 </div>
-                <div class="gal-item" data-aos="zoom-in" data-aos-delay="500">
-                    <img
-                        src="https://placehold.co/400x533/FFCDD6/8B3045?text=Photo+5"
-                        alt="Photo 5"
-                    />
+                <div class="gal-item">
+                    <img src="gallory/325A1400-7312-4FBF-A84F-33E9298892D5_4_5005_c.jpeg" alt="Photo 5" loading="lazy" />
                 </div>
-                <div class="gal-item" data-aos="zoom-in" data-aos-delay="600">
-                    <img
-                        src="https://placehold.co/400x533/F5C0C8/8B3045?text=Photo+6"
-                        alt="Photo 6"
-                    />
+                <div class="gal-item">
+                    <img src="gallory/33E9EBA4-35EC-4C12-9969-15EAC5378F58_4_5005_c.jpeg" alt="Photo 6" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/3AA7D0B6-357A-4A2F-9B64-E8896BD3539F_4_5005_c.jpeg" alt="Photo 7" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/3D6A8116-637B-4792-9AF0-2FF3B2DEC3BC_4_5005_c.jpeg" alt="Photo 8" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/47172C94-4F19-438B-B42C-11937A8E904E_4_5005_c.jpeg" alt="Photo 9" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/6B9E29C6-8765-4387-ACA3-87817BDBD0FB_4_5005_c.jpeg" alt="Photo 10" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/7356CAF7-8B78-4401-A39C-1CBE7BD76403_4_5005_c.jpeg" alt="Photo 11" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/743884F6-F4EC-4EA1-AB86-0BEBA0FB44B8_4_5005_c.jpeg" alt="Photo 12" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/8B6C6F8D-E94B-492F-8F35-D682FFE55D07_4_5005_c.jpeg" alt="Photo 13" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/8DE6BD0D-869A-42B6-A2D2-A56EE19BDECD_4_5005_c.jpeg" alt="Photo 14" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/B20F5DEB-7EE1-4C9C-87A1-0A49033111F5_4_5005_c.jpeg" alt="Photo 15" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/B44639D5-BFB1-4B74-A0E8-48F86966DBB3_4_5005_c.jpeg" alt="Photo 16" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/B936D023-B78C-4BBC-85F2-CB2978783E5E_4_5005_c.jpeg" alt="Photo 17" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/C778697B-B20C-4107-BB53-3A3F41C83B50_4_5005_c.jpeg" alt="Photo 18" loading="lazy" />
+                </div>
+                <div class="gal-item">
+                    <img src="gallory/D8A3291D-B3CA-44C9-ADA6-77135852AFE1_4_5005_c.jpeg" alt="Photo 19" loading="lazy" />
                 </div>
             </div>
         </section>
@@ -1905,12 +1950,9 @@
                     อำเภอปากเกร็ด จังหวัดนนทบุรี 11120
                 </p>
 
-                <img
-                    src="S__13139996.jpg"
-                    alt="QR Code"
-                    class="qr-img"
-                    onclick="this.classList.toggle('scale-150')"
-                />
+                <div class="qr-wrap" onclick="this.classList.toggle('scale-150')">
+                    <img src="S__13139996.jpg" alt="QR Code" draggable="false" />
+                </div>
 
                 <form id="payment-form">
                     <div class="modal-form-group">
@@ -3022,12 +3064,25 @@
                     if (!modal || !fullImg || !closeBtn) return;
 
                     document.querySelectorAll(".gal-item").forEach((item) => {
+                        let touchMoved = false;
+                        item.addEventListener("touchstart", () => { touchMoved = false; }, { passive: true });
+                        item.addEventListener("touchmove", () => { touchMoved = true; }, { passive: true });
+                        item.addEventListener("touchend", (e) => {
+                            if (touchMoved) return;
+                            e.preventDefault();
+                            const img = item.querySelector("img");
+                            if (img) {
+                                fullImg.src = img.src;
+                                modal.classList.add("active");
+                                document.body.style.overflow = "hidden";
+                            }
+                        });
                         item.addEventListener("click", () => {
                             const img = item.querySelector("img");
                             if (img) {
                                 fullImg.src = img.src;
                                 modal.classList.add("active");
-                                document.body.style.overflow = "hidden"; // Prevent scroll
+                                document.body.style.overflow = "hidden";
                             }
                         });
                     });
@@ -3045,6 +3100,13 @@
                         if (e.key === "Escape") closeModal();
                     });
                 }
+
+                document.addEventListener("contextmenu", (e) => {
+                    if (e.target.tagName === "IMG") e.preventDefault();
+                });
+                document.addEventListener("dragstart", (e) => {
+                    if (e.target.tagName === "IMG") e.preventDefault();
+                });
 
                 document.addEventListener("DOMContentLoaded", function () {
                     initLangSwitcher();
