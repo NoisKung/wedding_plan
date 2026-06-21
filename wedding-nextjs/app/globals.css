@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #fdf6f0;
+  --bg-alt: #f5ebe4;
+  --accent: #b76e79;
+  --accent-light: #d4949f;
+  --gold: #c9a07a;
+  --text: #2d2d2d;
+  --text-soft: #7a6b6b;
+  --white: #ffffff;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.font-serif-display {
+  font-family: var(--font-libre-baskerville), Georgia, serif;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
