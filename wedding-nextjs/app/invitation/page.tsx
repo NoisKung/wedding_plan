@@ -3,6 +3,7 @@ import { InvitationSection } from "@/components/invitation/InvitationSection";
 import { CountdownSection } from "@/components/invitation/CountdownSection";
 import { ScheduleSection } from "@/components/invitation/ScheduleSection";
 import { GallerySection } from "@/components/invitation/GallerySection";
+import { VenueSection } from "@/components/invitation/VenueSection";
 
 export default function InvitationPage() {
   return (
@@ -12,6 +13,7 @@ export default function InvitationPage() {
       <CountdownSection />
       <ScheduleSection />
       <GallerySection />
+      <VenueSection />
     </main>
   );
 }
