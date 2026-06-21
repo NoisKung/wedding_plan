@@ -45,6 +45,10 @@ export function RSVPSection() {
   const [manualName, setManualName] = useState("");
   const [manualEmail, setManualEmail] = useState("");
   const [rsvpDone, setRsvpDone] = useState(false);
+  const [rsvpError, setRsvpError] = useState(false);
+  const [attending, setAttending] = useState("");
+  const [guestCount, setGuestCount] = useState("");
+  const [message, setMessage] = useState("");
   const [showPayment, setShowPayment] = useState(false);
   const [payStatus, setPayStatus] = useState("");
   const payFormRef = useRef<HTMLFormElement>(null);
@@ -70,12 +74,19 @@ export function RSVPSection() {
       alert(t("alertPleaseEnterName"));
       return;
     }
-    const data = new FormData(e.currentTarget);
-    data.set("name", name);
-    data.set("email", user?.email || manualEmail || "");
-    data.set("action", "rsvp");
-    await fetch(SCRIPT_URL, { method: "POST", body: data }).catch(() => null);
-    setRsvpDone(true);
+    const data = new URLSearchParams();
+    data.append("name", name);
+    data.append("email", user?.email || manualEmail || "");
+    data.append("action", "rsvp");
+    data.append("attending", attending);
+    data.append("guestCount", guestCount.toString());
+    data.append("message", message);
+    try {
+      await fetch(SCRIPT_URL, { method: "POST", body: data });
+      setRsvpDone(true);
+    } catch {
+      setRsvpError(true);
+    }
   }
 
   async function handlePaySubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -120,7 +131,16 @@ export function RSVPSection() {
           <GoldDivider className="max-w-xs mx-auto mt-4" />
         </FadeInSection>
 
-        {!rsvpDone ? (
+        {rsvpError ? (
+          <FadeInSection>
+            <div className="text-center py-10">
+              <p className="font-serif-display text-red-500 text-2xl mb-2">
+                Something went wrong
+              </p>
+              <p className="text-[var(--text-soft)]">Please try again or contact us directly.</p>
+            </div>
+          </FadeInSection>
+        ) : !rsvpDone ? (
           <FadeInSection>
             <div
               className="bg-white rounded-2xl p-8 shadow-sm"
@@ -224,6 +244,8 @@ export function RSVPSection() {
                             type="radio"
                             name="attending"
                             value={val}
+                            checked={attending === val}
+                            onChange={() => setAttending(val)}
                             className="accent-[var(--accent)]"
                             required
                           />
@@ -232,15 +254,30 @@ export function RSVPSection() {
                       ))}
                     </div>
                   </div>
+                  {attending === "attending" && (
+                    <div>
+                      <label className={labelClass}>{t("guestsLabel")}</label>
+                      <input
+                        className={inputClass}
+                        type="number"
+                        name="guestCount"
+                        min={1}
+                        max={20}
+                        value={guestCount}
+                        onChange={(e) => setGuestCount(e.target.value)}
+                        placeholder={t("guestCountPlaceholder")}
+                      />
+                    </div>
+                  )}
                   <div>
-                    <label className={labelClass}>{t("guestsLabel")}</label>
-                    <input
-                      className={inputClass}
-                      type="number"
-                      name="guestCount"
-                      min={1}
-                      max={20}
-                      placeholder={t("guestCountPlaceholder")}
+                    <label className={labelClass}>{t("messageLabel")}</label>
+                    <textarea
+                      className={`${inputClass} resize-none`}
+                      rows={3}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder={t("messagePlaceholder")}
+                      maxLength={500}
                     />
                   </div>
                   <button
