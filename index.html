@@ -10,7 +10,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap"
             rel="stylesheet"
         />
 
@@ -334,71 +334,108 @@
                 box-shadow: 0 36px 72px rgba(74, 107, 72, 0.36);
             }
 
-            .pc-photo {
-                position: absolute;
-                inset: 0;
+            /* ── NEWSPAPER PORTRAIT CARD ── */
+            .newspaper {
+                width: 100%;
+                height: 100%;
+                background: #f4edd6;
+                display: flex;
+                flex-direction: column;
+                padding: clamp(8px, 2.5vw, 13px);
+                color: #111;
+            }
+
+            .np-thick { height: 3px; background: #111; flex-shrink: 0; }
+            .np-thin  { height: 1px; background: #111; flex-shrink: 0; }
+            .np-gap   { height: 2px; flex-shrink: 0; }
+
+            .np-title {
+                font-family: "Playfair Display", serif;
+                font-weight: 900;
+                font-size: clamp(0.9rem, 5.5vw, 1.55rem);
+                text-align: center;
+                letter-spacing: 2px;
+                color: #111;
+                padding: clamp(4px, 1.2vw, 7px) 0;
+                line-height: 1;
+                flex-shrink: 0;
+            }
+
+            .np-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: clamp(3px, 0.9vw, 5px) 2px;
+                flex-shrink: 0;
+            }
+            .np-meta-date, .np-meta-loc {
+                font-family: "Cormorant Garamond", serif;
+                font-size: clamp(0.42rem, 1.5vw, 0.56rem);
+                line-height: 1.35;
+                color: #111;
+                letter-spacing: 0.3px;
+                text-align: center;
+            }
+            .np-badge {
+                background: #111;
+                color: #f4edd6;
+                border-radius: 30px;
+                padding: 2px 9px;
+                font-family: "Cormorant Garamond", serif;
+                font-size: clamp(0.42rem, 1.5vw, 0.56rem);
+                letter-spacing: 0.5px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .np-photo-wrap {
+                flex: 1;
+                overflow: hidden;
+                border: 1.5px solid #111;
+                margin: clamp(3px, 0.9vw, 6px) 0;
+                min-height: 0;
+            }
+            .np-photo {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
                 object-position: center top;
                 display: block;
-                image-rendering: -webkit-optimize-contrast;
-                image-rendering: high-quality;
             }
 
-            /* Curved blush panel on the right */
-            .pc-panel,
-            .pc-panel-text {
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
+            .np-foot {
+                text-align: center;
+                flex-shrink: 0;
             }
-            .pc-panel-text {
-                z-index: 10;
-            }
-
-            /* Vertical date stack — top right */
-            .pc-date {
-                position: absolute;
-                top: 4%;
-                right: 7%;
+            .np-hearts {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                font-family: "Cormorant Garamond", serif;
-                color: var(--wine);
-                z-index: 10;
-                line-height: 1;
+                gap: 5px;
+                padding: clamp(2px, 0.7vw, 4px) 0;
+                font-size: clamp(0.42rem, 1.4vw, 0.58rem);
+                color: #111;
             }
-            .pc-num {
-                font-size: clamp(1.7rem, 6vw, 2.4rem);
-                font-weight: 400;
-                line-height: 1;
+            .np-heart-rule {
+                flex: 1;
+                height: 1px;
+                background: #111;
             }
-            .pc-box {
-                font-size: clamp(1.7rem, 6vw, 2.4rem);
-                font-family: "Cormorant Garamond", serif;
-                line-height: 1;
-                color: var(--wine);
+            .np-names {
+                font-family: "Playfair Display", serif;
+                font-weight: 900;
+                font-size: clamp(0.9rem, 5.5vw, 1.55rem);
+                letter-spacing: 1.5px;
+                color: #111;
+                line-height: 1.1;
+                padding: clamp(1px, 0.4vw, 3px) 0;
             }
-            .pc-dot {
-                font-size: clamp(1rem, 2.8vw, 1.4rem);
-                color: var(--wine);
-                line-height: 0.35;
-                margin: 2px 0;
-            }
-
-            /* Curved names — SVG textPath */
-            .pc-name-svg {
+            .np-married {
                 font-family: "Cormorant Garamond", serif;
                 font-style: italic;
-                font-size: 3.8px;
-                fill: var(--wine);
-                letter-spacing: 0.2px;
-                user-select: none;
+                font-size: clamp(0.55rem, 2vw, 0.78rem);
+                color: #111;
+                padding-bottom: clamp(2px, 0.5vw, 4px);
+                letter-spacing: 0.5px;
             }
 
             .pc-hint {
@@ -573,58 +610,54 @@
             <!-- Portrait Card (revealed after envelope opens) -->
             <div class="portrait-stage" id="portraitStage">
                 <div class="portrait-card" id="portraitCard">
-                    <img
-                        class="pc-photo"
-                        src="gallory/5D420CFC-9E80-4DA7-A171-E248EA5972C3_4_5005_c.jpeg"
-                        alt="Couple"
-                    />
+                    <div class="newspaper">
+                        <!-- Top rules -->
+                        <div class="np-thick"></div>
+                        <div class="np-gap"></div>
+                        <div class="np-thin"></div>
 
-                    <!-- Curved blush panel background -->
-                    <svg
-                        class="pc-panel"
-                        viewBox="0 0 100 140"
-                        preserveAspectRatio="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M 100 0 L 100 140 L 70 140 C 30 100, 110 40, 70 0 Z"
-                            fill="#ede8df"
-                        />
-                    </svg>
+                        <!-- Masthead -->
+                        <h1 class="np-title">WEDDING DAILY TIMES</h1>
 
-                    <!-- Vertical date stack -->
-                    <div class="pc-date">
-                        <div class="pc-num">22</div>
-                        <div class="pc-dot">·</div>
-                        <div class="pc-box">11</div>
-                        <div class="pc-dot">·</div>
-                        <div class="pc-num">26</div>
+                        <!-- Sub-rule -->
+                        <div class="np-thin"></div>
+
+                        <!-- Meta row -->
+                        <div class="np-meta">
+                            <div class="np-meta-date">SUNDAY<br>NOVEMBER 22, 2026</div>
+                            <span class="np-badge">Breaking News</span>
+                            <div class="np-meta-loc">BOKRAK<br>RATCHAPHRUEK</div>
+                        </div>
+
+                        <!-- Double rule below meta -->
+                        <div class="np-thin"></div>
+                        <div class="np-gap"></div>
+                        <div class="np-thick"></div>
+
+                        <!-- Couple photo -->
+                        <div class="np-photo-wrap">
+                            <img
+                                class="np-photo"
+                                src="gallory/2444242F-7559-4BCE-8078-7DB2821EB427_4_5005_c.jpeg"
+                                alt="Couple"
+                            />
+                        </div>
+
+                        <!-- Footer: hearts + names -->
+                        <div class="np-foot">
+                            <div class="np-thin"></div>
+                            <div class="np-hearts">
+                                <span>♥</span>
+                                <div class="np-heart-rule"></div>
+                                <span>♥</span>
+                            </div>
+                            <div class="np-names">SUNEE &amp; SUPAKIT</div>
+                            <div class="np-married">Are Getting Married</div>
+                        </div>
+
+                        <!-- Bottom rule -->
+                        <div class="np-thick"></div>
                     </div>
-
-                    <!-- Curved names on top -->
-                    <svg
-                        class="pc-panel-text"
-                        viewBox="0 0 110 140"
-                        preserveAspectRatio="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            id="namePath"
-                            d="M 82 0 C 122 40, 42 100, 82 140"
-                            fill="none"
-                        />
-                        <text class="pc-name-svg">
-                            <textPath
-                                href="#namePath"
-                                startOffset="62%"
-                                text-anchor="middle"
-                                dominant-baseline="middle"
-                            >
-                                Sunee Mongkolvorakitchai &amp; Supakit
-                                Sujaritcheewawong
-                            </textPath>
-                        </text>
-                    </svg>
                 </div>
                 <div class="tap-hint pc-hint">
                     <span data-i18n="enterHint">แตะการ์ดเพื่อเข้าชม</span>
