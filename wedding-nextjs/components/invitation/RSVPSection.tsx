@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useI18n } from "@/providers/I18nProvider";
 import { GoldDivider } from "@/components/ui/GoldDivider";
 import { FadeInSection } from "@/components/ui/FadeInSection";
@@ -19,16 +19,22 @@ interface GoogleUser {
   sub: string;
 }
 
-function parseJwt(token: string): GoogleUser {
-  const b64 = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
-  return JSON.parse(
-    decodeURIComponent(
-      atob(b64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
-    )
-  );
+function parseJwt(token: string): GoogleUser | null {
+  try {
+    const part = token.split(".")[1];
+    if (!part) return null;
+    const b64 = part.replace(/-/g, "+").replace(/_/g, "/");
+    return JSON.parse(
+      decodeURIComponent(
+        atob(b64)
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      )
+    );
+  } catch {
+    return null;
+  }
 }
 
 function sanitize(str: string, max = 500): string {
@@ -54,11 +60,18 @@ export function RSVPSection() {
   const payFormRef = useRef<HTMLFormElement>(null);
 
   // Expose Google Sign-In callback globally
-  if (typeof window !== "undefined") {
+  useEffect(() => {
     (window as unknown as Record<string, unknown>)["handleCredentialResponse"] = (response: {
       credential: string;
-    }) => setUser(parseJwt(response.credential));
-  }
+    }) => {
+      const parsed = parseJwt(response.credential);
+      if (parsed) setUser(parsed);
+      else setShowManual(true);
+    };
+    return () => {
+      delete (window as unknown as Record<string, unknown>)["handleCredentialResponse"];
+    };
+  }, []);
 
   function signOut() {
     setUser(null);
@@ -80,9 +93,10 @@ export function RSVPSection() {
     data.append("action", "rsvp");
     data.append("attending", attending);
     data.append("guestCount", guestCount.toString());
-    data.append("message", message);
+    data.append("message", sanitize(message, 500));
     try {
-      await fetch(SCRIPT_URL, { method: "POST", body: data });
+      const response = await fetch(SCRIPT_URL, { method: "POST", body: data });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       setRsvpDone(true);
     } catch {
       setRsvpError(true);
@@ -110,8 +124,13 @@ export function RSVPSection() {
     }
     setPayStatus(t("alertSending"));
     formData.set("action", "payment");
-    await fetch(SCRIPT_URL, { method: "POST", body: formData }).catch(() => null);
-    setPayStatus(t("alertPaymentSuccess"));
+    try {
+      const response = await fetch(SCRIPT_URL, { method: "POST", body: formData });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      setPayStatus(t("alertPaymentSuccess"));
+    } catch {
+      setPayStatus(t("alertError") || "Something went wrong. Please try again.");
+    }
   }
 
   const inputClass =

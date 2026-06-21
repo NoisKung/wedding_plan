@@ -24,6 +24,14 @@ export function EnvelopeAnimation() {
       {/* ENVELOPE */}
       <div
         onClick={handleEnvelopeClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleEnvelopeClick();
+          }
+        }}
         style={{
           position: "relative",
           cursor: phase === "card" ? "default" : "pointer",

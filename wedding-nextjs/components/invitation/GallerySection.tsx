@@ -47,7 +47,7 @@ export function GallerySection() {
         </FadeInSection>
 
         {/* CSS columns masonry — NO FadeInSection on items (AOS opacity:0 breaks column height) */}
-        <div style={{ columnCount: 2, columnGap: 12 }} className="sm:[column-count:3] lg:[column-count:4]">
+        <div className="[column-count:2] sm:[column-count:3] lg:[column-count:4] [column-gap:12px]">
           {GALLERY_IMAGES.map((filename) => (
             <div
               key={filename}
