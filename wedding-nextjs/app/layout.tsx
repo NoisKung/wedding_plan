@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Libre_Baskerville, Lato } from "next/font/google";
+import Script from "next/script";
 import { I18nProvider } from "@/providers/I18nProvider";
 import "./globals.css";
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="th">
       <body className={`${libreBaskerville.variable} ${lato.variable}`}>
         <I18nProvider>{children}</I18nProvider>
+        <Script src="https://accounts.google.com/gsi/client" strategy="lazyOnload" />
       </body>
     </html>
   );

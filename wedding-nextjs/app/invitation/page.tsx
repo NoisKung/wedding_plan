@@ -4,6 +4,7 @@ import { CountdownSection } from "@/components/invitation/CountdownSection";
 import { ScheduleSection } from "@/components/invitation/ScheduleSection";
 import { GallerySection } from "@/components/invitation/GallerySection";
 import { VenueSection } from "@/components/invitation/VenueSection";
+import { RSVPSection } from "@/components/invitation/RSVPSection";
 
 export default function InvitationPage() {
   return (
@@ -14,6 +15,7 @@ export default function InvitationPage() {
       <ScheduleSection />
       <GallerySection />
       <VenueSection />
+      <RSVPSection />
     </main>
   );
 }
