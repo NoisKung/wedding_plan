@@ -1,5 +1,0 @@
-{
-  "installCommand": "cd wedding-nextjs && npm install",
-  "buildCommand": "cd wedding-nextjs && npm run build",
-  "outputDirectory": "wedding-nextjs/out"
-}
