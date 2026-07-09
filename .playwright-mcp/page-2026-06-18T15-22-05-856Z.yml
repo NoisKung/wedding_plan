@@ -1,0 +1,37 @@
+- generic [active] [ref=e1]:
+  - button "🇹🇭 ไทย" [ref=e3] [cursor=pointer]:
+    - generic [ref=e4]: 🇹🇭
+    - generic [ref=e5]: ไทย
+  - generic [ref=e6]:
+    - generic [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - generic [ref=e13]: Wedding Invitation
+            - generic [ref=e14]:
+              - text: Sunee
+              - text: "& Supakit"
+            - generic [ref=e16]: สุนีย์ & ศุภกิตติ์
+            - generic [ref=e17]: 22 · NOVEMBER · 2026
+          - generic [ref=e18]:
+            - img "Couple" [ref=e19]
+            - generic [ref=e20]:
+              - generic [ref=e21]: "22"
+              - generic [ref=e23]: "11"
+              - generic [ref=e25]: "26"
+        - img "Seal" [ref=e31]
+      - generic [ref=e33]: แตะเพื่อเปิดซอง
+    - generic:
+      - generic:
+        - img "Couple"
+        - img
+        - generic:
+          - generic: "22"
+          - generic: ·
+          - generic: "11"
+          - generic: ·
+          - generic: "26"
+        - img:
+          - generic: Sunee Mongkolvorakitchai & Supakit Sujaritcheewawong
+      - generic:
+        - generic: แตะการ์ดเพื่อเข้าชม

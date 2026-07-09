@@ -1,0 +1,45 @@
+- generic [active] [ref=e1]:
+  - button "🇹🇭 ไทย" [ref=e3] [cursor=pointer]:
+    - generic [ref=e4]: 🇹🇭
+    - generic [ref=e5]: ไทย
+  - generic [ref=e6]:
+    - generic [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - generic [ref=e13]: Wedding Invitation
+            - generic [ref=e14]:
+              - text: Sunee
+              - text: "& Supakit"
+            - generic [ref=e16]: สุนีย์ & ศุภกิตติ์
+            - generic [ref=e17]: 22 · NOVEMBER · 2026
+          - generic [ref=e18]:
+            - img "Couple" [ref=e19]
+            - generic [ref=e20]:
+              - generic [ref=e21]: "22"
+              - generic [ref=e23]: "11"
+              - generic [ref=e25]: "26"
+        - img "Seal"
+      - generic [ref=e33]: แตะเพื่อเปิดซอง
+    - generic:
+      - generic:
+        - generic:
+          - heading "WEDDING DAILY TIMES" [level=1]
+          - generic:
+            - generic:
+              - text: SUNDAY
+              - text: NOVEMBER 22, 2026
+            - generic: Breaking News
+            - generic:
+              - text: BOKRAK
+              - text: RATCHAPHRUEK
+          - generic:
+            - img "Couple"
+          - generic:
+            - generic:
+              - generic: ♥
+              - generic: ♥
+            - generic: SUNEE & SUPAKIT
+            - generic: Are Getting Married
+      - generic:
+        - generic: แตะการ์ดเพื่อเข้าชม

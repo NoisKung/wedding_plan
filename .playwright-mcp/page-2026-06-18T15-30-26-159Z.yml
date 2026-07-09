@@ -1,0 +1,146 @@
+- generic [active] [ref=e1]:
+  - button "Change language" [ref=e3] [cursor=pointer]:
+    - generic [ref=e4]: 🇹🇭
+    - generic [ref=e5]: ไทย
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]: คุณมาลัย วรรณภูงา คุณชาญชัย มงคลวรกิจชัย
+        - generic [ref=e10]: "&"
+        - generic [ref=e11]: คุณสุพร ซูพูล คุณสมชัย สุจริตชีววงศ์
+      - paragraph [ref=e12]: ขอเรียนเชิญเพื่อเป็นเกียรติในพิธีมงคลสมรสระหว่าง
+      - generic [ref=e13]:
+        - generic [ref=e14]: "{"
+        - generic [ref=e15]:
+          - img "Bride" [ref=e17]
+          - generic [ref=e18]: สุนีย์
+          - generic [ref=e19]: มงคลวรกิจชัย
+        - generic [ref=e20]: "&"
+        - generic [ref=e21]:
+          - img "Groom" [ref=e23]
+          - generic [ref=e24]: ศุภกิตติ์
+          - generic [ref=e25]: สุจริตชีววงศ์
+        - generic [ref=e26]: "}"
+      - generic [ref=e27]:
+        - strong [ref=e28]: วันอาทิตย์ที่ 22 พฤศจิกายน 2569 เวลา 07:00 น.
+        - text: ณ BokRak VIVACE WEDDING HALL ราชพฤกษ์
+      - paragraph [ref=e29]: ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง
+    - link [ref=e30] [cursor=pointer]:
+      - /url: "#countdown"
+      - img [ref=e31]
+  - generic [ref=e33]:
+    - heading "นับถอยหลังสู่วันของเรา" [level=3] [ref=e34]
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - generic [ref=e37]: "00"
+        - generic [ref=e38]: วัน
+      - generic [ref=e39]:
+        - generic [ref=e40]: "00"
+        - generic [ref=e41]: ชั่วโมง
+      - generic [ref=e42]:
+        - generic [ref=e43]: "00"
+        - generic [ref=e44]: นาที
+      - generic [ref=e45]:
+        - generic [ref=e46]: "00"
+        - generic [ref=e47]: วินาที
+  - generic [ref=e48]:
+    - generic [ref=e49]:
+      - heading "กำหนดการ" [level=3] [ref=e50]
+      - paragraph [ref=e51]: "\"งานเช้า เลี้ยงเที่ยง\""
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - img [ref=e55]
+        - generic [ref=e57]: 08:09 น.
+        - generic [ref=e58]: พิธีสงฆ์
+      - generic [ref=e59]:
+        - img [ref=e61]
+        - generic [ref=e63]: 09:09 น.
+        - generic [ref=e64]: แห่ขันหมาก
+      - generic [ref=e65]:
+        - img [ref=e67]
+        - generic [ref=e69]: 10:09 น.
+        - generic [ref=e70]: พิธีรดน้ำสังข์
+      - generic [ref=e71]:
+        - img [ref=e73]
+        - generic [ref=e75]: 12:00 น.
+        - generic [ref=e76]: รับประทานอาหาร
+  - generic [ref=e77]:
+    - heading "แกลเลอรี่ความทรงจำ" [level=3] [ref=e78]
+    - generic [ref=e79]:
+      - img "Photo 1" [ref=e81] [cursor=pointer]
+      - img "Photo 2" [ref=e83] [cursor=pointer]
+      - img "Photo 3" [ref=e85] [cursor=pointer]
+      - img "Photo 4" [ref=e87] [cursor=pointer]
+      - img "Photo 5" [ref=e89] [cursor=pointer]
+      - img "Photo 6" [ref=e91] [cursor=pointer]
+      - generic [ref=e92] [cursor=pointer]:
+        - img "Photo 7"
+      - generic [ref=e93] [cursor=pointer]:
+        - img "Photo 8"
+      - generic [ref=e94] [cursor=pointer]:
+        - img "Photo 9"
+      - generic [ref=e95] [cursor=pointer]:
+        - img "Photo 10"
+      - img "Photo 11" [ref=e97] [cursor=pointer]
+      - img "Photo 12" [ref=e99] [cursor=pointer]
+      - img "Photo 13" [ref=e101] [cursor=pointer]
+      - img "Photo 14" [ref=e103] [cursor=pointer]
+      - img "Photo 15" [ref=e105] [cursor=pointer]
+      - img "Photo 16" [ref=e107] [cursor=pointer]
+      - generic [ref=e108] [cursor=pointer]:
+        - img "Photo 17"
+      - generic [ref=e109] [cursor=pointer]:
+        - img "Photo 18"
+      - generic [ref=e110] [cursor=pointer]:
+        - img "Photo 19"
+  - generic:
+    - generic: ×
+    - img "Full size"
+  - generic [ref=e112]:
+    - heading "สถานที่จัดงาน" [level=3] [ref=e113]
+    - paragraph [ref=e114]: ณ VIVACE WEDDING HALL ราชพฤกษ์
+    - paragraph [ref=e115]: 18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด จังหวัดนนทบุรี 11120
+    - link "ดูแผนที่" [ref=e116] [cursor=pointer]:
+      - /url: https://maps.app.goo.gl/FsBq9wKKmYub5BrMA
+    - iframe [ref=e118]:
+      - link "Open in Maps (opens in new tab)" [ref=f501e4] [cursor=pointer]:
+        - /url: about:invalid#zClosurez
+        - text: Open in Maps
+        - img [ref=f501e6]
+    - generic [ref=e119]:
+      - heading "การแต่งกาย" [level=4] [ref=e120]
+      - generic [ref=e121]:
+        - generic "ชมพูอ่อน" [ref=e122]
+        - generic "ชมพู" [ref=e123]
+        - generic "พีช" [ref=e124]
+        - generic "เขียว" [ref=e125]
+        - generic "แดงเลือดหมู" [ref=e126]
+      - paragraph [ref=e127]: "#SOMJINGWEDDING"
+    - generic [ref=e128]:
+      - generic [ref=e129]: 22.11.69
+      - paragraph [ref=e130]: ณ BokRak VIVACE WEDDING HALL ราชพฤกษ์
+  - generic [ref=e132]:
+    - img [ref=e133]
+    - heading "ตอบรับการเข้าร่วมงาน" [level=3] [ref=e135]
+    - generic [ref=e137]:
+      - paragraph [ref=e138]: กรุณาเข้าสู่ระบบด้วย Google เพื่อตอบรับการเข้าร่วมงาน
+      - generic [ref=e140]:
+        - button "ลงชื่อเข้าใช้ด้วย Googleเปิดในแท็บใหม่" [ref=e142] [cursor=pointer]:
+          - generic [ref=e144]:
+            - img [ref=e146]
+            - generic [ref=e153]: ลงชื่อเข้าใช้ด้วย Google
+        - generic:
+          - iframe
+          - button "ลงชื่อเข้าใช้ด้วย Google เปิดในแท็บใหม่"
+    - button "ไม่ได้ใช้ Gmail? ลงทะเบียนด้วยชื่อ" [ref=e155] [cursor=pointer]
+    - generic [ref=e156]:
+      - heading "บันทึกวันสำคัญของเรา" [level=4] [ref=e157]
+      - paragraph [ref=e158]: เพิ่มวันแต่งงานของเราลงในปฏิทินของคุณ
+      - link "เพิ่มในปฏิทิน" [ref=e159] [cursor=pointer]:
+        - /url: https://www.google.com/calendar/render?action=TEMPLATE&text=%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B9%81%E0%B8%95%E0%B9%88%E0%B8%87%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%B8%E0%B8%99%E0%B8%B5%E0%B8%A2%E0%B9%8C%20%26%20%E0%B8%A8%E0%B8%B8%E0%B8%A0%E0%B8%81%E0%B8%B4%E0%B8%95%E0%B8%95%E0%B8%B4%E0%B9%8C&dates=20261121T080000/20261121T220000&details=%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%A1%E0%B9%81%E0%B8%AA%E0%B8%94%E0%B8%87%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B8%A2%E0%B8%B4%E0%B8%99%E0%B8%94%E0%B8%B5%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%AA%E0%B8%B3%E0%B8%84%E0%B8%B1%E0%B8%8D%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B2%20-%20%23SuneeSupakitWedding&location=VIVACE%20WEDDING%20HALL%20%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%9E%E0%B8%A4%E0%B8%81%E0%B8%A9%E0%B9%8C%20-%2018%2F15%20%E0%B8%96.%20%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%9E%E0%B8%A4%E0%B8%81%E0%B8%A9%E0%B9%8C%20%E0%B8%95%E0%B8%B3%E0%B8%9A%E0%B8%A5%E0%B8%AD%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B9%80%E0%B8%81%E0%B8%A3%E0%B9%87%E0%B8%94%20%E0%B8%AD%E0%B8%B3%E0%B9%80%E0%B8%A0%E0%B8%AD%E0%B8%9B%E0%B8%B2%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%A3%E0%B9%87%E0%B8%94%20%E0%B8%99%E0%B8%99%E0%B8%97%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5%2011120
+        - img [ref=e160]
+        - generic [ref=e162]: เพิ่มในปฏิทิน
+  - contentinfo [ref=e163]:
+    - paragraph [ref=e164]: "#SuneeSupakitWedding"
+    - paragraph [ref=e165]: ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง
+  - button "โอนเงิน" [ref=e166] [cursor=pointer]
