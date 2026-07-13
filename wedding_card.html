@@ -1052,7 +1052,7 @@
                 line-height: 1.6;
                 color: var(--text);
             }
-            .account-line span {
+            .account-line #account-number {
                 color: var(--wine);
                 font-weight: 700;
                 font-family: monospace;
@@ -2051,9 +2051,14 @@
                     </div>
 
                     <p class="account-line">
-                        ชื่อบัญชี: นางสาวสุนีย์ มงคลวรกิจชัย และ/หรือ
-                        นายศุภกิตติ์ สุจริตชีววงศ์<br />
-                        ธนาคาร: กสิกรไทย<br />เลขที่บัญชี:
+                        <span data-i18n="accountNameLine"
+                            >ชื่อบัญชี: นางสาวสุนีย์ มงคลวรกิจชัย และ/หรือ
+                            นายศุภกิตติ์ สุจริตชีววงศ์</span
+                        ><br />
+                        <span data-i18n="accountBankLine"
+                            >ธนาคาร: กสิกรไทย</span
+                        ><br />
+                        <span data-i18n="accountNumberLabel">เลขที่บัญชี:</span>
                         <span id="account-number">121-8-46216-9</span>
                     </p>
 
@@ -2699,6 +2704,10 @@
                         messageLabel: "คำอวยพร / ข้อความ",
                         messagePlaceholder: "คำอวยพรถึงคู่บ่าวสาว",
                         uploadSlip: "อัพโหลดสลิป (รูปหรือ PDF)",
+                        accountNameLine:
+                            "ชื่อบัญชี: นางสาวสุนีย์ มงคลวรกิจชัย และ/หรือ นายศุภกิตติ์ สุจริตชีววงศ์",
+                        accountBankLine: "ธนาคาร: กสิกรไทย",
+                        accountNumberLabel: "เลขที่บัญชี:",
                         copyAccount: "คัดลอกเลขบัญชี",
                         submitPayment: "แจ้งโอน & สลิป",
                         payFooterNote:
@@ -2806,6 +2815,10 @@
                         messageLabel: "Blessing Message",
                         messagePlaceholder: "Your blessing to the couple",
                         uploadSlip: "Upload Slip (Image or PDF)",
+                        accountNameLine:
+                            "Account Name: Ms. Sunee Mongkolvorakitchai and/or Mr. Supakit Sujaritcheewawong",
+                        accountBankLine: "Bank: Kasikornbank (KBank)",
+                        accountNumberLabel: "Account No.:",
                         copyAccount: "Copy Account",
                         submitPayment: "Submit Transfer",
                         payFooterNote:
@@ -2914,6 +2927,10 @@
                         messageLabel: "お祝いメッセージ",
                         messagePlaceholder: "新郎新婦へのメッセージ",
                         uploadSlip: "振込明細をアップロード",
+                        accountNameLine:
+                            "口座名義: スニー モンコンウォラキットチャイ および／または スパキット スチャリットチーワウォン",
+                        accountBankLine: "銀行: カシコン銀行（Kasikornbank）",
+                        accountNumberLabel: "口座番号:",
                         copyAccount: "口座番号をコピー",
                         submitPayment: "送信",
                         payFooterNote:
