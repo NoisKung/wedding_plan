@@ -10,7 +10,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Pridi:wght@300;400;500;600&family=Sarabun:wght@300;400;500;600&family=Sriracha&display=swap"
             rel="stylesheet"
         />
 
@@ -32,6 +32,26 @@
                 --white: #ffffff;
                 --text: #1c1c1c;
                 --text-soft: #6b6b6b;
+
+                /* ── FONT SYSTEM (Language-aware) ── */
+                /* Default: Thai */
+                --font-display: "Pridi", serif;
+                --font-body: "Sarabun", sans-serif;
+                --font-accent: "Sriracha", cursive;
+                --font-serif-en: "Cormorant Garamond", serif;
+                --font-script-en: "Great Vibes", cursive;
+            }
+
+            html[lang="en"] {
+                --font-display: "Cormorant Garamond", serif;
+                --font-body: "Cormorant Garamond", "Sarabun", serif;
+                --font-accent: "Great Vibes", cursive;
+            }
+
+            html[lang="ja"] {
+                --font-display: "Noto Serif JP", serif;
+                --font-body: "Noto Sans JP", sans-serif;
+                --font-accent: "Noto Serif JP", serif;
             }
 
             html,
@@ -40,7 +60,7 @@
                 height: 100%;
                 overflow: hidden;
                 background-color: var(--blush-pale);
-                font-family: "IBM Plex Sans Thai", sans-serif;
+                font-family: var(--font-body);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -123,7 +143,7 @@
                 gap: 5px;
             }
             .card-label {
-                font-family: "Cormorant Garamond", serif;
+                font-family: var(--font-serif-en);
                 font-style: italic;
                 font-size: clamp(0.52rem, 1.4vw, 0.68rem);
                 color: var(--wine-mid);
@@ -131,7 +151,7 @@
                 text-transform: uppercase;
             }
             .card-title {
-                font-family: "Cormorant Garamond", serif;
+                font-family: var(--font-serif-en);
                 font-size: clamp(1.4rem, 3.8vw, 2.1rem);
                 font-weight: 500;
                 color: var(--wine);
@@ -145,7 +165,7 @@
                 margin: 3px 0;
             }
             .card-names {
-                font-family: "Cormorant Garamond", serif;
+                font-family: var(--font-serif-en);
                 font-size: clamp(0.78rem, 1.9vw, 0.98rem);
                 font-weight: 600;
                 color: var(--text);
@@ -180,7 +200,7 @@
                 flex-shrink: 0;
             }
             .card-date-bar span {
-                font-family: "Cormorant Garamond", serif;
+                font-family: var(--font-serif-en);
                 font-size: clamp(0.62rem, 1.6vw, 0.82rem);
                 font-weight: 600;
                 color: #fff;
@@ -369,7 +389,7 @@
                 flex-shrink: 0;
             }
             .np-meta-date, .np-meta-loc {
-                font-family: "Cormorant Garamond", serif;
+                font-family: var(--font-serif-en);
                 font-size: clamp(0.42rem, 1.5vw, 0.56rem);
                 line-height: 1.35;
                 color: #111;
@@ -381,7 +401,7 @@
                 color: #f4edd6;
                 border-radius: 30px;
                 padding: 2px 9px;
-                font-family: "Cormorant Garamond", serif;
+                font-family: var(--font-serif-en);
                 font-size: clamp(0.42rem, 1.5vw, 0.56rem);
                 letter-spacing: 0.5px;
                 white-space: nowrap;
@@ -430,7 +450,7 @@
                 padding: clamp(1px, 0.4vw, 3px) 0;
             }
             .np-married {
-                font-family: "Cormorant Garamond", serif;
+                font-family: var(--font-serif-en);
                 font-style: italic;
                 font-size: clamp(0.55rem, 2vw, 0.78rem);
                 color: #111;
@@ -477,7 +497,7 @@
                 color: var(--wine);
                 box-shadow: 0 2px 10px rgba(74, 107, 72, 0.09);
                 backdrop-filter: blur(8px);
-                font-family: "IBM Plex Sans Thai", sans-serif;
+                font-family: var(--font-body);
                 transition: all 0.2s;
             }
             .lang-btn:hover {
@@ -515,7 +535,7 @@
                 border-radius: 8px;
                 cursor: pointer;
                 font-size: 13px;
-                font-family: "IBM Plex Sans Thai", sans-serif;
+                font-family: var(--font-body);
                 color: var(--text);
                 transition: background 0.15s;
             }
@@ -736,6 +756,7 @@
                         t[l].flag;
                     document.getElementById("currentLangName").textContent =
                         t[l].langName;
+                    document.documentElement.lang = l === 'th' ? 'th' : l === 'ja' ? 'ja' : 'en';
                     document
                         .querySelectorAll(".lang-option")
                         .forEach((o) =>
