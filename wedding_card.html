@@ -527,6 +527,37 @@
         }
 
         /* ═══════════════════════════════════════════════════
+           PHOTO BREAK
+        ═══════════════════════════════════════════════════ */
+        .photo-break {
+            position: relative;
+            min-height: 60vh;
+            background-image:
+                linear-gradient(
+                    180deg,
+                    rgba(74, 107, 72, 0.15) 0%,
+                    rgba(74, 107, 72, 0.8) 100%
+                ),
+                url("701AFFE2-8D0D-4D05-8D45-2D18633A0EBA_4_5005_c.jpeg");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 32px 24px;
+        }
+
+        .photo-break-text {
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-style: italic;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            max-width: 480px;
+        }
+
+        /* ═══════════════════════════════════════════════════
            SECTION 4 — GALLERY
         ═══════════════════════════════════════════════════ */
         .gal-section {
@@ -1556,6 +1587,15 @@
     </section>
 
     <!-- ══════════════════════════════════════════════════
+         PHOTO BREAK
+    ══════════════════════════════════════════════════ -->
+    <section class="photo-break" data-aos="fade-in">
+        <p class="photo-break-text" data-i18n="photoBreakText">
+            เรื่องราวของเราสองคน กำลังจะเริ่มต้นบทใหม่
+        </p>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
          SECTION 3 — SCHEDULE
     ══════════════════════════════════════════════════ -->
     <section class="sch-section">
@@ -2535,6 +2575,7 @@
                     scheduleTitle: "กำหนดการ",
                     scheduleSubtitle: '"งานเช้า เลี้ยงเที่ยง"',
                     bgmPrompt: "กดเพื่อฟังเพลงประกอบ",
+                    photoBreakText: "เรื่องราวของเราสองคน กำลังจะเริ่มต้นบทใหม่",
                     buddhist: "พิธีสงฆ์",
                     procession: "แห่ขันหมาก",
                     waterBlessing: "ยกน้ำชา",
@@ -2646,6 +2687,7 @@
                     scheduleSubtitle:
                         '"Morning Ceremony, Luncheon Reception"',
                     bgmPrompt: "Tap to play background music",
+                    photoBreakText: "Our story is about to begin a new chapter",
                     buddhist: "Buddhist Ceremony",
                     procession: "Groom's Procession",
                     waterBlessing: "Tea Ceremony",
@@ -2757,6 +2799,7 @@
                     scheduleTitle: "スケジュール",
                     scheduleSubtitle: "「午前の式典、昼食会」",
                     bgmPrompt: "タップして音楽を再生",
+                    photoBreakText: "私たちの物語は、新しい章を迎えようとしています",
                     buddhist: "仏式",
                     procession: "花婿行列",
                     waterBlessing: "献茶の儀式",
