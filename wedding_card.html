@@ -1297,6 +1297,62 @@
             }
         }
 
+        .bgm-prompt {
+            max-width: 320px;
+            margin: 24px auto 0;
+            padding: 14px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--blush-mid);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--wine);
+            box-shadow: 0 4px 16px rgba(74, 107, 72, 0.12);
+        }
+
+        .bgm-prompt svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .bgm-prompt.hidden {
+            display: none;
+        }
+
+        .bgm-toggle {
+            position: fixed;
+            left: 18px;
+            bottom: 18px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--wine);
+            color: var(--white);
+            border: none;
+            z-index: 200;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(74, 107, 72, 0.35);
+        }
+
+        .bgm-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .bgm-toggle {
+                bottom: max(18px, env(safe-area-inset-bottom));
+            }
+        }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 480px) {
             .inv-family-names {
@@ -1445,6 +1501,32 @@
             </svg>
         </a>
     </section>
+
+    <!-- ══════════════════════════════════════════════════
+         BACKGROUND MUSIC
+    ══════════════════════════════════════════════════ -->
+    <audio id="bgm" loop preload="none">
+        <source
+            src="assets/audio/gymnopedie-no1.mp3"
+            type="audio/mpeg"
+        />
+    </audio>
+    <!--
+        "Gymnopedie No. 1" — composed by Erik Satie, arranged by
+        Kevin MacLeod (incompetech.com). Licensed under Creative
+        Commons: By Attribution 3.0 (https://creativecommons.org/licenses/by/3.0/)
+    -->
+    <button
+        type="button"
+        id="bgmPromptBtn"
+        class="bgm-prompt"
+        data-aos="fade-up"
+    >
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+        </svg>
+        <span data-i18n="bgmPrompt">กดเพื่อฟังเพลงประกอบ</span>
+    </button>
 
     <!-- ══════════════════════════════════════════════════
          SECTION 2 — COUNTDOWN
@@ -1894,6 +1976,27 @@
             </p>
         </div>
     </div>
+
+    <!-- Floating music toggle -->
+    <button
+        type="button"
+        id="bgmToggle"
+        class="bgm-toggle"
+        aria-label="Toggle background music"
+        style="display: none"
+    >
+        <svg id="bgmIconPlay" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+        </svg>
+        <svg
+            id="bgmIconPause"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            style="display: none"
+        >
+            <path d="M6 5h4v14H6zm8 0h4v14h-4z" />
+        </svg>
+    </button>
 
     <!-- Floating pay button -->
     <button id="open-pay" class="pay-btn" aria-haspopup="dialog" aria-controls="pay-modal" data-i18n="payBtn">
@@ -2431,6 +2534,7 @@
                     seconds: "วินาที",
                     scheduleTitle: "กำหนดการ",
                     scheduleSubtitle: '"งานเช้า เลี้ยงเที่ยง"',
+                    bgmPrompt: "กดเพื่อฟังเพลงประกอบ",
                     buddhist: "พิธีสงฆ์",
                     procession: "แห่ขันหมาก",
                     waterBlessing: "ยกน้ำชา",
@@ -2541,6 +2645,7 @@
                     scheduleTitle: "Wedding Schedule",
                     scheduleSubtitle:
                         '"Morning Ceremony, Luncheon Reception"',
+                    bgmPrompt: "Tap to play background music",
                     buddhist: "Buddhist Ceremony",
                     procession: "Groom's Procession",
                     waterBlessing: "Tea Ceremony",
@@ -2651,6 +2756,7 @@
                     seconds: "秒",
                     scheduleTitle: "スケジュール",
                     scheduleSubtitle: "「午前の式典、昼食会」",
+                    bgmPrompt: "タップして音楽を再生",
                     buddhist: "仏式",
                     procession: "花婿行列",
                     waterBlessing: "献茶の儀式",
@@ -2894,6 +3000,46 @@
                 initLangSwitcher();
                 initGalleryModal();
                 setLanguage(currentLang);
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            const bgm = document.getElementById("bgm");
+            const promptBtn = document.getElementById("bgmPromptBtn");
+            const toggleBtn = document.getElementById("bgmToggle");
+            const iconPlay = document.getElementById("bgmIconPlay");
+            const iconPause = document.getElementById("bgmIconPause");
+            if (!bgm || !promptBtn || !toggleBtn) return;
+
+            function showPlayingIcon(isPlaying) {
+                iconPlay.style.display = isPlaying ? "none" : "block";
+                iconPause.style.display = isPlaying ? "block" : "none";
+            }
+
+            function startMusic() {
+                bgm.play()
+                    .then(() => {
+                        promptBtn.classList.add("hidden");
+                        toggleBtn.style.display = "flex";
+                        showPlayingIcon(true);
+                    })
+                    .catch(() => {
+                        /* autoplay blocked or file unavailable — leave prompt visible */
+                    });
+            }
+
+            promptBtn.addEventListener("click", startMusic);
+
+            toggleBtn.addEventListener("click", function () {
+                if (bgm.paused) {
+                    bgm.play()
+                        .then(() => showPlayingIcon(true))
+                        .catch(() => {});
+                } else {
+                    bgm.pause();
+                    showPlayingIcon(false);
+                }
             });
         })();
     </script>
