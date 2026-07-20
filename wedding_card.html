@@ -461,7 +461,7 @@
            SECTION 3 — SCHEDULE
         ═══════════════════════════════════════════════════ */
         .sch-section {
-            background: var(--section-alt);
+            background: var(--wine);
             padding: 80px 24px;
             text-align: center;
         }
@@ -482,25 +482,55 @@
             margin-bottom: 48px;
         }
 
-        .sch-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 24px;
-            max-width: 760px;
+        .sch-section .section-title,
+        .sch-section .section-sub {
+            color: var(--white);
+        }
+
+        .sch-section .section-sub {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .tl-list {
+            position: relative;
+            max-width: 360px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 56px;
         }
 
-        .sch-item {
+        .tl-list::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(-50%);
+        }
+
+        .tl-line-fill {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 0%;
             background: var(--white);
-            border-radius: 16px;
-            padding: 28px 16px;
-            box-shadow: 0 4px 16px rgba(139, 48, 69, 0.07);
+            transform: translateX(-50%);
+            transition: height 0.6s ease;
         }
 
-        .sch-icon {
+        .tl-item {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tl-icon {
             width: 56px;
             height: 56px;
-            background: var(--blush);
+            background: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -509,20 +539,20 @@
             color: var(--wine);
         }
 
-        .sch-icon svg {
+        .tl-icon svg {
             width: 28px;
             height: 28px;
         }
 
-        .sch-time {
+        .tl-time {
             font-weight: 600;
-            color: var(--wine);
+            color: var(--white);
             font-size: 0.92rem;
             margin-bottom: 4px;
         }
 
-        .sch-event {
-            color: var(--text-soft);
+        .tl-event {
+            color: rgba(255, 255, 255, 0.85);
             font-size: 0.88rem;
         }
 
@@ -1607,50 +1637,51 @@
                 "งานเช้า เลี้ยงเที่ยง"
             </p>
         </div>
-        <div class="sch-grid">
-            <div class="sch-item" data-aos="fade-up" data-aos-delay="100">
-                <div class="sch-icon">
+        <div class="tl-list" id="tlList">
+            <div class="tl-line-fill" id="tlLineFill"></div>
+            <div class="tl-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="tl-icon">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
-                <div class="sch-time" data-i18n="time1">07:09 น.</div>
-                <div class="sch-event" data-i18n="buddhist">พิธีสงฆ์</div>
+                <div class="tl-time" data-i18n="time1">07:09 น.</div>
+                <div class="tl-event" data-i18n="buddhist">พิธีสงฆ์</div>
             </div>
-            <div class="sch-item" data-aos="fade-up" data-aos-delay="200">
-                <div class="sch-icon">
+            <div class="tl-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="tl-icon">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                 </div>
-                <div class="sch-time" data-i18n="time2">08:29 น.</div>
-                <div class="sch-event" data-i18n="procession">
+                <div class="tl-time" data-i18n="time2">08:29 น.</div>
+                <div class="tl-event" data-i18n="procession">
                     แห่ขันหมาก
                 </div>
             </div>
-            <div class="sch-item" data-aos="fade-up" data-aos-delay="300">
-                <div class="sch-icon">
+            <div class="tl-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="tl-icon">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                 </div>
-                <div class="sch-time" data-i18n="time3">09:49 น.</div>
-                <div class="sch-event" data-i18n="waterBlessing">
+                <div class="tl-time" data-i18n="time3">09:49 น.</div>
+                <div class="tl-event" data-i18n="waterBlessing">
                     ยกน้ำชา
                 </div>
             </div>
-            <div class="sch-item" data-aos="fade-up" data-aos-delay="400">
-                <div class="sch-icon">
+            <div class="tl-item" data-aos="fade-up" data-aos-delay="400">
+                <div class="tl-icon">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V8.546c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0c.454.303.977.454 1.5.454v7z" />
                     </svg>
                 </div>
-                <div class="sch-time" data-i18n="time4">11:30 น.</div>
-                <div class="sch-event" data-i18n="luncheon">
+                <div class="tl-time" data-i18n="time4">11:30 น.</div>
+                <div class="tl-event" data-i18n="luncheon">
                     รับประทานอาหาร
                 </div>
             </div>
@@ -3084,6 +3115,32 @@
                     showPlayingIcon(false);
                 }
             });
+        })();
+    </script>
+    <script>
+        (function () {
+            if (!("IntersectionObserver" in window)) return;
+            const items = document.querySelectorAll(".tl-item");
+            const fill = document.getElementById("tlLineFill");
+            const list = document.getElementById("tlList");
+            if (!items.length || !fill || !list) return;
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
+                        const item = entry.target;
+                        const percent =
+                            ((item.offsetTop + item.offsetHeight / 2) /
+                                list.offsetHeight) *
+                            100;
+                        fill.style.height = Math.min(percent, 100) + "%";
+                    });
+                },
+                { threshold: 0.5 },
+            );
+
+            items.forEach((item) => observer.observe(item));
         })();
     </script>
 </body>
