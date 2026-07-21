@@ -1591,16 +1591,22 @@
     <!-- ══════════════════════════════════════════════════
          BACKGROUND MUSIC
     ══════════════════════════════════════════════════ -->
-    <audio id="bgm" loop preload="none">
-        <source
-            src="assets/audio/gymnopedie-no1.mp3"
-            type="audio/mpeg"
-        />
-    </audio>
+    <div
+        id="bgmPlayer"
+        style="
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        "
+    ></div>
     <!--
-        "Gymnopedie No. 1" — composed by Erik Satie, arranged by
-        Kevin MacLeod (incompetech.com). Licensed under Creative
-        Commons: By Attribution 3.0 (https://creativecommons.org/licenses/by/3.0/)
+        "Marry You" by Bruno Mars, played via the official YouTube
+        embed (youtube.com/watch?v=dElRVQFqj-k) — not self-hosted,
+        playback stays on YouTube's platform so its own licensing
+        covers use here.
     -->
     <button
         type="button"
@@ -1614,7 +1620,7 @@
         <span data-i18n="bgmPrompt">กดเพื่อฟังเพลงประกอบ</span>
     </button>
     <small class="bgm-credit">
-        "Gymnopedie No. 1" by Kevin MacLeod (incompetech.com) — CC BY 3.0
+        "Marry You" by Bruno Mars — via YouTube
     </small>
 
     <!-- ══════════════════════════════════════════════════
@@ -3105,42 +3111,79 @@
             });
         })();
     </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         (function () {
-            const bgm = document.getElementById("bgm");
             const promptBtn = document.getElementById("bgmPromptBtn");
             const toggleBtn = document.getElementById("bgmToggle");
             const iconPlay = document.getElementById("bgmIconPlay");
             const iconPause = document.getElementById("bgmIconPause");
-            if (!bgm || !promptBtn || !toggleBtn) return;
+            if (!promptBtn || !toggleBtn) return;
+
+            const BGM_VIDEO_ID = "dElRVQFqj-k";
+            let player = null;
+            let pendingPlay = false;
 
             function showPlayingIcon(isPlaying) {
                 iconPlay.style.display = isPlaying ? "none" : "block";
                 iconPause.style.display = isPlaying ? "block" : "none";
             }
 
+            function revealToggle() {
+                promptBtn.classList.add("hidden");
+                toggleBtn.style.display = "flex";
+            }
+
+            window.onYouTubeIframeAPIReady = function () {
+                player = new YT.Player("bgmPlayer", {
+                    videoId: BGM_VIDEO_ID,
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 0,
+                        disablekb: 1,
+                        fs: 0,
+                        modestbranding: 1,
+                        playsinline: 1,
+                    },
+                    events: {
+                        onReady: function () {
+                            if (pendingPlay) {
+                                pendingPlay = false;
+                                player.playVideo();
+                            }
+                        },
+                        onStateChange: function (event) {
+                            if (event.data === YT.PlayerState.PLAYING) {
+                                revealToggle();
+                                showPlayingIcon(true);
+                            } else if (event.data === YT.PlayerState.PAUSED) {
+                                showPlayingIcon(false);
+                            } else if (event.data === YT.PlayerState.ENDED) {
+                                player.seekTo(0);
+                                player.playVideo();
+                            }
+                        },
+                    },
+                });
+            };
+
             function startMusic() {
-                bgm.play()
-                    .then(() => {
-                        promptBtn.classList.add("hidden");
-                        toggleBtn.style.display = "flex";
-                        showPlayingIcon(true);
-                    })
-                    .catch(() => {
-                        /* autoplay blocked or file unavailable — leave prompt visible */
-                    });
+                if (player && typeof player.playVideo === "function") {
+                    player.playVideo();
+                } else {
+                    pendingPlay = true;
+                }
             }
 
             promptBtn.addEventListener("click", startMusic);
 
             toggleBtn.addEventListener("click", function () {
-                if (bgm.paused) {
-                    bgm.play()
-                        .then(() => showPlayingIcon(true))
-                        .catch(() => {});
+                if (!player || typeof player.getPlayerState !== "function")
+                    return;
+                if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                    player.pauseVideo();
                 } else {
-                    bgm.pause();
-                    showPlayingIcon(false);
+                    player.playVideo();
                 }
             });
         })();
