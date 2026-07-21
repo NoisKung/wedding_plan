@@ -181,7 +181,14 @@
             position: relative;
             min-height: 100vh;
             min-height: 100svh;
-            background: var(--blush);
+            background-color: var(--blush);
+            background-image:
+                url("assets/flower/base-flower-nobg.png"),
+                url("assets/flower/side-flower-left-nobg.png");
+            background-repeat: no-repeat, no-repeat;
+            background-position: bottom center, left top;
+            background-size: min(600px, 100%) auto, 200px auto;
+            background-blend-mode: normal, screen;
             display: flex;
             align-items: center;
             justify-content: center;
