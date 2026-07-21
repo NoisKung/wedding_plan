@@ -1,0 +1,166 @@
+- generic [active] [ref=e1]:
+  - button "Change language" [ref=e3] [cursor=pointer]:
+    - generic [ref=e4]: 🇹🇭
+    - generic [ref=e5]: ไทย
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]: คุณมาลัย วรรณภูงา คุณชาญชัย มงคลวรกิจชัย
+        - generic [ref=e10]: "&"
+        - generic [ref=e11]: คุณสุพร ซูพูล คุณสมชัย สุจริตชีววงศ์
+      - paragraph [ref=e13]: ขอเรียนเชิญเพื่อเป็นเกียรติในพิธีมงคลสมรสระหว่าง
+      - generic [ref=e14]:
+        - generic [ref=e15]: "{"
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - img "Bride"
+          - generic [ref=e18]: สุนีย์
+          - generic [ref=e19]: มงคลวรกิจชัย
+        - generic [ref=e20]: "&"
+        - generic [ref=e21]:
+          - generic [ref=e22]:
+            - img "Groom"
+          - generic [ref=e23]: ศุภกิตติ์
+          - generic [ref=e24]: สุจริตชีววงศ์
+        - generic [ref=e25]: "}"
+      - generic [ref=e26]:
+        - strong [ref=e27]: วันอาทิตย์ที่ 22 พฤศจิกายน 2569 เวลา 07:00 น.
+        - text: ณ BokRak VIVACE WEDDING HALL ราชพฤกษ์
+      - paragraph [ref=e28]: ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง
+    - link [ref=e29] [cursor=pointer]:
+      - /url: "#countdown"
+  - iframe [ref=e32]:
+    - generic [ref=f3e1]:
+      - generic "YouTube Video Player" [ref=f3e3]
+      - generic [ref=f3e5]:
+        - generic:
+          - generic:
+            - button "Play video" [ref=f3e10] [cursor=pointer]
+            - button "Hide player controls" [ref=f3e12] [cursor=pointer]
+            - generic [ref=f3e19]:
+              - generic [ref=f3e20]:
+                - link "Bruno Mars - Marry You (Official Lyric Video)":
+                  - /url: https://www.youtube.com/watch?v=dElRVQFqj-k
+                - link "Bruno Mars":
+                  - /url: /channel/UCoUM-UJ7rirJYP8CQ0EIaHA
+              - generic [ref=f3e21]:
+                - button [ref=f3e22] [cursor=pointer]
+                - generic [ref=f3e24]:
+                  - generic: Bruno Mars
+                  - generic: 44M subscribers
+  - button "กดเพื่อฟังเพลงประกอบ" [ref=e33] [cursor=pointer]
+  - generic [ref=e37]: "\"Marry You\" by Bruno Mars — via YouTube"
+  - generic [ref=e38]:
+    - heading "นับถอยหลังสู่วันของเรา" [level=3] [ref=e39]
+    - generic [ref=e40]:
+      - generic [ref=e41]:
+        - generic [ref=e42]: "00"
+        - generic [ref=e43]: วัน
+      - generic [ref=e44]:
+        - generic [ref=e45]: "00"
+        - generic [ref=e46]: ชั่วโมง
+      - generic [ref=e47]:
+        - generic [ref=e48]: "00"
+        - generic [ref=e49]: นาที
+      - generic [ref=e50]:
+        - generic [ref=e51]: "00"
+        - generic [ref=e52]: วินาที
+  - paragraph [ref=e54]: เรื่องราวของเราสองคน กำลังจะเริ่มต้นบทใหม่
+  - generic [ref=e55]:
+    - generic [ref=e56]:
+      - heading "กำหนดการ" [level=3] [ref=e57]
+      - paragraph [ref=e58]: "\"งานเช้า เลี้ยงเที่ยง\""
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - generic [ref=e64]: 07:09 น.
+        - generic [ref=e65]: พิธีสงฆ์
+      - generic [ref=e66]:
+        - generic [ref=e70]: 08:29 น.
+        - generic [ref=e71]: แห่ขันหมาก
+      - generic [ref=e72]:
+        - generic [ref=e76]: 09:49 น.
+        - generic [ref=e77]: ยกน้ำชา
+      - generic [ref=e78]:
+        - generic [ref=e82]: 11:30 น.
+        - generic [ref=e83]: รับประทานอาหาร
+  - generic [ref=e84]:
+    - heading "แกลเลอรี่ความทรงจำ" [level=3] [ref=e85]
+    - generic [ref=e86]:
+      - generic [ref=e87] [cursor=pointer]:
+        - img "Photo 1"
+      - generic [ref=e88] [cursor=pointer]:
+        - img "Photo 2"
+      - generic [ref=e89] [cursor=pointer]:
+        - img "Photo 3"
+      - generic [ref=e90] [cursor=pointer]:
+        - img "Photo 4"
+      - generic [ref=e91] [cursor=pointer]:
+        - img "Photo 5"
+      - generic [ref=e92] [cursor=pointer]:
+        - img "Photo 6"
+      - generic [ref=e93] [cursor=pointer]:
+        - img "Photo 7"
+      - generic [ref=e94] [cursor=pointer]:
+        - img "Photo 8"
+      - generic [ref=e95] [cursor=pointer]:
+        - img "Photo 9"
+      - generic [ref=e96] [cursor=pointer]:
+        - img "Photo 10"
+      - generic [ref=e97] [cursor=pointer]:
+        - img "Photo 11"
+      - generic [ref=e98] [cursor=pointer]:
+        - img "Photo 12"
+      - generic [ref=e99] [cursor=pointer]:
+        - img "Photo 13"
+      - generic [ref=e100] [cursor=pointer]:
+        - img "Photo 14"
+      - generic [ref=e101] [cursor=pointer]:
+        - img "Photo 15"
+      - generic [ref=e102] [cursor=pointer]:
+        - img "Photo 16"
+      - generic [ref=e103] [cursor=pointer]:
+        - img "Photo 17"
+      - generic [ref=e104] [cursor=pointer]:
+        - img "Photo 18"
+      - generic [ref=e105] [cursor=pointer]:
+        - img "Photo 19"
+  - generic:
+    - generic: ×
+    - img "Full size"
+  - generic [ref=e107]:
+    - heading "สถานที่จัดงาน" [level=3] [ref=e108]
+    - paragraph [ref=e109]: ณ VIVACE WEDDING HALL ราชพฤกษ์
+    - paragraph [ref=e110]: 18/15 ถ. ราชพฤกษ์ ตำบลอ้อมเกร็ด อำเภอปากเกร็ด จังหวัดนนทบุรี 11120
+    - link "ดูแผนที่" [ref=e111] [cursor=pointer]:
+      - /url: https://maps.app.goo.gl/FsBq9wKKmYub5BrMA
+    - iframe [ref=e113]
+    - generic [ref=e114]:
+      - heading "การแต่งกาย" [level=4] [ref=e115]
+      - generic [ref=e116]:
+        - generic "ชมพูอ่อน" [ref=e117]
+        - generic "ชมพู" [ref=e118]
+        - generic "พีช" [ref=e119]
+        - generic "เขียว" [ref=e120]
+        - generic "แดงเลือดหมู" [ref=e121]
+      - paragraph [ref=e122]: "#SOMJINGWEDDING"
+    - generic [ref=e123]:
+      - generic [ref=e124]: 22.11.69
+      - paragraph [ref=e125]: ณ BokRak VIVACE WEDDING HALL ราชพฤกษ์
+  - generic [ref=e127]:
+    - heading "ตอบรับการเข้าร่วมงาน" [level=3] [ref=e130]
+    - generic [ref=e132]:
+      - paragraph [ref=e133]: กรุณาเข้าสู่ระบบด้วย Google เพื่อตอบรับการเข้าร่วมงาน
+      - generic [ref=e135]:
+        - button "ลงชื่อเข้าใช้ด้วย Googleเปิดในแท็บใหม่" [ref=e137] [cursor=pointer]:
+          - generic [ref=e139]: ลงชื่อเข้าใช้ด้วย Google
+        - iframe
+    - button "ไม่ได้ใช้ Gmail? ลงทะเบียนด้วยชื่อ" [ref=e150] [cursor=pointer]
+    - generic [ref=e151]:
+      - heading "บันทึกวันสำคัญของเรา" [level=4] [ref=e152]
+      - paragraph [ref=e153]: เพิ่มวันแต่งงานของเราลงในปฏิทินของคุณ
+      - link "เพิ่มในปฏิทิน" [ref=e154] [cursor=pointer]:
+        - /url: https://www.google.com/calendar/render?action=TEMPLATE&text=%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B9%81%E0%B8%95%E0%B9%88%E0%B8%87%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%B8%E0%B8%99%E0%B8%B5%E0%B8%A2%E0%B9%8C%20%26%20%E0%B8%A8%E0%B8%B8%E0%B8%A0%E0%B8%81%E0%B8%B4%E0%B8%95%E0%B8%95%E0%B8%B4%E0%B9%8C&dates=20261121T080000/20261121T220000&details=%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%A1%E0%B9%81%E0%B8%AA%E0%B8%94%E0%B8%87%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B8%A2%E0%B8%B4%E0%B8%99%E0%B8%94%E0%B8%B5%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%AA%E0%B8%B3%E0%B8%84%E0%B8%B1%E0%B8%8D%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B2%20-%20%23SuneeSupakitWedding&location=VIVACE%20WEDDING%20HALL%20%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%9E%E0%B8%A4%E0%B8%81%E0%B8%A9%E0%B9%8C%20-%2018%2F15%20%E0%B8%96.%20%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%9E%E0%B8%A4%E0%B8%81%E0%B8%A9%E0%B9%8C%20%E0%B8%95%E0%B8%B3%E0%B8%9A%E0%B8%A5%E0%B8%AD%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B9%80%E0%B8%81%E0%B8%A3%E0%B9%87%E0%B8%94%20%E0%B8%AD%E0%B8%B3%E0%B9%80%E0%B8%A0%E0%B8%AD%E0%B8%9B%E0%B8%B2%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%A3%E0%B9%87%E0%B8%94%20%E0%B8%99%E0%B8%99%E0%B8%97%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5%2011120
+  - contentinfo [ref=e158]:
+    - paragraph [ref=e159]: "#SuneeSupakitWedding"
+    - paragraph [ref=e160]: ขออภัยหากมิได้มาเรียนเชิญด้วยตนเอง
+  - button "โอนเงิน" [ref=e161] [cursor=pointer]
