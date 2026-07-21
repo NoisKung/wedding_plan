@@ -60,6 +60,10 @@
                 height: 100%;
                 overflow: hidden;
                 background-color: var(--blush-pale);
+                background-image: url("assets/flower/image.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
                 font-family: var(--font-body);
                 display: flex;
                 align-items: center;
@@ -184,8 +188,8 @@
             .card-photo {
                 width: clamp(68px, 17vw, 108px);
                 height: 100%;
-                object-fit: cover;
-                object-position: center top;
+                object-fit: contain;
+                background: var(--white);
                 display: block;
             }
             .card-date-bar {
