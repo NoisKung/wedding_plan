@@ -545,13 +545,26 @@
         }
 
         .tl-time {
+            position: relative;
+            z-index: 2;
+            display: block;
+            width: fit-content;
+            margin: 0 auto 4px;
+            background: var(--wine);
+            padding: 2px 12px;
             font-weight: 600;
             color: var(--white);
             font-size: 0.92rem;
-            margin-bottom: 4px;
         }
 
         .tl-event {
+            position: relative;
+            z-index: 2;
+            display: block;
+            width: fit-content;
+            margin: 0 auto;
+            background: var(--wine);
+            padding: 2px 12px;
             color: rgba(255, 255, 255, 0.85);
             font-size: 0.88rem;
         }
@@ -561,20 +574,21 @@
         ═══════════════════════════════════════════════════ */
         .photo-break {
             position: relative;
-            min-height: 60vh;
+            min-height: 100vh;
             background-image:
                 linear-gradient(
                     180deg,
                     rgba(74, 107, 72, 0.15) 0%,
-                    rgba(74, 107, 72, 0.8) 100%
+                    rgba(74, 107, 72, 0.75) 65%,
+                    rgba(74, 107, 72, 1) 100%
                 ),
                 url("701AFFE2-8D0D-4D05-8D45-2D18633A0EBA_4_5005_c.jpeg");
             background-size: cover;
-            background-position: center;
+            background-position: center 20%;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            padding: 32px 24px;
+            padding: 32px 24px 64px;
         }
 
         .photo-break-text {
