@@ -47,11 +47,13 @@ Hardcoded `rgba(74, 107, 72, …)` shadows also appear throughout — these corr
 
 Real photos live in two places:
 - **Root**: `25E11052-…jpeg` (groom solo), `701AFFE2-…jpeg` (couple), `C4D20F07-…jpeg` (bride solo) — used in the invitation hero card
-- **`gallory/`** (note spelling): 19 pre-wedding photos used in Section 4 gallery
+- **`gallory/`** (note spelling): 18 pre-wedding photos, all used in Section 4 gallery
 
 `index.html` uses:
 - `701AFFE2-…jpeg` → envelope card strip (right side)
-- `gallory/B936D023-…jpeg` → portrait card (revealed after envelope opens)
+- `gallory/B20F5DEB-…jpeg` → portrait card (revealed after envelope opens)
+
+The portrait card frame (`.np-photo-wrap`) is roughly square (~0.9 ratio) while the source photos are 540×360 landscape, so `object-fit: cover` keeps only the **central ~60% of the width**. Any replacement must have both subjects near the horizontal centre — compositions with people at the left and right edges get cropped out.
 
 ### Gallery (Section 4 — `wedding_card.html`)
 
