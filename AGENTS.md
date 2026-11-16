@@ -17,7 +17,7 @@
 - Images and assets should use lowercase filenames with underscores or hyphens (match existing assets).
 
 ## Testing Guidelines
-- No automated test suite is present. Validate changes manually:
+- `npm test` runs the Node unit tests in `tests/` (guest photo upload: `photos/photos-core.js` and `google_apps_script/Photos.gs`). Validate everything else manually:
   - Run Jekyll and check key pages in a browser.
   - If you touch payment flow, test the Apps Script endpoint using `wedding_card.html`.
 

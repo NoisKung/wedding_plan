@@ -36,3 +36,44 @@ If you want, I can:
 - Help deploy the script step-by-step while you share the necessary IDs.
 - Modify the script to validate Google Sign-In tokens (so only signed-in users can submit).
 - Add email notifications on new payments.
+
+---
+
+Guest photos (/photos) — `Photos.gs`
+
+`Photos.gs` receives photos from `photos/index.html`
+and saves each one to Google Drive as `<parent folder>/<guest name>/<shot id>.jpg`.
+It is a separate Apps Script project from the RSVP/payment script,
+so deploying or switching it off never touches RSVP or payments.
+
+Deploy (about 5 minutes, once):
+1. Open script.google.com > New project. Name it e.g. "Wedding Photos".
+2. Replace the editor contents with `Photos.gs` and save.
+3. Pick `setup` in the function menu and click Run.
+   Approve the Drive permission prompt.
+   The log prints the URL of the new folder "Wedding Moments - Guest Photos" in My Drive.
+   (To use a folder you already have, first add a Script Property
+   `PHOTOS_FOLDER_ID` = that folder's ID under Project Settings > Script Properties, then run `setup`.)
+4. Optional: run `testUpload` — a "Test Guest" folder with a 1×1 image should appear.
+   Delete that folder afterwards.
+5. Deploy > New deployment > Web app.
+   - Execute as: Me
+   - Who has access: Anyone
+6. Copy the Web app URL (ends in `/exec`) and paste it into
+   `PHOTOS_SCRIPT_URL` near the top of the script in `photos/index.html`.
+   Until then the page says photo upload isn't switched on yet.
+
+Changing `Photos.gs` later: Deploy > Manage deployments > edit (pencil) > Version: New version.
+This keeps the same `/exec` URL.
+"New deployment" makes a new URL instead.
+
+Limits to know:
+- One photo per request, at most 8 MB after decoding; the page sends about 0.5–1.5 MB JPEGs.
+- Rate limits per 10 minutes: 120 requests per guest name, 2000 for everyone together.
+- Web apps that run as "Me" share the owner's simultaneous-execution quota
+  (30 at a time per the Apps Script quotas page).
+  The page uploads one photo at a time per phone and retries with backoff,
+  so a busy moment queues up instead of losing photos.
+- Photos count against the owner's Google Drive storage.
+
+Turning it off after the wedding: Deploy > Manage deployments > Archive.

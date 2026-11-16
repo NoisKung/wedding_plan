@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ede8df" />
+    <title>Wedding Moments | สุนีย์ &amp; ศุภกิตติ์</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;500;600&family=Pridi:wght@300;400;500;600&family=Sarabun:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Same palette as index.html and wedding_card.html — keep in sync. */
+        :root {
+            --blush: #ede8df;
+            --blush-pale: #f8f6f2;
+            --blush-mid: #d9d2c6;
+            --wine: #4a6b48;
+            --wine-mid: #7d9e7b;
+            --white: #ffffff;
+            --text: #1c1c1c;
+            --text-soft: #6b6b6b;
+
+            --film-amber: #ffb347;
+            --danger: #a6463c;
+
+            --font-display: "Pridi", serif;
+            --font-body: "Sarabun", sans-serif;
+            --font-serif-en: "Cormorant Garamond", serif;
+            --font-script-en: "Great Vibes", cursive;
+        }
+
+        html[lang="en"] {
+            --font-display: "Cormorant Garamond", serif;
+            --font-body: "Sarabun", sans-serif;
+        }
+
+        html[lang="ja"] {
+            --font-display: "Noto Serif JP", serif;
+            --font-body: "Noto Sans JP", sans-serif;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+            font-family: var(--font-body);
+            color: var(--text);
+            background-color: var(--blush);
+            background-image:
+                url("../assets/flower/base-flower-nobg.png"),
+                url("../assets/flower/side-flower-left-nobg.png");
+            background-repeat: no-repeat, no-repeat;
+            background-position: bottom center, left top;
+            background-size: min(560px, 100%) auto, 150px auto;
+            background-blend-mode: normal, screen;
+            padding: max(16px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ── Language switch ── */
+        .topbar {
+            max-width: 460px;
+            margin: 0 auto 14px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .lang {
+            display: inline-flex;
+            padding: 3px;
+            gap: 2px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--blush-mid);
+            border-radius: 999px;
+            box-shadow: 0 2px 10px rgba(74, 107, 72, 0.08);
+        }
+
+        .lang button {
+            border: 0;
+            background: transparent;
+            color: var(--text-soft);
+            font: 500 12px/1 var(--font-body);
+            letter-spacing: 0.06em;
+            padding: 7px 11px;
+            border-radius: 999px;
+            cursor: pointer;
+        }
+
+        .lang button[aria-pressed="true"] {
+            background: var(--wine);
+            color: var(--white);
+        }
+
+        /* ── Card ── */
+        .card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px 22px 26px;
+            text-align: center;
+            box-shadow: 0 8px 40px rgba(74, 107, 72, 0.1);
+        }
+
+        .eyebrow {
+            font-family: var(--font-serif-en);
+            font-size: 13px;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--wine-mid);
+        }
+
+        .couple {
+            margin-top: 6px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: clamp(26px, 7vw, 32px);
+            color: var(--wine);
+            line-height: 1.3;
+        }
+
+        html[lang="en"] .couple {
+            font-family: var(--font-script-en);
+            font-weight: 400;
+            font-size: clamp(34px, 9vw, 42px);
+        }
+
+        .date {
+            margin-top: 4px;
+            font-size: 14px;
+            color: var(--text-soft);
+        }
+
+        .divider {
+            width: 56px;
+            height: 1px;
+            margin: 18px auto 20px;
+            background: var(--blush-mid);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 21px;
+            color: var(--text);
+        }
+
+        .lead {
+            margin: 8px auto 0;
+            max-width: 32ch;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-soft);
+        }
+
+        /* ── Name step ── */
+        .name-form {
+            margin-top: 22px;
+            text-align: left;
+        }
+
+        .name-form label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .name-form input {
+            width: 100%;
+            font: 400 17px/1.4 var(--font-body);
+            color: var(--text);
+            padding: 13px 14px;
+            border: 1px solid var(--blush-mid);
+            border-radius: 12px;
+            background: var(--blush-pale);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .name-form input:focus {
+            border-color: var(--wine-mid);
+            box-shadow: 0 0 0 3px rgba(74, 107, 72, 0.12);
+        }
+
+        .hint {
+            margin-top: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-soft);
+        }
+
+        .hint.error {
+            color: var(--danger);
+        }
+
+        .btn-primary,
+        .btn-outline {
+            display: block;
+            width: 100%;
+            border-radius: 999px;
+            font: 500 16px/1 var(--font-body);
+            padding: 15px 18px;
+            cursor: pointer;
+            transition: transform 0.12s, background 0.2s, opacity 0.2s;
+        }
+
+        .btn-primary {
+            margin-top: 18px;
+            border: 0;
+            background: var(--wine);
+            color: var(--white);
+            box-shadow: 0 6px 18px rgba(74, 107, 72, 0.25);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--wine-mid);
+            background: var(--white);
+            color: var(--wine);
+        }
+
+        .btn-primary:active,
+        .btn-outline:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        /* ── Camera step ── */
+        .guest-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 4px 10px;
+            font-size: 16px;
+        }
+
+        .guest-row strong {
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .link {
+            border: 0;
+            background: none;
+            color: var(--wine);
+            font: 400 13px/1 var(--font-body);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .camera {
+            margin-top: 18px;
+            padding: 20px 18px 18px;
+            border-radius: 18px;
+            background: var(--blush-pale);
+            border: 1px solid var(--blush-mid);
+        }
+
+        .counter {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-soft);
+        }
+
+        /* The little frame-counter window on a disposable camera. */
+        .counter-window {
+            min-width: 44px;
+            padding: 5px 8px;
+            border-radius: 7px;
+            background: #2a2a2a;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            color: var(--film-amber);
+            font: 700 18px/1 "Courier New", ui-monospace, monospace;
+            letter-spacing: 0.08em;
+            text-shadow: 0 0 6px rgba(255, 140, 40, 0.55);
+        }
+
+        .shutter-wrap {
+            margin: 20px 0 6px;
+        }
+
+        .shutter {
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            border: 0;
+            background: var(--wine);
+            color: var(--white);
+            box-shadow: 0 0 0 6px var(--white), 0 0 0 7px var(--blush-mid), 0 10px 26px rgba(74, 107, 72, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.12s;
+        }
+
+        .shutter:active {
+            transform: scale(0.94);
+        }
+
+        .shutter svg {
+            width: 38px;
+            height: 38px;
+        }
+
+        .shutter-label {
+            display: block;
+            margin-top: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--wine);
+        }
+
+        .camera .btn-outline {
+            margin-top: 18px;
+        }
+
+        .film-toggle {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .film-toggle input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+        }
+
+        .switch {
+            flex: none;
+            position: relative;
+            width: 46px;
+            height: 28px;
+            border-radius: 999px;
+            background: var(--blush-mid);
+            transition: background 0.2s;
+        }
+
+        .switch::after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--white);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .film-toggle input:checked+.switch {
+            background: var(--wine);
+        }
+
+        .film-toggle input:checked+.switch::after {
+            transform: translateX(18px);
+        }
+
+        .film-toggle input:focus-visible+.switch {
+            outline: 2px solid var(--wine-mid);
+            outline-offset: 2px;
+        }
+
+        .film-toggle strong {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .film-toggle small {
+            display: block;
+            font-size: 13px;
+            color: var(--text-soft);
+            line-height: 1.4;
+        }
+
+        .notice {
+            margin-top: 14px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+            background: rgba(74, 107, 72, 0.08);
+            color: var(--wine);
+        }
+
+        .notice.warn {
+            background: rgba(166, 70, 60, 0.08);
+            color: var(--danger);
+        }
+
+        /* ── Roll ── */
+        .roll-head {
+            margin-top: 26px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+
+        .roll-head h3 {
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 17px;
+        }
+
+        .roll-empty {
+            margin-top: 14px;
+            padding: 22px 12px;
+            border: 1px dashed var(--blush-mid);
+            border-radius: 14px;
+            font-size: 14px;
+            color: var(--text-soft);
+        }
+
+        .roll {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .shot {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--blush-mid);
+            border: 0;
+            padding: 0;
+            font: inherit;
+            color: inherit;
+            cursor: default;
+        }
+
+        /* Tiles are only tappable when failed; don't dim the rest. */
+        .shot:disabled {
+            opacity: 1;
+            cursor: default;
+        }
+
+        .shot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .shot[data-status="queued"]::before,
+        .shot[data-status="processing"]::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, var(--blush-mid) 30%, var(--blush-pale) 50%, var(--blush-mid) 70%);
+            background-size: 250% 100%;
+            animation: shimmer 1.4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: -150% 0;
+            }
+        }
+
+        .shot[data-status="uploading"] img,
+        .shot[data-status="processing"] img {
+            filter: brightness(0.7);
+        }
+
+        .shot[data-status="failed"] {
+            cursor: pointer;
+        }
+
+        .shot[data-status="failed"] img {
+            filter: grayscale(0.6) brightness(0.55);
+        }
+
+        .badge {
+            position: absolute;
+            right: 6px;
+            bottom: 6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--white);
+            background: rgba(28, 28, 28, 0.55);
+        }
+
+        .shot[data-status="done"] .badge {
+            background: var(--wine);
+        }
+
+        .shot[data-status="unconfirmed"] .badge {
+            background: var(--wine-mid);
+        }
+
+        .shot[data-status="failed"] .badge {
+            background: var(--danger);
+        }
+
+        .shot[data-status="uploading"] .badge::after,
+        .shot[data-status="processing"] .badge::after,
+        .shot[data-status="queued"] .badge::after {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-top-color: var(--white);
+            animation: spin 0.9s linear infinite;
+        }
+
+        .shot[data-status="queued"] .badge::after {
+            animation: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .shot-msg {
+            position: absolute;
+            left: 6px;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            line-height: 1.35;
+            color: var(--white);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        .privacy {
+            margin-top: 22px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-soft);
+        }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: max(24px, env(safe-area-inset-bottom));
+            transform: translate(-50%, 20px);
+            max-width: calc(100% - 32px);
+            width: max-content;
+            padding: 11px 18px;
+            border-radius: 999px;
+            background: rgba(28, 28, 28, 0.88);
+            color: var(--white);
+            font-size: 14px;
+            line-height: 1.4;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s;
+            z-index: 10;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .shot::before,
+            .badge::after {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-lang="th">TH</button>
+            <button type="button" data-lang="en">EN</button>
+            <button type="button" data-lang="ja">JA</button>
+        </div>
+    </div>
+
+    <main class="card">
+        <p class="eyebrow">Wedding Moments</p>
+        <h1 class="couple" data-i18n="couple">สุนีย์ &amp; ศุภกิตติ์</h1>
+        <p class="date" data-i18n="date">22 พฤศจิกายน 2569</p>
+        <div class="divider" aria-hidden="true"></div>
+
+        <!-- Step 1: guest types their name -->
+        <section id="nameStep">
+            <h2 data-i18n="title">ร่วมเก็บภาพความทรงจำ</h2>
+            <p class="lead" data-i18n="subtitle"></p>
+            <form id="nameForm" class="name-form" novalidate>
+                <label for="guestName" data-i18n="nameLabel">ชื่อของคุณ</label>
+                <input id="guestName" name="guestName" type="text" maxlength="60" autocomplete="name"
+                    enterkeyhint="go" />
+                <p id="nameHint" class="hint" data-i18n="nameHint"></p>
+                <button type="submit" class="btn-primary" data-i18n="start">เริ่มถ่ายรูป</button>
+            </form>
+        </section>
+
+        <!-- Step 2: camera + roll -->
+        <section id="cameraStep" hidden>
+            <div class="guest-row">
+                <span id="helloText"></span>
+                <button type="button" id="changeNameBtn" class="link" data-i18n="changeName">เปลี่ยนชื่อ</button>
+            </div>
+
+            <p id="notConfigured" class="notice warn" data-i18n="notConfigured" hidden></p>
+
+            <div class="camera">
+                <div class="counter" aria-live="polite">
+                    <span class="counter-window" id="counterNum" aria-hidden="true">00</span>
+                    <span id="counterText"></span>
+                </div>
+
+                <div class="shutter-wrap">
+                    <button type="button" id="shutterBtn" class="shutter" aria-describedby="shutterLabel">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path
+                                d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.6a1 1 0 0 0 .8-.4l1-1.3a1 1 0 0 1 .8-.4h4.6a1 1 0 0 1 .8.4l1 1.3a1 1 0 0 0 .8.4h1.6A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z" />
+                            <circle cx="12" cy="12.5" r="3.6" />
+                        </svg>
+                    </button>
+                    <span class="shutter-label" id="shutterLabel" data-i18n="takePhoto">ถ่ายรูป</span>
+                </div>
+
+                <button type="button" id="pickBtn" class="btn-outline" data-i18n="pickPhotos">เลือกรูปจากอัลบั้ม</button>
+
+                <label class="film-toggle">
+                    <input type="checkbox" id="filmToggle" />
+                    <span class="switch" aria-hidden="true"></span>
+                    <span>
+                        <strong data-i18n="filmLabel">โหมดฟิล์ม</strong>
+                        <small data-i18n="filmHint"></small>
+                    </span>
+                </label>
+            </div>
+
+            <!-- capture opens the camera directly; the second input has no
+                 capture so phones offer the photo library. -->
+            <input type="file" id="cameraInput" class="sr-only" accept="image/*" capture="environment"
+                tabindex="-1" aria-hidden="true" />
+            <input type="file" id="pickInput" class="sr-only" accept="image/*" multiple tabindex="-1"
+                aria-hidden="true" />
+
+            <p id="keepOpen" class="notice" data-i18n="keepOpen" hidden></p>
+
+            <div class="roll-head">
+                <h3 data-i18n="rollTitle">ม้วนฟิล์มของคุณ</h3>
+            </div>
+            <p id="rollEmpty" class="roll-empty" data-i18n="rollEmpty"></p>
+            <div id="roll" class="roll"></div>
+        </section>
+
+        <p class="privacy" data-i18n="privacy"></p>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="photos-core.js"></script>
+    <script>
+        (function () {
+            "use strict";
+
+            // ── Settings ─────────────────────────────────────────────
+            // /exec URL of the Photos.gs web app (google_apps_script/Photos.gs).
+            var PHOTOS_SCRIPT_URL =
+                "https://script.google.com/macros/s/AKfycbwfV4ilPBfALbzYQFIq9XChA1KBkcX1_C0KtuHC9nM3nbOemeo_nTQ1TgFsNroV5U51/exec";
+            // 0 = unlimited. Set e.g. 27 for a disposable-camera feel.
+            var SHOT_LIMIT = 0;
+            // Film look on by default; guests can switch it off.
+            var FILM_DEFAULT = true;
+            var MAX_EDGE = 2048; // px, long edge of the uploaded JPEG
+            var JPEG_QUALITY = 0.85;
+            var REQUEST_TIMEOUT_MS = 90000;
+            var AUTO_RETRY_MS = 60000; // re-send failed photos while the page is open
+            var ROLL_KEEP = 60; // thumbnails remembered on this device
+
+            var Core = window.PhotosCore;
+            var configured = PHOTOS_SCRIPT_URL.indexOf("REPLACE_WITH") === -1;
+
+            // ── Text ─────────────────────────────────────────────────
+            var STR = {
+                th: {
+                    couple: "สุนีย์ & ศุภกิตติ์",
+                    date: "22 พฤศจิกายน 2569",
+                    title: "ร่วมเก็บภาพความทรงจำ",
+                    subtitle: "ถ่ายรูปบรรยากาศในงาน แล้วส่งถึงบ่าวสาวได้ทันที ไม่ต้องลงแอป",
+                    nameLabel: "ชื่อของคุณ",
+                    namePlaceholder: "เช่น พี่นก (เพื่อนเจ้าบ่าว)",
+                    nameHint: "รูปทั้งหมดของคุณจะถูกเก็บไว้ในโฟลเดอร์ชื่อนี้",
+                    nameRequired: "กรุณาใส่ชื่อก่อนนะ",
+                    start: "เริ่มถ่ายรูป",
+                    hello: "สวัสดี",
+                    changeName: "เปลี่ยนชื่อ",
+                    takePhoto: "ถ่ายรูป",
+                    pickPhotos: "เลือกรูปจากอัลบั้ม",
+                    filmLabel: "โหมดฟิล์ม",
+                    filmHint: "โทนกล้องฟิล์ม พร้อมวันที่มุมภาพ",
+                    sent: "ส่งแล้ว {n} รูป",
+                    left: "เหลืออีก {n} รูป",
+                    rollTitle: "ม้วนฟิล์มของคุณ",
+                    rollEmpty: "ยังไม่มีรูป กดปุ่มถ่ายรูปได้เลย",
+                    stQueued: "รอส่ง",
+                    stProcessing: "กำลังเตรียมรูป",
+                    stUploading: "กำลังส่ง",
+                    stDone: "ส่งแล้ว",
+                    stUnconfirmed: "ส่งแล้ว (ยืนยันผลไม่ได้)",
+                    stFailed: "ส่งไม่สำเร็จ แตะเพื่อลองใหม่",
+                    stUnsupported: "เปิดไฟล์นี้ไม่ได้ แตะเพื่อลบ",
+                    keepOpen: "กรุณาเปิดหน้านี้ค้างไว้จนกว่ารูปจะส่งครบ",
+                    allSent: "ส่งครบแล้ว ขอบคุณมาก ♡",
+                    limitReached: "ครบ {n} รูปแล้ว ขอบคุณที่ช่วยเก็บภาพนะ",
+                    limitTrimmed: "เหลืออีก {n} รูป จะส่งเฉพาะ {n} รูปแรก",
+                    notConfigured: "ระบบรับรูปยังไม่เปิดใช้งาน",
+                    privacy: "รูปจะส่งถึงบ่าวสาวเท่านั้น ไม่แสดงต่อสาธารณะ",
+                },
+                en: {
+                    couple: "Sunee & Supakit",
+                    date: "22 November 2026",
+                    title: "Share your moments",
+                    subtitle: "Snap the day as you see it. Photos go straight to the couple — no app needed.",
+                    nameLabel: "Your name",
+                    namePlaceholder: "e.g. Nok (groom's friend)",
+                    nameHint: "All your photos will be saved in a folder with this name.",
+                    nameRequired: "Please enter your name first.",
+                    start: "Start",
+                    hello: "Hi,",
+                    changeName: "Change name",
+                    takePhoto: "Take a photo",
+                    pickPhotos: "Choose from album",
+                    filmLabel: "Film look",
+                    filmHint: "Disposable-camera colours with a date stamp",
+                    sent: "{n} sent",
+                    left: "{n} shots left",
+                    rollTitle: "Your roll",
+                    rollEmpty: "No photos yet — take your first shot!",
+                    stQueued: "Waiting",
+                    stProcessing: "Preparing",
+                    stUploading: "Sending",
+                    stDone: "Sent",
+                    stUnconfirmed: "Sent (not confirmed)",
+                    stFailed: "Couldn't send — tap to retry",
+                    stUnsupported: "Can't open this file — tap to remove",
+                    keepOpen: "Keep this page open until every photo is sent.",
+                    allSent: "All sent — thank you! ♡",
+                    limitReached: "That's all {n} shots — thank you!",
+                    limitTrimmed: "Only {n} shots left, so the first {n} will be sent.",
+                    notConfigured: "Photo upload isn't switched on yet.",
+                    privacy: "Photos are shared only with the couple, never publicly.",
+                },
+                ja: {
+                    couple: "スニー & スパキット",
+                    date: "2026年11月22日",
+                    title: "思い出をシェア",
+                    subtitle: "会場の写真を撮って、そのまま新郎新婦へ。アプリは不要です。",
+                    nameLabel: "お名前",
+                    namePlaceholder: "例：ノック（新郎の友人）",
+                    nameHint: "写真はこの名前のフォルダにまとめて保存されます。",
+                    nameRequired: "お名前を入力してください。",
+                    start: "はじめる",
+                    hello: "ようこそ、",
+                    changeName: "名前を変更",
+                    takePhoto: "撮影する",
+                    pickPhotos: "アルバムから選ぶ",
+                    filmLabel: "フィルム風",
+                    filmHint: "使い捨てカメラ風の色味と日付入り",
+                    sent: "{n}枚送信済み",
+                    left: "残り{n}枚",
+                    rollTitle: "あなたのフィルム",
+                    rollEmpty: "まだ写真はありません。最初の一枚をどうぞ！",
+                    stQueued: "待機中",
+                    stProcessing: "準備中",
+                    stUploading: "送信中",
+                    stDone: "送信済み",
+                    stUnconfirmed: "送信済み（未確認）",
+                    stFailed: "送信失敗 — タップで再送",
+                    stUnsupported: "このファイルは開けません — タップで削除",
+                    keepOpen: "送信が終わるまでこのページを開いたままにしてください。",
+                    allSent: "すべて送信しました。ありがとうございます ♡",
+                    limitReached: "{n}枚すべて撮影しました。ありがとうございます！",
+                    limitTrimmed: "残り{n}枚のため、最初の{n}枚だけ送信します。",
+                    notConfigured: "写真の受付はまだ開始していません。",
+                    privacy: "写真は新郎新婦にだけ届き、公開されません。",
+                },
+            };
+
+            // ── Storage (may be unavailable in private mode) ─────────
+            var store = {
+                get: function (k) {
+                    try { return window.localStorage.getItem(k); } catch (_) { return null; }
+                },
+                set: function (k, v) {
+                    try { window.localStorage.setItem(k, v); return true; } catch (_) { return false; }
+                },
+                remove: function (k) {
+                    try { window.localStorage.removeItem(k); } catch (_) { }
+                },
+            };
+
+            var lang = STR[store.get("wedding_lang")] ? store.get("wedding_lang") : "th";
+
+            function t(key, vars) {
+                var s = (STR[lang] && STR[lang][key]) || STR.th[key] || key;
+                if (vars) {
+                    Object.keys(vars).forEach(function (k) {
+                        s = s.split("{" + k + "}").join(String(vars[k]));
+                    });
+                }
+                return s;
+            }
+
+            // ── Elements ─────────────────────────────────────────────
+            var $ = function (id) { return document.getElementById(id); };
+            var nameStep = $("nameStep");
+            var cameraStep = $("cameraStep");
+            var nameForm = $("nameForm");
+            var nameInput = $("guestName");
+            var nameHint = $("nameHint");
+            var helloText = $("helloText");
+            var shutterBtn = $("shutterBtn");
+            var pickBtn = $("pickBtn");
+            var cameraInput = $("cameraInput");
+            var pickInput = $("pickInput");
+            var filmToggle = $("filmToggle");
+            var counterNum = $("counterNum");
+            var counterText = $("counterText");
+            var keepOpen = $("keepOpen");
+            var rollEl = $("roll");
+            var rollEmpty = $("rollEmpty");
+            var toastEl = $("toast");
+
+            // ── State ────────────────────────────────────────────────
+            var guestName = Core.sanitizeName(store.get("wm_guest_name") || "");
+            var sentCount = parseInt(store.get("wm_sent") || "0", 10) || 0;
+            var shots = []; // newest first
+            var working = false;
+            var nameError = false;
+            // True once this browser has read a response from the script.
+            // After that, a network failure is a real failure (e.g. the
+            // script is overloaded), so the unreadable no-cors resend — which
+            // would show ✓ without proof — is no longer used.
+            var corsVerified = false;
+
+            filmToggle.checked = store.get("wm_film") === null ? FILM_DEFAULT : store.get("wm_film") === "1";
+
+            // ── Language ─────────────────────────────────────────────
+            function applyLang() {
+                document.documentElement.lang = lang;
+                document.querySelectorAll("[data-i18n]").forEach(function (el) {
+                    el.textContent = t(el.getAttribute("data-i18n"));
+                });
+                nameInput.placeholder = t("namePlaceholder");
+                nameHint.textContent = nameError ? t("nameRequired") : t("nameHint");
+                document.querySelectorAll(".lang button").forEach(function (b) {
+                    b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang));
+                });
+                renderHello();
+                renderCounter();
+                shots.forEach(renderShot);
+            }
+
+            document.querySelectorAll(".lang button").forEach(function (b) {
+                b.addEventListener("click", function () {
+                    lang = b.getAttribute("data-lang");
+                    store.set("wedding_lang", lang);
+                    applyLang();
+                });
+            });
+
+            // ── Steps ────────────────────────────────────────────────
+            function showNameStep() {
+                nameStep.hidden = false;
+                cameraStep.hidden = true;
+                nameInput.value = guestName;
+                setTimeout(function () { nameInput.focus(); }, 50);
+            }
+
+            function showCameraStep() {
+                nameStep.hidden = true;
+                cameraStep.hidden = false;
+                renderHello();
+                renderCounter();
+                checkEndpoint();
+            }
+
+            // Health check (doGet in Photos.gs). Succeeds only if this
+            // browser can read the script's responses cross-origin.
+            function checkEndpoint() {
+                if (!configured || corsVerified) return;
+                timedFetch(PHOTOS_SCRIPT_URL, { method: "GET", redirect: "follow" })
+                    .then(function (r) { return r.ok ? r.json() : null; })
+                    .then(function (j) {
+                        if (j && j.service === "wedding-photos") corsVerified = true;
+                    })
+                    .catch(function () { /* unreadable: keep the no-cors fallback */ });
+            }
+
+            function renderHello() {
+                helloText.textContent = "";
+                helloText.appendChild(document.createTextNode(t("hello") + " "));
+                var strong = document.createElement("strong");
+                strong.textContent = guestName;
+                helloText.appendChild(strong);
+            }
+
+            nameForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                var clean = Core.sanitizeName(nameInput.value);
+                if (!clean) {
+                    nameError = true;
+                    nameHint.textContent = t("nameRequired");
+                    nameHint.classList.add("error");
+                    nameInput.focus();
+                    return;
+                }
+                nameError = false;
+                nameHint.textContent = t("nameHint");
+                nameHint.classList.remove("error");
+                guestName = clean;
+                store.set("wm_guest_name", guestName);
+                showCameraStep();
+            });
+
+            $("changeNameBtn").addEventListener("click", showNameStep);
+
+            filmToggle.addEventListener("change", function () {
+                store.set("wm_film", filmToggle.checked ? "1" : "0");
+            });
+
+            // ── Counter / limit ──────────────────────────────────────
+            function inFlightCount() {
+                return shots.filter(function (s) {
+                    return s.status === "queued" || s.status === "processing" || s.status === "uploading" ||
+                        (s.status === "failed" && !s.permanent);
+                }).length;
+            }
+
+            function remainingShots() {
+                if (!SHOT_LIMIT) return Infinity;
+                return Math.max(0, SHOT_LIMIT - sentCount - inFlightCount());
+            }
+
+            function renderCounter() {
+                var shown = SHOT_LIMIT ? remainingShots() : sentCount;
+                counterNum.textContent = String(shown).padStart(2, "0");
+                counterText.textContent = SHOT_LIMIT ? t("left", { n: shown }) : t("sent", { n: sentCount });
+                var canShoot = configured && remainingShots() > 0;
+                shutterBtn.disabled = !canShoot;
+                pickBtn.disabled = !canShoot;
+                $("notConfigured").hidden = configured;
+                var pending = shots.some(function (s) {
+                    return s.status === "queued" || s.status === "processing" || s.status === "uploading";
+                });
+                keepOpen.hidden = !pending;
+                rollEmpty.hidden = shots.length > 0;
+            }
+
+            // ── Roll persistence (thumbnails of sent shots only) ─────
+            function saveRoll() {
+                var keep = shots
+                    .filter(function (s) { return (s.status === "done" || s.status === "unconfirmed") && s.thumb; })
+                    .slice(0, ROLL_KEEP)
+                    .map(function (s) { return { id: s.id, thumb: s.thumb, s: s.status }; });
+                // On quota errors drop the oldest thumbnails until it fits.
+                while (keep.length && !store.set("wm_roll_v1", JSON.stringify(keep))) keep.pop();
+                store.set("wm_sent", String(sentCount));
+            }
+
+            function loadRoll() {
+                var raw = store.get("wm_roll_v1");
+                if (!raw) return;
+                try {
+                    JSON.parse(raw).forEach(function (r) {
+                        if (r && r.id && r.thumb && typeof r.thumb === "string" && r.thumb.indexOf("data:image/") === 0) {
+                            shots.push({ id: r.id, thumb: r.thumb, status: r.s === "unconfirmed" ? "unconfirmed" : "done" });
+                        }
+                    });
+                } catch (_) {
+                    store.remove("wm_roll_v1");
+                }
+            }
+
+            // ── Rendering a shot tile ───────────────────────────────
+            function statusText(shot) {
+                switch (shot.status) {
+                    case "queued": return t("stQueued");
+                    case "processing": return t("stProcessing");
+                    case "uploading": return t("stUploading");
+                    case "done": return t("stDone");
+                    case "unconfirmed": return t("stUnconfirmed");
+                    case "failed": return shot.permanent ? t("stUnsupported") : t("stFailed");
+                }
+                return "";
+            }
+
+            function renderShot(shot) {
+                if (!shot.el) {
+                    shot.el = document.createElement("button");
+                    shot.el.type = "button";
+                    shot.el.className = "shot";
+                    shot.el.addEventListener("click", function () { onShotTap(shot); });
+                }
+                var el = shot.el;
+                el.setAttribute("data-status", shot.status);
+                el.setAttribute("aria-label", statusText(shot));
+                el.disabled = shot.status !== "failed";
+
+                var img = el.querySelector("img");
+                if (shot.thumb && !img) {
+                    img = document.createElement("img");
+                    img.alt = "";
+                    el.insertBefore(img, el.firstChild);
+                }
+                if (img && img.src !== shot.thumb) img.src = shot.thumb;
+
+                var badge = el.querySelector(".badge");
+                if (!badge) {
+                    badge = document.createElement("span");
+                    badge.className = "badge";
+                    badge.setAttribute("aria-hidden", "true");
+                    el.appendChild(badge);
+                }
+                badge.textContent = shot.status === "done" || shot.status === "unconfirmed" ? "✓"
+                    : shot.status === "failed" ? "!" : "";
+
+                var msg = el.querySelector(".shot-msg");
+                if (shot.status === "failed") {
+                    if (!msg) {
+                        msg = document.createElement("span");
+                        msg.className = "shot-msg";
+                        el.appendChild(msg);
+                    }
+                    msg.textContent = statusText(shot);
+                } else if (msg) {
+                    msg.remove();
+                }
+            }
+
+            function renderRoll() {
+                // DOM order = newest first, same as `shots`.
+                shots.forEach(function (s, i) {
+                    renderShot(s);
+                    if (rollEl.children[i] !== s.el) rollEl.insertBefore(s.el, rollEl.children[i] || null);
+                });
+                renderCounter();
+            }
+
+            function setStatus(shot, status) {
+                shot.status = status;
+                renderShot(shot);
+                renderCounter();
+            }
+
+            function onShotTap(shot) {
+                if (shot.status !== "failed") return;
+                if (shot.permanent) {
+                    shots.splice(shots.indexOf(shot), 1);
+                    if (shot.el) shot.el.remove();
+                    renderCounter();
+                    return;
+                }
+                setStatus(shot, "queued");
+                pump();
+            }
+
+            // ── Toast ────────────────────────────────────────────────
+            var toastTimer = null;
+            function toast(text) {
+                toastEl.textContent = text;
+                toastEl.classList.add("show");
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 3200);
+            }
+
+            // ── Picking files ───────────────────────────────────────
+            shutterBtn.addEventListener("click", function () { cameraInput.click(); });
+            pickBtn.addEventListener("click", function () { pickInput.click(); });
+            cameraInput.addEventListener("change", onFiles);
+            pickInput.addEventListener("change", onFiles);
+
+            function onFiles(e) {
+                var input = e.target;
+                var files = Array.prototype.slice.call(input.files || []).filter(function (f) {
+                    return !f.type || f.type.indexOf("image/") === 0;
+                });
+                input.value = ""; // allow picking the same file again
+                if (!files.length) return;
+
+                var room = remainingShots();
+                if (room <= 0) {
+                    toast(t("limitReached", { n: SHOT_LIMIT }));
+                    return;
+                }
+                if (files.length > room) {
+                    files = files.slice(0, room);
+                    toast(t("limitTrimmed", { n: room }));
+                }
+
+                var film = filmToggle.checked;
+                files.forEach(function (file) {
+                    shots.unshift({
+                        id: Core.makeShotId(new Date()),
+                        name: guestName,
+                        film: film,
+                        file: file,
+                        status: "queued",
+                    });
+                });
+                renderRoll();
+                pump();
+            }
+
+            // ── Image processing ────────────────────────────────────
+            function loadImage(file) {
+                return new Promise(function (resolve, reject) {
+                    var url = URL.createObjectURL(file);
+                    var img = new Image();
+                    img.onload = function () { resolve({ img: img, url: url }); };
+                    img.onerror = function () {
+                        URL.revokeObjectURL(url);
+                        reject(new Error("decode failed"));
+                    };
+                    img.src = url;
+                });
+            }
+
+            function drawStamp(ctx, w, h, date) {
+                var size = Math.max(14, Math.round(Math.min(w, h) * 0.045));
+                ctx.save();
+                ctx.font = "bold " + size + 'px "Courier New", ui-monospace, monospace';
+                ctx.textAlign = "right";
+                ctx.textBaseline = "bottom";
+                ctx.shadowColor = "rgba(255, 120, 30, 0.9)";
+                ctx.shadowBlur = size * 0.35;
+                ctx.fillStyle = "#ffb347";
+                ctx.globalAlpha = 0.92;
+                ctx.fillText(Core.formatStamp(date), w - size * 1.2, h - size * 0.9);
+                ctx.restore();
+            }
+
+            function makeThumb(source, size) {
+                var c = document.createElement("canvas");
+                c.width = c.height = size;
+                var side = Math.min(source.width, source.height);
+                c.getContext("2d").drawImage(
+                    source,
+                    (source.width - side) / 2, (source.height - side) / 2, side, side,
+                    0, 0, size, size
+                );
+                var url = c.toDataURL("image/jpeg", 0.7);
+                c.width = c.height = 0;
+                return url;
+            }
+
+            function canvasToBlob(canvas) {
+                return new Promise(function (resolve, reject) {
+                    canvas.toBlob(function (b) {
+                        if (b) resolve(b); else reject(new Error("encode failed"));
+                    }, "image/jpeg", JPEG_QUALITY);
+                });
+            }
+
+            function blobToBase64(blob) {
+                return new Promise(function (resolve, reject) {
+                    var r = new FileReader();
+                    r.onload = function () { resolve(String(r.result).split(",")[1] || ""); };
+                    r.onerror = function () { reject(r.error); };
+                    r.readAsDataURL(blob);
+                });
+            }
+
+            // Re-encoding through a canvas resizes big phone photos, turns
+            // HEIC into JPEG, and drops EXIF data such as GPS location.
+            async function processFile(file, film) {
+                var loaded = await loadImage(file);
+                try {
+                    var size = Core.fitWithin(loaded.img.naturalWidth, loaded.img.naturalHeight, MAX_EDGE);
+                    var canvas = document.createElement("canvas");
+                    canvas.width = size.width;
+                    canvas.height = size.height;
+                    var ctx = canvas.getContext("2d", { willReadFrequently: film });
+                    ctx.drawImage(loaded.img, 0, 0, size.width, size.height);
+                    if (film) {
+                        var data = ctx.getImageData(0, 0, size.width, size.height);
+                        Core.applyFilmLook(data.data, size.width, size.height);
+                        ctx.putImageData(data, 0, 0);
+                        drawStamp(ctx, size.width, size.height, new Date());
+                    }
+                    var blob = await canvasToBlob(canvas);
+                    var thumb = makeThumb(canvas, 320);
+                    canvas.width = canvas.height = 0; // free memory early on iOS
+                    return { base64: await blobToBase64(blob), thumb: thumb };
+                } finally {
+                    URL.revokeObjectURL(loaded.url);
+                }
+            }
+
+            // ── Upload queue (one at a time per phone) ──────────────
+            function sleep(ms) {
+                return new Promise(function (r) { setTimeout(r, ms); });
+            }
+
+            function timedFetch(url, init) {
+                if (typeof AbortController === "undefined") return fetch(url, init);
+                var ctrl = new AbortController();
+                var timer = setTimeout(function () { ctrl.abort(); }, REQUEST_TIMEOUT_MS);
+                init.signal = ctrl.signal;
+                return fetch(url, init).finally(function () { clearTimeout(timer); });
+            }
+
+            async function handleShot(shot) {
+                if (!shot.payload) {
+                    setStatus(shot, "processing");
+                    try {
+                        var out = await processFile(shot.file, shot.film);
+                        shot.thumb = out.thumb;
+                        shot.payload = { name: shot.name, id: shot.id, mimeType: "image/jpeg", data: out.base64 };
+                        shot.file = null;
+                    } catch (err) {
+                        console.error("Could not prepare photo", err);
+                        shot.permanent = true;
+                        setStatus(shot, "failed");
+                        return;
+                    }
+                }
+                setStatus(shot, "uploading");
+                var res = await Core.uploadShot({
+                    url: PHOTOS_SCRIPT_URL,
+                    payload: shot.payload,
+                    fetchImpl: timedFetch,
+                    sleep: sleep,
+                    allowNoCors: function () { return !corsVerified; },
+                });
+                if (res.ok && res.confirmed) corsVerified = true;
+                if (res.ok) {
+                    shot.payload = null;
+                    sentCount++;
+                    setStatus(shot, res.confirmed ? "done" : "unconfirmed");
+                    saveRoll();
+                } else {
+                    console.error("Upload failed", shot.id, res.error);
+                    shot.permanent = !!res.permanent;
+                    shot.error = res.error;
+                    setStatus(shot, "failed");
+                }
+            }
+
+            async function pump() {
+                if (working) return;
+                working = true;
+                var handled = 0;
+                try {
+                    for (; ;) {
+                        // Oldest queued first, so photos arrive in order.
+                        var next = null;
+                        for (var i = shots.length - 1; i >= 0; i--) {
+                            if (shots[i].status === "queued") { next = shots[i]; break; }
+                        }
+                        if (!next) break;
+                        await handleShot(next);
+                        handled++;
+                    }
+                } finally {
+                    working = false;
+                    renderCounter();
+                }
+                var failed = shots.some(function (s) { return s.status === "failed"; });
+                if (handled && !failed) toast(t("allSent"));
+            }
+
+            function requeueFailed() {
+                var any = false;
+                shots.forEach(function (s) {
+                    if (s.status === "failed" && !s.permanent && s.payload) {
+                        setStatus(s, "queued");
+                        any = true;
+                    }
+                });
+                if (any) pump();
+            }
+
+            // Guests won't tap retry during a busy moment, so keep trying.
+            window.addEventListener("online", requeueFailed);
+            setInterval(function () {
+                if (!working) requeueFailed();
+            }, AUTO_RETRY_MS);
+
+            window.addEventListener("beforeunload", function (e) {
+                var pending = shots.some(function (s) {
+                    return s.status === "queued" || s.status === "processing" || s.status === "uploading";
+                });
+                if (pending) {
+                    e.preventDefault();
+                    e.returnValue = "";
+                }
+            });
+
+            // ── Start ───────────────────────────────────────────────
+            loadRoll();
+            applyLang();
+            renderRoll();
+            if (guestName) showCameraStep(); else showNameStep();
+        })();
+    </script>
+</body>
+
+</html>
