@@ -42,7 +42,15 @@ If you want, I can:
 Guest photos (/photos) — `Photos.gs`
 
 `Photos.gs` receives photos from `photos/index.html`
-and saves each one to Google Drive as `<parent folder>/<guest name>/<shot id>.jpg`.
+and saves them to Google Drive, one folder per guest name:
+
+```
+<parent folder>/<guest name>/Original/<shot id>.jpg        every photo, no filter or date stamp
+<parent folder>/<guest name>/Film/<shot id>-film.jpg       only when the guest has film look on
+```
+
+Both copies are resized to 2048 px on the long edge,
+and EXIF data such as GPS location is removed.
 It is a separate Apps Script project from the RSVP/payment script,
 so deploying or switching it off never touches RSVP or payments.
 
@@ -54,7 +62,7 @@ Deploy (about 5 minutes, once):
    The log prints the URL of the new folder "Wedding Moments - Guest Photos" in My Drive.
    (To use a folder you already have, first add a Script Property
    `PHOTOS_FOLDER_ID` = that folder's ID under Project Settings > Script Properties, then run `setup`.)
-4. Optional: run `testUpload` — a "Test Guest" folder with a 1×1 image should appear.
+4. Optional: run `testUpload` — a "Test Guest" folder with a 1×1 image in `Original/` should appear.
    Delete that folder afterwards.
 5. Deploy > New deployment > Web app.
    - Execute as: Me
@@ -63,17 +71,22 @@ Deploy (about 5 minutes, once):
    `PHOTOS_SCRIPT_URL` near the top of the script in `photos/index.html`.
    Until then the page says photo upload isn't switched on yet.
 
-Changing `Photos.gs` later: Deploy > Manage deployments > edit (pencil) > Version: New version.
+Changing `Photos.gs` later: paste the new code, save,
+then Deploy > Manage deployments > edit (pencil) > Version: New version > Deploy.
 This keeps the same `/exec` URL.
 "New deployment" makes a new URL instead.
+To check the update is live, open the `/exec` URL in a browser:
+it should show the `version` set in `PHOTOS_API_VERSION` (currently 2).
 
 Limits to know:
 - One photo per request, at most 8 MB after decoding; the page sends about 0.5–1.5 MB JPEGs.
-- Rate limits per 10 minutes: 120 requests per guest name, 2000 for everyone together.
+- Rate limits per 10 minutes: 240 requests per guest name, 4000 for everyone together.
+  A photo taken with film look on is two requests (original + film).
 - Web apps that run as "Me" share the owner's simultaneous-execution quota
   (30 at a time per the Apps Script quotas page).
   The page uploads one photo at a time per phone and retries with backoff,
   so a busy moment queues up instead of losing photos.
 - Photos count against the owner's Google Drive storage.
+  With film look on, each photo is stored twice (about 1–3 MB per photo in total).
 
 Turning it off after the wedding: Deploy > Manage deployments > Archive.

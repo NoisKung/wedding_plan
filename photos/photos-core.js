@@ -21,6 +21,7 @@
     'bad_data',
     'too_large',
     'not_configured',
+    'bad_variant',
   ];
 
   /** Same rules as sanitizeGuestName_ in google_apps_script/Photos.gs. */
@@ -57,6 +58,17 @@
       suffix += alphabet[Math.floor(rand() * alphabet.length) % alphabet.length];
     }
     return stamp + '-' + suffix;
+  }
+
+  /**
+   * What to upload for one shot. The clean original always goes; the film
+   * copy only when film look is on. The film copy gets its own file name so
+   * that even a server that ignores `variant` keeps both files.
+   */
+  function shotParts(id, film) {
+    var parts = [{ variant: 'original', id: id }];
+    if (film) parts.push({ variant: 'film', id: id + '-film' });
+    return parts;
   }
 
   function fitWithin(width, height, maxEdge) {
@@ -193,6 +205,7 @@
     PERMANENT_ERRORS: PERMANENT_ERRORS,
     sanitizeName: sanitizeName,
     makeShotId: makeShotId,
+    shotParts: shotParts,
     fitWithin: fitWithin,
     formatStamp: formatStamp,
     backoffDelay: backoffDelay,

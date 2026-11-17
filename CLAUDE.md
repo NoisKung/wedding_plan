@@ -83,9 +83,17 @@ not the RSVP/payment script, so the two can be deployed independently.
 Deploy steps are in `google_apps_script/README.md`;
 the page shows "not switched on yet" until `PHOTOS_SCRIPT_URL` is set.
 
-- Drive layout: `<parent folder>/<guest name>/<shot id>.jpg`.
+- Drive layout: `<parent folder>/<guest name>/Original/<shot id>.jpg` for every photo,
+  plus `<guest name>/Film/<shot id>-film.jpg` when film look is on.
+  Each photo is one or two requests (`variant: 'original' | 'film'`, see `shotParts`).
+  The original is encoded from the canvas **before** the film look is drawn on it.
+  The film copy has its own file name, so a `Photos.gs` that predates variants still keeps both.
+  A request without `variant` (a page cached from before) is saved in `<guest name>/` itself.
   The parent folder ID lives in Script Properties (`PHOTOS_FOLDER_ID`), not in git.
   Two guests who type the same name share one folder.
+- After changing `Photos.gs`, bump `PHOTOS_API_VERSION` if the request shape changed
+  and redeploy as a new version of the same deployment (same `/exec` URL);
+  `GET /exec` reports the version, so the redeploy can be checked before the page goes live.
 - Uploads are one request per photo, one at a time per phone,
   because "Execute as: Me" web apps share the owner's simultaneous-execution quota.
 - The body is a JSON string with **no** `Content-Type` header,

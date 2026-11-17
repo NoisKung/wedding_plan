@@ -722,7 +722,7 @@
             // ── Settings ─────────────────────────────────────────────
             // /exec URL of the Photos.gs web app (google_apps_script/Photos.gs).
             var PHOTOS_SCRIPT_URL =
-                "https://script.google.com/macros/s/AKfycbwfV4ilPBfALbzYQFIq9XChA1KBkcX1_C0KtuHC9nM3nbOemeo_nTQ1TgFsNroV5U51/exec";
+                "https://script.google.com/macros/s/AKfycby4B5ciu8BbYEDqAYmeIbu1eWBdYtp7LaaWgvFpPf0YTnoj_mtOfSuRa4jr4pwMOxZx/exec";
             // 0 = unlimited. Set e.g. 27 for a disposable-camera feel.
             var SHOT_LIMIT = 0;
             // Film look on by default; guests can switch it off.
@@ -753,7 +753,7 @@
                     takePhoto: "ถ่ายรูป",
                     pickPhotos: "เลือกรูปจากอัลบั้ม",
                     filmLabel: "โหมดฟิล์ม",
-                    filmHint: "โทนกล้องฟิล์ม พร้อมวันที่มุมภาพ",
+                    filmHint: "โทนกล้องฟิล์ม พร้อมวันที่มุมภาพ (เก็บรูปต้นฉบับไว้ให้ด้วย)",
                     sent: "ส่งแล้ว {n} รูป",
                     left: "เหลืออีก {n} รูป",
                     rollTitle: "ม้วนฟิล์มของคุณ",
@@ -787,7 +787,7 @@
                     takePhoto: "Take a photo",
                     pickPhotos: "Choose from album",
                     filmLabel: "Film look",
-                    filmHint: "Disposable-camera colours with a date stamp",
+                    filmHint: "Disposable-camera colours with a date stamp. The original is kept too.",
                     sent: "{n} sent",
                     left: "{n} shots left",
                     rollTitle: "Your roll",
@@ -821,7 +821,7 @@
                     takePhoto: "撮影する",
                     pickPhotos: "アルバムから選ぶ",
                     filmLabel: "フィルム風",
-                    filmHint: "使い捨てカメラ風の色味と日付入り",
+                    filmHint: "使い捨てカメラ風の色味と日付入り（元の写真も保存されます）",
                     sent: "{n}枚送信済み",
                     left: "残り{n}枚",
                     rollTitle: "あなたのフィルム",
@@ -1229,6 +1229,8 @@
 
             // Re-encoding through a canvas resizes big phone photos, turns
             // HEIC into JPEG, and drops EXIF data such as GPS location.
+            // The clean original is encoded first, because the film look
+            // changes the canvas in place.
             async function processFile(file, film) {
                 var loaded = await loadImage(file);
                 try {
@@ -1238,16 +1240,17 @@
                     canvas.height = size.height;
                     var ctx = canvas.getContext("2d", { willReadFrequently: film });
                     ctx.drawImage(loaded.img, 0, 0, size.width, size.height);
+                    var blobs = { original: await canvasToBlob(canvas) };
                     if (film) {
                         var data = ctx.getImageData(0, 0, size.width, size.height);
                         Core.applyFilmLook(data.data, size.width, size.height);
                         ctx.putImageData(data, 0, 0);
                         drawStamp(ctx, size.width, size.height, new Date());
+                        blobs.film = await canvasToBlob(canvas);
                     }
-                    var blob = await canvasToBlob(canvas);
-                    var thumb = makeThumb(canvas, 320);
+                    var thumb = makeThumb(canvas, 320); // what the guest chose to see
                     canvas.width = canvas.height = 0; // free memory early on iOS
-                    return { base64: await blobToBase64(blob), thumb: thumb };
+                    return { blobs: blobs, thumb: thumb };
                 } finally {
                     URL.revokeObjectURL(loaded.url);
                 }
@@ -1266,41 +1269,64 @@
                 return fetch(url, init).finally(function () { clearTimeout(timer); });
             }
 
+            function failShot(shot, permanent, error) {
+                shot.permanent = permanent;
+                shot.error = error;
+                setStatus(shot, "failed");
+            }
+
+            // One shot = one or two parts (clean original, film copy), each
+            // its own request. A retry sends only the parts not yet sent.
             async function handleShot(shot) {
-                if (!shot.payload) {
+                if (!shot.parts) {
                     setStatus(shot, "processing");
                     try {
                         var out = await processFile(shot.file, shot.film);
                         shot.thumb = out.thumb;
-                        shot.payload = { name: shot.name, id: shot.id, mimeType: "image/jpeg", data: out.base64 };
+                        shot.parts = Core.shotParts(shot.id, shot.film).map(function (p) {
+                            return { variant: p.variant, id: p.id, blob: out.blobs[p.variant], sent: false, confirmed: false };
+                        });
                         shot.file = null;
                     } catch (err) {
                         console.error("Could not prepare photo", err);
-                        shot.permanent = true;
-                        setStatus(shot, "failed");
+                        failShot(shot, true, "prepare");
                         return;
                     }
                 }
                 setStatus(shot, "uploading");
-                var res = await Core.uploadShot({
-                    url: PHOTOS_SCRIPT_URL,
-                    payload: shot.payload,
-                    fetchImpl: timedFetch,
-                    sleep: sleep,
-                    allowNoCors: function () { return !corsVerified; },
-                });
-                if (res.ok && res.confirmed) corsVerified = true;
-                if (res.ok) {
-                    shot.payload = null;
-                    sentCount++;
-                    setStatus(shot, res.confirmed ? "done" : "unconfirmed");
-                    saveRoll();
-                } else {
-                    console.error("Upload failed", shot.id, res.error);
-                    shot.permanent = !!res.permanent;
-                    shot.error = res.error;
-                    setStatus(shot, "failed");
+                for (var i = 0; i < shot.parts.length; i++) {
+                    var part = shot.parts[i];
+                    if (part.sent) continue;
+                    var data;
+                    try {
+                        data = await blobToBase64(part.blob);
+                    } catch (err) {
+                        console.error("Could not read photo", part.id, err);
+                        failShot(shot, true, "prepare");
+                        return;
+                    }
+                    var res = await Core.uploadShot({
+                        url: PHOTOS_SCRIPT_URL,
+                        payload: { name: shot.name, id: part.id, variant: part.variant, mimeType: "image/jpeg", data: data },
+                        fetchImpl: timedFetch,
+                        sleep: sleep,
+                        allowNoCors: function () { return !corsVerified; },
+                    });
+                    data = null;
+                    if (res.ok && res.confirmed) corsVerified = true;
+                    if (!res.ok) {
+                        console.error("Upload failed", part.id, res.error);
+                        failShot(shot, !!res.permanent, res.error);
+                        return;
+                    }
+                    part.sent = true;
+                    part.confirmed = !!res.confirmed;
+                    part.blob = null;
                 }
+                sentCount++;
+                var confirmed = shot.parts.every(function (p) { return p.confirmed; });
+                setStatus(shot, confirmed ? "done" : "unconfirmed");
+                saveRoll();
             }
 
             async function pump() {
@@ -1329,7 +1355,7 @@
             function requeueFailed() {
                 var any = false;
                 shots.forEach(function (s) {
-                    if (s.status === "failed" && !s.permanent && s.payload) {
+                    if (s.status === "failed" && !s.permanent && s.parts) {
                         setStatus(s, "queued");
                         any = true;
                     }

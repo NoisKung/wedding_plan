@@ -76,6 +76,26 @@ test('applyFilmLook grain changes pixels when randomness is not neutral', () => 
   assert.notDeepEqual(px, flat);
 });
 
+test('shotParts: film on sends a clean original plus the film copy', () => {
+  const id = '20261122-073012-a1b2c3';
+  const parts = core.shotParts(id, true);
+  assert.deepEqual(parts, [
+    { variant: 'original', id },
+    { variant: 'film', id: id + '-film' },
+  ]);
+  for (const p of parts) assert.match(p.id, SERVER_ID_PATTERN);
+});
+
+test('shotParts: film off sends the original only', () => {
+  assert.deepEqual(core.shotParts('20261122-073012-a1b2c3', false), [
+    { variant: 'original', id: '20261122-073012-a1b2c3' },
+  ]);
+});
+
+test('bad_variant is a permanent error (retrying cannot fix it)', () => {
+  assert.ok(core.PERMANENT_ERRORS.includes('bad_variant'));
+});
+
 // ---- uploadShot ----
 
 function jsonResponse(obj, status = 200) {

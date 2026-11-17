@@ -154,10 +154,11 @@ function validBody(overrides = {}) {
   };
 }
 
-test('doGet answers a health check', () => {
+test('doGet answers a health check and says which version is deployed', () => {
   const env = makeEnv();
   const out = JSON.parse(env.ctx.doGet({}).text);
   assert.equal(out.status, 'ok');
+  assert.equal(out.version, 2, 'bump when the request shape changes, so a redeploy can be checked');
 });
 
 test('upload creates a folder named after the guest and saves the decoded file', () => {
@@ -306,11 +307,13 @@ test('the script lock is always released, even when folder creation fails', () =
 test('one guest name is rate limited after too many uploads in the window', () => {
   const env = makeEnv();
   let last;
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 400; i++) {
     last = post(env, validBody({ id: 'shot-' + String(i).padStart(4, '0') + '-zzzz' }));
     if (last.status !== 'ok') break;
   }
   assert.equal(last.code, 'rate_limited');
+  // A film shot costs two requests (original + film), so ~100 shots must fit.
+  assert.ok(Number(env.cacheStore.get('rl_' + md5hex('Nok'))) >= 200);
   // A different guest is not affected.
   assert.equal(post(env, validBody({ name: 'Fon', id: 'shot-9999-fon1' })).status, 'ok');
 });
@@ -324,4 +327,87 @@ test('setup() stores a new parent folder id when none is configured', () => {
   // Running it again keeps the same folder.
   env.ctx.setup();
   assert.equal(env.props.get('PHOTOS_FOLDER_ID'), id);
+});
+
+// ---- variants: the clean original and the film copy go to separate subfolders ----
+
+function child(folder, name) {
+  return folder._folders.find((f) => f._name === name && !f._trashed);
+}
+
+test('variant "original" is saved in <guest>/Original', () => {
+  const env = makeEnv();
+  assert.deepEqual(post(env, validBody({ variant: 'original' })), { status: 'ok' });
+  const guest = child(env.parent, 'Nok');
+  assert.equal(guest._files.length, 0, 'nothing in the guest root');
+  const original = child(guest, 'Original');
+  assert.deepEqual(original._files.map((f) => f.name), ['20261122-073012-a1b2c3.jpg']);
+});
+
+test('the film copy and the original of one shot are both kept, even with the same id', () => {
+  const env = makeEnv();
+  const id = '20261122-073012-a1b2c3';
+  assert.deepEqual(post(env, validBody({ id, variant: 'original' })), { status: 'ok' });
+  assert.deepEqual(post(env, validBody({ id, variant: 'film' })), { status: 'ok' }, 'not a duplicate');
+  const guest = child(env.parent, 'Nok');
+  assert.equal(child(guest, 'Original')._files.length, 1);
+  assert.equal(child(guest, 'Film')._files.length, 1);
+  assert.equal(guest._folders.length, 2);
+});
+
+test('retrying the same variant is still deduped', () => {
+  const env = makeEnv();
+  post(env, validBody({ variant: 'film' }));
+  const film = child(child(env.parent, 'Nok'), 'Film');
+  film.getFilesByName = EMPTY_ITERATOR; // search index lag
+  const again = post(env, validBody({ variant: 'film' }));
+  assert.equal(again.duplicate, true);
+  assert.equal(film._files.length, 1);
+});
+
+test('a request without a variant (page cached before this change) still lands in the guest folder', () => {
+  const env = makeEnv();
+  assert.equal(post(env, validBody()).status, 'ok');
+  const guest = child(env.parent, 'Nok');
+  assert.equal(guest._files.length, 1);
+  assert.equal(guest._folders.length, 0);
+});
+
+test('unknown variants are rejected and never become folder names', () => {
+  const env = makeEnv();
+  for (const variant of ['../x', 'Film', 'constructor', '__proto__', 'toString', 7, true]) {
+    assert.equal(post(env, validBody({ variant })).code, 'bad_variant', 'variant ' + JSON.stringify(variant));
+  }
+  assert.equal(env.parent._folders.length, 0);
+});
+
+test('mimeType lookups ignore inherited object keys', () => {
+  const env = makeEnv();
+  for (const mimeType of ['constructor', '__proto__', 'toString', 'hasOwnProperty']) {
+    assert.equal(post(env, validBody({ mimeType })).code, 'bad_type', 'mimeType ' + mimeType);
+  }
+  assert.equal(env.parent._folders.length, 0);
+});
+
+test('the variant subfolder is reused after the folder-id cache is lost', () => {
+  const env = makeEnv();
+  post(env, validBody({ id: 'shot-0001-aaaa', variant: 'film' }));
+  env.cacheStore.clear();
+  post(env, validBody({ id: 'shot-0002-bbbb', variant: 'film' }));
+  const guest = child(env.parent, 'Nok');
+  assert.equal(guest._folders.length, 1);
+  assert.equal(child(guest, 'Film')._files.length, 2);
+});
+
+test('the script lock is released when the variant subfolder cannot be created', () => {
+  const env = makeEnv();
+  const guest = env.parent.createFolder('Nok');
+  guest.createFolder = () => {
+    throw new Error('Drive is down');
+  };
+  assert.equal(post(env, validBody({ variant: 'original' })).code, 'server_error');
+  const waits = env.lockLog.filter((x) => x === 'wait').length;
+  const releases = env.lockLog.filter((x) => x === 'release').length;
+  assert.ok(waits > 0);
+  assert.equal(waits, releases);
 });

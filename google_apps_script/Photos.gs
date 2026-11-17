@@ -4,7 +4,11 @@
  * Guests type their own name on photos/index.html, take or pick photos,
  * and each photo is POSTed here. Photos are saved to Google Drive as:
  *
- *   <parent folder>/<guest name>/<shot id>.jpg
+ *   <parent folder>/<guest name>/Original/<shot id>.jpg       every shot, no filter
+ *   <parent folder>/<guest name>/Film/<shot id>-film.jpg      only when film look is on
+ *
+ * A request without `variant` (a page cached from before Original/Film
+ * existed) is saved straight into <guest name>/, as it used to be.
  *
  * This is a SEPARATE Apps Script project from the RSVP/payment script
  * (Code.gs / google_apps_script.js) on purpose: the photo endpoint can be
@@ -21,9 +25,16 @@
  *      Execute as: Me — Who has access: Anyone
  *   4. Put the /exec URL into PHOTOS_SCRIPT_URL in photos/index.html.
  *
+ * Updating this code later: Deploy > Manage deployments > edit (pencil) >
+ * Version: New version > Deploy. That keeps the same /exec URL.
+ * ("New deployment" makes a new URL instead.) Then check that
+ * GET /exec answers with the new `version` below.
+ *
  * Request: POST, body is a JSON string (sent as text/plain so browsers
  * skip the CORS preflight):
- *   { name, id, mimeType, data }   data = base64 without the data: prefix
+ *   { name, id, mimeType, data, variant }
+ *   data    = base64 without the data: prefix
+ *   variant = 'original' | 'film'   (optional, see above)
  * Response: { status: 'ok' [, duplicate: true] }
  *        or { status: 'error', code }  — see the codes below.
  */
@@ -35,15 +46,21 @@ const MAX_NAME_LENGTH = 40;              // characters (code points)
 const MAX_PHOTO_BYTES = 8 * 1024 * 1024; // after base64 decoding
 const ALLOWED_PHOTO_TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 const SHOT_ID_PATTERN = /^[A-Za-z0-9_-]{8,64}$/;
+// Request value -> subfolder name. Only these values ever become folder names.
+const PHOTO_VARIANT_FOLDERS = { original: 'Original', film: 'Film' };
+
+// Bump when the request shape changes; doGet reports it, so a redeploy can be checked.
+const PHOTOS_API_VERSION = 2;
 
 // Abuse limits. Retries count too, so these sit well above normal use.
+// A film shot is two requests (original + film).
 const RATE_WINDOW_SECONDS = 600;
-const RATE_LIMIT_PER_NAME = 120;   // one guest picking a whole album is ~50
-const RATE_LIMIT_GLOBAL = 2000;    // every guest together, per window
+const RATE_LIMIT_PER_NAME = 240;   // one guest picking a whole album is ~50 shots
+const RATE_LIMIT_GLOBAL = 4000;    // every guest together, per window
 const FOLDER_CACHE_SECONDS = 21600; // 6 h, the CacheService maximum
 
 function doGet() {
-  return json_({ status: 'ok', service: 'wedding-photos' });
+  return json_({ status: 'ok', service: 'wedding-photos', version: PHOTOS_API_VERSION });
 }
 
 function doPost(e) {
@@ -62,8 +79,14 @@ function doPost(e) {
     const id = String(body.id || '');
     if (!SHOT_ID_PATTERN.test(id)) return error_('bad_id');
 
-    const ext = ALLOWED_PHOTO_TYPES[body.mimeType];
+    const ext = lookup_(ALLOWED_PHOTO_TYPES, body.mimeType);
     if (!ext) return error_('bad_type');
+
+    let variantFolder = null; // null = legacy request, save in the guest folder itself
+    if (body.variant !== undefined && body.variant !== null && body.variant !== '') {
+      variantFolder = lookup_(PHOTO_VARIANT_FOLDERS, body.variant);
+      if (!variantFolder) return error_('bad_variant');
+    }
 
     if (typeof body.data !== 'string' || body.data.length === 0) return error_('bad_data');
     // Cheap size check before decoding: base64 is 4 chars per 3 bytes.
@@ -86,14 +109,20 @@ function doPost(e) {
     const parent = getParentFolder_();
     if (!parent) return error_('not_configured');
 
-    const folder = getGuestFolder_(parent, name);
+    const guestFolder = getChildFolder_(parent, name, 'folder_' + digest_(name));
+    // Guest names never contain '/', so these paths and cache keys cannot collide.
+    const folderPath = variantFolder ? name + '/' + variantFolder : name;
+    const folder = variantFolder
+      ? getChildFolder_(guestFolder, variantFolder, 'folder_' + digest_(folderPath))
+      : guestFolder;
     const fileName = id + '.' + ext;
 
     // The client retries on timeouts and may resend a photo that already
     // arrived. The shot id makes the retry harmless. Drive search can lag
-    // just after a create, so a cache marker is checked first.
+    // just after a create, so a cache marker is checked first. The key is
+    // per folder, so the film copy is never mistaken for the original.
     const cache = CacheService.getScriptCache();
-    const shotKey = 'shot_' + digest_(name + '/' + fileName);
+    const shotKey = 'shot_' + digest_(folderPath + '/' + fileName);
     if (cache.get(shotKey) || folder.getFilesByName(fileName).hasNext()) {
       return json_({ status: 'ok', duplicate: true });
     }
@@ -143,6 +172,7 @@ function testUpload() {
         id: 'test-' + new Date().getTime(),
         mimeType: 'image/png',
         data: onePixelPng,
+        variant: 'original',
       }),
     },
   });
@@ -170,13 +200,13 @@ function getParentFolder_() {
 }
 
 /**
- * Finds or creates <parent>/<name>. Drive allows two folders with the same
- * name, so creation runs under the script lock; without it a guest who
- * uploads several photos at once could end up with several folders.
+ * Finds or creates <parent>/<name> (a guest folder, or its Original/Film
+ * subfolder). Drive allows two folders with the same name, so creation runs
+ * under the script lock; without it a guest who uploads several photos at
+ * once could end up with several folders.
  */
-function getGuestFolder_(parent, name) {
+function getChildFolder_(parent, name, cacheKey) {
   const cache = CacheService.getScriptCache();
-  const cacheKey = 'folder_' + digest_(name);
 
   const cached = cachedFolder_(cache, cacheKey);
   if (cached) return cached;
@@ -237,6 +267,12 @@ function digest_(text) {
     Utilities.Charset.UTF_8,
   );
   return bytes.map((b) => ('0' + (b & 0xff).toString(16)).slice(-2)).join('');
+}
+
+/** table[key] for own keys only, so 'constructor' or '__proto__' never match. */
+function lookup_(table, key) {
+  if (typeof key !== 'string') return null;
+  return Object.prototype.hasOwnProperty.call(table, key) ? table[key] : null;
 }
 
 function error_(code) {
